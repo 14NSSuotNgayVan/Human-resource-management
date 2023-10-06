@@ -1,0 +1,11 @@
+export const GET_ALL_STAFF = "GET_ALL_STAFF";
+export const POST_STAFF_TO_LIST = "POST_STAFF_TO_LIST";
+export const PUT_STAFF_TO_LIST = "PUT_STAFF_TO_LIST";
+export const DELETE_STAFF = "DELETE_STAFF";
+export const SEARCH_BY_PAGE = "SEARCH_BY_PAGE";
+export const SEARCH_BY_PAGE_SUCCESS = "SEARCH_BY_PAGE_SUCCESS";
+export const SEARCH_BY_PAGE_FAIL = "SEARCH_BY_PAGE_FAIL";
+export const SET_LOADING = "SET_LOADING";
+
+
+
