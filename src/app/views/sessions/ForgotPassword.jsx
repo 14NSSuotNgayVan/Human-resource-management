@@ -58,22 +58,22 @@ class ForgotPassword extends Component {
                       value={email}
                       validators={["required", "isEmail"]}
                       errorMessages={[
-                        t("general.errorMessages_required"),
+                        t("staff.notify.errorMessages_required"),
                         t("general.errorMessages_email_valid")
                       ]}
                     />
                     <div className="flex flex-middle">
                       <Button variant="contained" color="primary" type="submit">
-                        {t("resetPassword")}
+                        {t("login.reset_password")}
                       </Button>
-                      <span className="ml-16 mr-16">{t("or")}</span>
+                      <span className="ml-16 mr-16">{t("general.or")}</span>
                       <Button
                         className="capitalize"
                         variant="contained"
                         onClick={() =>
                           this.props.history.push(ConstantList.ROOT_PATH+"session/signin")
                         }>
-                          {t("sign_in.title")}
+                          {t("login.title")}
                       </Button>
                     </div>
                   </ValidatorForm>

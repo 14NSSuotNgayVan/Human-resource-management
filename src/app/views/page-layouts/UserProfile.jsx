@@ -109,6 +109,7 @@ class UserProfile extends Component {
     let checkHealthOrg = false;
     let { healthOrg } = this.state;
     getCurrentUser().then(({ data }) => {
+      console.log(data);
       data.roles.forEach((res) => {
         if (
           res.name == "ROLE_HEALTH_ORG" &&
@@ -458,7 +459,7 @@ class UserProfile extends Component {
                     size="small"
                     variant="outlined"
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                     className="w-100"
                   />
                 </Grid>
@@ -483,7 +484,7 @@ class UserProfile extends Component {
                       this.handleChange(lastName, "lastName")
                     }
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                     className="w-100"
                   />
                 </Grid>
@@ -505,7 +506,7 @@ class UserProfile extends Component {
                         : ""
                     }
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                     className="w-100"
                   />
                 </Grid>
@@ -536,7 +537,7 @@ class UserProfile extends Component {
                     name="email"
                     value={this.state.email ? this.state.email : ""}
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                   />
                 </Grid>
 
@@ -551,7 +552,7 @@ class UserProfile extends Component {
                     name="username"
                     value={this.state.username ? this.state.username : ""}
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                     disabled
                   />
                 </Grid>
@@ -620,7 +621,7 @@ class UserProfile extends Component {
                     name="name"
                     value={name}
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                     variant="outlined"
                     size="small"
                   />
@@ -654,7 +655,7 @@ class UserProfile extends Component {
                     name="address"
                     value={address}
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                     variant="outlined"
                     size="small"
                   />
@@ -694,7 +695,7 @@ class UserProfile extends Component {
                     value={email ? email : ""}
                     validators={["required", "isEmail"]}
                     errorMessages={[
-                      t("general.errorMessages_required"),
+                      t("staff.notify.errorMessages_required"),
                       t("general.errorMessages_email_valid"),
                     ]}
                     variant="outlined"
@@ -716,7 +717,7 @@ class UserProfile extends Component {
                     variant="outlined"
                     size="small"
                     validators={["required"]}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                   />
                 </Grid>
                 <Grid item lg={4} md={4} sm={12} xs={12}>

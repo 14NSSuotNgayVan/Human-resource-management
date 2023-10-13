@@ -9,8 +9,11 @@ import {
   SEARCH_BY_PAGE,
   SEARCH_BY_PAGE_SUCCESS,
   SEARCH_BY_PAGE_FAIL,
-  SET_LOADING,
-} from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
+  SET_SHOULD_UPDATE,
+  UPLOAD_IMAGE,
+  GET_IMAGE,
+  POST_STAFF_TO_LIST_SUCCESS,
+} from "app/redux/reducers/actionTypeConstant/StaffActionTypeConstant.js";
 import { takeLatest, put, call } from "redux-saga/effects";
 toast.configure({
   autoClose: 2000,
@@ -19,8 +22,7 @@ toast.configure({
 });
 function* searchByPage(action) {
   try {
-    const {data} = yield call(axios.get, ConstantList.API_ENDPOINT + "employee/search", {params: {...action.payload}});
-    console.log(data);
+    const { data } = yield call(axios.get, ConstantList.API_ENDPOINT + "employee/search", { params: { ...action.payload } });
     if (checkResponseCode(data.code)) {
       if (data.data) {
         yield put({
@@ -35,9 +37,9 @@ function* searchByPage(action) {
 }
 function* deleteStaff(action) {
   try {
-    const { data } = yield call(axios.delete, ConstantList.API_ENDPOINT + `/api/employees/${action.payload}`);
+    const { data } = yield call(axios.delete, ConstantList.API_ENDPOINT + `employee/${action.payload}`);
     if (checkResponseCode(data?.code)) {
-      yield put({ type: SET_LOADING });
+      yield put({ type: SET_SHOULD_UPDATE});
       toast.success("Xóa thành công");
     } else {
       toast.error(data?.message);
@@ -48,13 +50,37 @@ function* deleteStaff(action) {
 }
 function* addStaff(action) {
   try {
-    const { data } = yield call(axios.post, ConstantList.API_ENDPOINT + "/api/employees", action.payload);
-    if (checkResponseCode(data?.code)) {
-      toast.success("Thêm thành công");
-      yield put({ type: SET_LOADING });
-    } else {
-      toast.error(data?.message);
+    //uploadImage
+    let image = "";
+    if(action?.payload?.file){
+      const {data}  = yield call(
+        axios.post,
+        ConstantList.API_ENDPOINT + `employee/upload-image`,
+        action?.payload?.file
+      );
+      if (data?.id) {
+        image = data?.name ? ConstantList.API_ENDPOINT + `/public/image/${data?.name}`:"";
+        toast.success("Tạo thông tin nhân viên thành công");
+      } else {
+        toast.error("Thêm ảnh không thành công");
+      }
     }
+      //create staff with image
+      const  dataStaff = yield call(axios.post, ConstantList.API_ENDPOINT + "/employee",
+      {
+        ...action?.payload?.staff,
+        image: image,
+        employeeFamilyDtos:[],
+        certificatesDto:[]
+      }
+      );
+      if (checkResponseCode(dataStaff.data?.code)) {
+        yield put({type:POST_STAFF_TO_LIST_SUCCESS,payload:dataStaff?.data?.data});
+        toast.success("Tạo thông tin nhân viên thành công");
+      } else {
+        toast.error(dataStaff.data?.message);
+      }
+
   } catch (err) {
     toast.error(err);
   }
@@ -64,11 +90,11 @@ function* updateStaff(action) {
     const { data } = yield call(
       axios.put,
       ConstantList.API_ENDPOINT + `/api/employees/${action.payload.id}`,
-      action.payload.data
+      action.payload
     );
     if (checkResponseCode(data?.code)) {
-      toast.success("Chỉnh sửa nhân viên thành công!");
-      yield put({ type: SET_LOADING });
+      toast.success("Chỉnh sửa thông tin nhân viên thành công!");
+      yield put({ type: SET_SHOULD_UPDATE });
     } else {
       toast.error(data?.message);
     }
@@ -77,9 +103,28 @@ function* updateStaff(action) {
   }
 }
 
+// function* uploadImage(action) {
+//   try {
+//     const { data } = yield call(
+//       axios.post,
+//       ConstantList.API_ENDPOINT + `employee/upload-image`,
+//       action?.payload
+//     );
+//     if (data.id) {
+//       toast.success("Thêm ảnh thành công");
+//       yield put({ type: GET_IMAGE, payload: ConstantList.API_ENDPOINT + `/public/image/${data.name}` });
+//     } else {
+//       toast.error("Thêm ảnh không thành thành công");
+//     }
+//   } catch (err) {
+//     toast.error(err);
+//   }
+// }
+
 export function* StaffSaga() {
   yield takeLatest(SEARCH_BY_PAGE, searchByPage);
   yield takeLatest(DELETE_STAFF, deleteStaff);
   yield takeLatest(POST_STAFF_TO_LIST, addStaff);
   yield takeLatest(PUT_STAFF_TO_LIST, updateStaff);
+  // yield takeLatest(UPLOAD_IMAGE, uploadImage);
 }

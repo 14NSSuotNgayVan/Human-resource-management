@@ -4,21 +4,34 @@ import {
   DELETE_STAFF,
   SEARCH_BY_PAGE_SUCCESS,
   SEARCH_BY_PAGE_FAIL,
-  SET_LOADING,
+  SET_SHOULD_UPDATE,
   SEARCH_BY_PAGE,
-} from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
+  UPLOAD_IMAGE,
+  GET_IMAGE,
+  SET_IMAGE,
+  SET_ITEM,
+  POST_STAFF_TO_LIST_SUCCESS,
+} from "app/redux/reducers/actionTypeConstant/StaffActionTypeConstant.js";
 const initState = {
+  item:{},
   itemList: [],
   totalElements: 0,
-  loading: false,
+  shouldUpdate: false,
+  image:"",
+  file:{},
 };
 const StaffReducer = (state = initState, action) => {
   switch (action?.type) {
-
+    case SET_ITEM:{
+      return{
+        ...state,
+        item:action?.payload
+      }
+    }
     case SEARCH_BY_PAGE: {
       return {
         ...state,
-        loading: true,
+        shouldUpdate: false,
 
       };
     }
@@ -27,8 +40,7 @@ const StaffReducer = (state = initState, action) => {
         ...state,
         itemList: action?.payload.data,
         totalElements: action?.payload?.totalElements,
-        loading: false,
-
+        shouldUpdate: false,
       };
     }
     case SEARCH_BY_PAGE_FAIL: {
@@ -36,31 +48,57 @@ const StaffReducer = (state = initState, action) => {
         ...state,
         itemList: [],
         totalElements: 0,
-        loading: false,
+        shouldUpdate: false,
       };
     }
     case DELETE_STAFF: {
       return {
         ...state,
-        loading: true,
+        shouldUpdate: false,
       };
     }
     case POST_STAFF_TO_LIST: {
       return {
         ...state,
-        loading: true,
+        shouldUpdate: false,
       };
+    }
+    case POST_STAFF_TO_LIST_SUCCESS:{
+      return{
+        ...state,
+        item: action.payload,
+        shouldUpdate:true
+      }
     }
     case PUT_STAFF_TO_LIST: {
       return {
         ...state,
-        loading: true,
+        shouldUpdate: false,
       };
     }
-    case SET_LOADING: {
+    case SET_IMAGE:{
+      return{
+        ...state,
+        image: action?.payload.url,
+        file: action?.payload.file,
+      }
+    }
+    // case UPLOAD_IMAGE: {
+    //   return {
+    //     ...state,
+    //     shouldUpdate: true,
+    //   }
+    // }
+    // case GET_IMAGE:{
+    //   return{
+    //     ...state,
+    //     image:action?.payload,
+    //   }
+    // }
+    case SET_SHOULD_UPDATE: {
       return {
         ...state,
-        loading: false,
+        shouldUpdate: true,
       };
     }
     default: {

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 const CustomTable = (props) => {
     const { data, columns, totalElements, pagePagination, setPagination } = props;
     const { t } = useTranslation();
+    console.log(data);
     return (
         <>
             <MaterialTable

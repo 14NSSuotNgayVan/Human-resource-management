@@ -114,7 +114,7 @@ class ChangePasswordPopup extends React.Component {
                     value={this.state.oldPassword}
                     onChange={this.handleChange('oldPassword')}
                     validators={['required']}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                   />
                 </FormControl>
               </Grid>
@@ -132,7 +132,7 @@ class ChangePasswordPopup extends React.Component {
                     value={this.state.password}
                     onChange={this.handleChange('password')}
                     validators={['required']}
-                    errorMessages={[t("general.errorMessages_required")]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
                   />
                 </FormControl>
               </Grid>
@@ -151,7 +151,7 @@ class ChangePasswordPopup extends React.Component {
                     onChange={this.handleChange('confirmPassword')}
                     validators={['required', 'isPasswordMatch']}
                     errorMessages={[
-                      t("general.errorMessages_required"),
+                      t("staff.notify.errorMessages_required"),
                       t("general.isPasswordMatch"),
                     ]}
                   />

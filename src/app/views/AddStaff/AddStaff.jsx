@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { searchByPageAction, deleteStaffAction } from "app/redux/actions/StaffActions.js";
+import React, { useCallback, useState } from "react";
+import { searchByPageAction, deleteStaffAction, setItem } from "app/redux/actions/StaffActions.js";
 import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Breadcrumb, ConfirmationDialog } from "egret";
@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { staffListSelector, totalElementsSelector, loadingSelector } from "app/redux/selectors/StaffSelector.js";
+import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
 import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
@@ -24,9 +24,8 @@ function Staff(props) {
   const dispatch = useDispatch();
   const staffList = useSelector(staffListSelector);
   const totalElements = useSelector(totalElementsSelector);
-  const loading = useSelector(loadingSelector);
+  const shouldUpdate = useSelector(shouldUpdateSelector);
   const { t } = props;
-  const [item, setItem] = useState({});
   const [id, setId] = useState("");
   const [pagePagination, setPagePagination] = useState({
     page: 0,
@@ -50,19 +49,19 @@ function Staff(props) {
   }, [pagePagination.rowsPerPage, pagePagination.page, keyword]);
 
   useEffect(() => {
-    if (loading) updatePageData();
+    if (shouldUpdate) updatePageData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  }, [shouldUpdate]);
 
   const handleDelete = (id) => {
     setId(id);
     setShouldOpenConfirmationDialog(true);
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = useCallback(() => {
     setShowEditorDialog(false);
     setShouldOpenConfirmationDialog(false);
-  };
+  },[]);
 
   const handleConfirmationResponse = async () => {
     if (staffList?.length === 1 && setPagePagination.page === 1) {
@@ -73,20 +72,16 @@ function Staff(props) {
   };
 
   const handleAddItem = (item) => {
-    setItem(item);
+    dispatch(setItem(item));
     setShowEditorDialog(true);
   };
 
-  const handleUpdateItem = (item) => {
-    setItem(item);
-    setShowEditorDialog(true);
-  };
   const Action = (props) => {
     const item = props.item;
     return (
       <div className="none_wrap">
         {STAFF_STATUS.EDIT.includes(item.submitProfileStatus) && (
-          <IconButton size="small" onClick={()=>handleUpdateItem(item)}>
+          <IconButton size="small" onClick={()=>handleAddItem(item)}>
             <Icon fontSize="small" color="primary">
               edit
             </Icon>
@@ -119,13 +114,13 @@ function Staff(props) {
       align: "center",
       minWidth: "150px",
     },
-    { title: t("staff.name"), field: "name", align: "ceter", minWidth: "170px" },
+    { title: t("staff.name"), field: "name", align: "center", minWidth: "170px" },
     {
       title: t("staff.dateOfBirth"),
       field: "dateOfBirth",
       align: "center",
       minWidth: "120px",
-      render: (props) => <span>{moment(props?.effectiveDate).format("DD/MM/YYYY")}</span>,
+      render: (props) => <span>{moment(new Date(props?.dateOfBirth)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.gender_display"),
@@ -139,7 +134,7 @@ function Staff(props) {
       field: "team",
       align: "center",
       minWidth: "100px",
-      render: (props) => <span>{TEAM[props.team]}</span>,
+      render: (props) => <span>{TEAM[props.team]?.name}</span>,
     },
 
     {
@@ -211,7 +206,7 @@ function Staff(props) {
                 open={shouldOpenConfirmationDialog}
                 onConfirmDialogClose={handleDialogClose}
                 onYesClick={handleConfirmationResponse}
-                text={t("DeleteConfirm")}
+                text={t("general.deleteConfirm")}
                 Yes={t("general.Yes")}
                 No={t("general.No")}
               />
@@ -220,7 +215,6 @@ function Staff(props) {
           <div>
             {showEditorDialog && (
             <AddStaffDialog
-            staff ={item}
             handleClose ={handleDialogClose}
             t ={t}
             />

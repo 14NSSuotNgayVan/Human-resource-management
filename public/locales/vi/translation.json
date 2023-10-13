@@ -1,9 +1,17 @@
 ﻿{
-  "Dashboard":{
-    "dashboard":"Trang chủ",
-    "addStaff":"Thêm mới nhân viên",
-    "profile":"Thông tin tài khoản",
-    "logout":"Đăng xuất"
+  "Dashboard": {
+    "dashboard": "Trang chủ",
+    "addStaff": "Thêm mới nhân viên",
+    "profile": "Thông tin tài khoản",
+    "logout": "Đăng xuất"
+  },
+  "login": {
+    "title": "Đăng nhập",
+    "username": "Tài khoản",
+    "password": "Mật khẩu",
+    "forgot_password": "Quên mật khẩu",
+    "reset_password": "Đổi mật khẩu",
+    "Logon_session_expires": "Phiên đăng nhập hết hạn"
   },
   "general": {
     "No": "Không",
@@ -82,19 +90,10 @@
     "warrantyMonthError": "Tháng bảo hành không hợp lệ",
     "yearPutIntoUseError": "Năm đưa vào sử dụng không hợp lệ",
     "add": "Thêm mới",
+    "register": "Đăng ký",
     "confirmCalculator": "Bạn có chắc chắn muốn lưu?",
     "add_file": "Thêm tài liệu",
-    "allProduct": "Tất cả sản phẩm",
-    "invalidDateFormat": "Định dạng ngày tháng không hợp lệ",
-    "errorMessages_number_required": "Định dạng số không hợp lệ",
-    "errorMessages_email_valid": "Định dạng email không hợp lệ",
-    "errorMessages_required": "Vui lòng điền vào trường này",
-    "invalidCodeFormat": "Mã sai định dạng",
-    "invalidPhoneFormat": "Số điện thoại sai định dạng",
-    "minLength_required": "Chưa đủ độ dài tối thiểu",
-    "maxLength_required": "Độ dài tối đa là 10",
-    "maxAgeValue_required": "Tuổi không phù hợp",
-    "minAgeValue_required": "Tuổi phải lớn hơn 18"
+    "allProduct": "Tất cả sản phẩm"
   },
   "toast": {
     "error": "Có lỗi xảy ra, vui lòng thử lại."
@@ -116,13 +115,20 @@
     "age": "Tuổi",
     "address": "Địa chỉ",
     "team": "Nhóm",
-    "certificates": "Văn bằng chứng chỉ",
+    "citizenIdentificationNumber": "Số CMND/ CCCD",
+    "dateOfIssuanceCard":"Ngày cấp",
+    "placeOfIssueCard":"Nơi cấp",
+    "information": "Thông tin nhân viên",
+    "certificates": "Thông tin văn bằng",
+    "family_relationship": "Quan hệ gia đình",
     "phone": "Điện thoại",
     "province": "Tỉnh/ Thành phố",
     "district": "Quận/ Huyện",
     "wards": "Phường/ Xã",
     "firstName": "Tên",
     "lastName": "Họ",
+    "ethnic": "Dân tộc",
+    "religion":"Tôn giáo",
     "displayName": "Tên nhân viên",
     "gender_display": "Giới tính",
     "dateOfBirth": "Ngày sinh",
@@ -139,14 +145,28 @@
     "UserName": "Tên đăng nhập",
     "department": "Phòng ban",
     "Email": "Email",
+    "avatar": "Ảnh đại diện",
     "certificate": {
       "code": "Mã chứng chỉ",
+      "issueDate": "Ngày cấp",
+      "content": "Nội dung",
+      "field": "Lĩnh vực",
       "effectiveDate": "Ngày hiệu lực",
       "expirationDate": "Ngày hết hạn",
-      "name": "Tên chứng chỉ",
+      "certificateName": "Tên chứng chỉ",
       "province": "Nơi cấp",
       "invalidExpirationDate": "Ngày hết hạn phải sau ngày hiện tại và ngày hiệu lực",
       "inValidEffectiveDate": "Ngày hiệu lực phải trước ngày hết hạn"
+    },
+    "family": {
+      "name": "Tên người thân",
+      "gender": "Giới tính",
+      "dateOfBirth": "Ngày sinh",
+      "relationShip": "Quan hệ",
+      "citizenIdentificationNumber": "Số CMND/ CCCD",
+      "address": "Địa chỉ",
+      "email": "Email",
+      "phoneNumber": "Số điện thoại"
     },
     "submit_profile_status_display": "Trạng thái",
     "submit_profile_status": {
@@ -161,12 +181,13 @@
       "EndProfileRejected": "Từ chối yêu cầu kết thúc hồ sơ",
       "savedProfile": "Nộp lưu hồ sơ"
     },
-    "action":{
-      "addStaff":"Thêm mới nhân viên",
-      "deleteStaff":"Xóa nhân viên",
-      "updateStaff":"Cập nhật thông tin nhân viên"
+    "action": {
+      "addStaff": "Thêm mới nhân viên",
+      "deleteStaff": "Xóa nhân viên",
+      "updateStaff": "Cập nhật thông tin nhân viên"
     },
-    "noti": {
+    "notify": {
+      "enterInformation": "Vui lòng điền thông tin nhân viên",
       "addError": "Thêm không thành công!",
       "addSuccess": "Thêm nhân viên thành công !",
       "updateSuccess": "Cập nhật thông tin nhân viên thành công !",
@@ -174,7 +195,24 @@
       "use": "Nhân viên đang sử dụng, không thể xóa",
       "use_all": "Nhân viên đều đã sử dụng",
       "deleted_unused": "Đã xoá nhân viên chưa sử dụng",
-      "dupli_code": "Mã đã được sử dụng"
+      "dupli_code": "Mã đã được sử dụng",
+      "isNotImage": "Chỉ chấp nhận ảnh",
+      "inSingleFile": "Chỉ chọn 1 ảnh",
+      "inValidFileSize": "Kích thước ảnh không vượt quá 10MB",
+      "inValidImageSize": "Kích thước ảnh vượt quá 500px x 500px",
+      "inValidBirthday": "Chưa đủ 18 tuổi",
+      "inValidDateOfIssuanceCard":"Ngày cấp phải trước ngày hiện tại",
+      "inValidCitizenIdentificationNumber": "Vui lòng nhập đúng độ dài CCCD: 12 số, CMND: 9 số",
+      "invalidDateFormat": "Định dạng ngày tháng không hợp lệ",
+      "errorMessages_number_required": "Định dạng số không hợp lệ",
+      "errorMessages_email_valid": "Định dạng email không hợp lệ",
+      "errorMessages_required": "Vui lòng điền vào trường này",
+      "invalidCodeFormat": "Mã sai định dạng",
+      "invalidPhoneFormat": "Số điện thoại sai định dạng",
+      "minLength_required": "Chưa đủ độ dài tối thiểu",
+      "maxLength_required": "Độ dài tối đa là 10",
+      "maxAgeValue_required": "Tuổi không phù hợp",
+      "minAgeValue_required": "Tuổi phải lớn hơn 18"
     }
   }
 }

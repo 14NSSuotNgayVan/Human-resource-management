@@ -27,7 +27,7 @@ import {
   POST_WARD_TO_LIST,
   PUT_WARD_TO_LIST,
   SET_SHOULD_UPDATE_WARD,
-} from "../actionTypeConstant/AddressActionTypeConstant";
+} from "./actionTypeConstant/AddressActionTypeConstant";
 
 const initState = {
   listProvinces: [],

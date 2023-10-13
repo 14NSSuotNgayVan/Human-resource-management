@@ -180,7 +180,7 @@ export default function AppButton() {
             aria-label="Upload picture"
             component="span"
           >
-            <Icon>photo_camera</Icon>
+            <Icon>edit</Icon>
           </IconButton>
         </label>
       </SimpleCard>

@@ -36,7 +36,7 @@ import {
   SET_SHOULD_UPDATE_DISTRICT,
   SET_SHOULD_UPDATE_PROVINCE,
   SET_SHOULD_UPDATE_WARD,
-} from "../actionTypeConstant/AddressActionTypeConstant";
+} from "../reducers/actionTypeConstant/AddressActionTypeConstant";
 const { checkResponseCode } = require("app/constants/apiCodeStatus");
 const { default: axios } = require("axios");
 const { toast } = require("react-toastify");

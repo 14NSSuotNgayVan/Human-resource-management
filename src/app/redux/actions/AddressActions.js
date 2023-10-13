@@ -16,7 +16,7 @@ import {
   SEARCH_BY_PAGE_DISTRICT,
   SEARCH_BY_PAGE_PROVINCE,
   SEARCH_BY_PAGE_WARD,
-} from "../actionTypeConstant/AddressActionTypeConstant";
+} from "../reducers/actionTypeConstant/AddressActionTypeConstant";
 //province
 export const getAllProvinceAction = () => {
   return {
