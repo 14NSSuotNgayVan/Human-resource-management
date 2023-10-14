@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 
 import NotificationBar from "../SharedCompoents/NotificationBar";
-import ShoppingCart from "../SharedCompoents/ShoppingCart";
 import ConstantList from "../../appConfig";
 import LanguageSelect from '../SharedCompoents/LanguageSelect';
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
@@ -84,7 +83,6 @@ class Layout2Topbar extends Component {
 
                 <NotificationBar />
 
-                <ShoppingCart/>
 
                 <EgretMenu
                   menuButton={

@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import { classList, isMobile, debounce } from "utils";
 import EgretCustomizer from "./EgretCustomizer/EgretCustomizer";
 import { withStyles } from "@material-ui/styles";
-import ShoppingCart from "./ShoppingCart";
 
 const width = "50px";
 
@@ -121,8 +120,6 @@ class SecondarySidebar extends Component {
           <span className="m-auto"></span>
 
           <EgretCustomizer />
-
-          <ShoppingCart/>
 
           <IconButton size="small" aria-label="delete" className="my-12">
             <Icon>comments</Icon>

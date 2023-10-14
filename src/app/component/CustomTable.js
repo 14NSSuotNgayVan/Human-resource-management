@@ -42,7 +42,7 @@ const CustomTable = (props) => {
                     draggable: false,
                 }}
             />
-            <TablePagination
+            {pagePagination&&<TablePagination
                 align="left"
                 className="px-16 mt-8"
                 rowsPerPageOptions={[1, 2, 3, 5, 10, 25]}
@@ -64,7 +64,7 @@ const CustomTable = (props) => {
                     setPagination({ ...pagePagination, page: newPage});
                 }}
                 onChangeRowsPerPage={(event => { setPagination({ ...pagePagination, rowsPerPage: event.target.value, page: 0 }) })}
-            />
+            />}
         </>
     );
 }

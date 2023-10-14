@@ -32,6 +32,10 @@ class JwtAuthService {
     axios.post(ConstantList.API_ENDPOINT+'/oauth/token',requestBody,config).then(response=>{
       console.log('authService:',response);
       var dateObj = new Date(Date.now() + response.data.expires_in*1000);
+<<<<<<< Updated upstream
+=======
+      console.log(new Date(Date.now() + response.data.expires_in*1))
+>>>>>>> Stashed changes
       localStorageService.setItem("token_expire_time",dateObj);
       this.setSession(response.data.access_token);
     });

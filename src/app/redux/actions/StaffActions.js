@@ -16,11 +16,27 @@ export const addStaffAction = (staff) => {
     payload: staff,
   };
 };
+<<<<<<< Updated upstream
 export const updateStaffAction = (id, data) => {
   return {
     type: PUT_STAFF_TO_LIST,
     payload: { id, data },
   };
+=======
+export const updateStaffAction = (staff, file) => {
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return {
+      type: PUT_STAFF_TO_LIST,
+      payload: { staff: staff, file: formData }
+    };
+  } else
+    return {
+      type: PUT_STAFF_TO_LIST,
+      payload: { staff: staff },
+    };
+>>>>>>> Stashed changes
 };
 export const deleteStaffAction = (staffId) => {
   return {

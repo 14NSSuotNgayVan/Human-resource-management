@@ -17,7 +17,6 @@ import { EgretMenu, EgretSearchBox } from "egret";
 import { isMdScreen } from "utils";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import { Link } from "react-router-dom";
-import ShoppingCart from "../SharedCompoents/ShoppingCart";
 import { useTranslation, withTranslation, Trans } from 'react-i18next';
 import Select from '@material-ui/core/Select';
 import LanguageSelect from '../SharedCompoents/LanguageSelect';
@@ -113,7 +112,6 @@ class Layout1Topbar extends Component {
                 <EgretSearchBox />
                 <ViewLanguageSelect/>
                 <NotificationBar />
-                <ShoppingCart></ShoppingCart>
                 {/* <select class="form-control language-selector"  onClick={() => changeLanguage('en')}>
                     <option value="de">Deutsch</option>
                     <option value="en">English</option>

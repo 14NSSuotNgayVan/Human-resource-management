@@ -5,7 +5,7 @@ import LayoutReducer from "./LayoutReducer";
 import ScrumBoardReducer from "./ScrumBoardReducer";
 import NotificationReducer from "./NotificationReducer";
 import StaffReducer  from "./StaffReducer";
-import AddressReducer from "./AddressReducer";
+import CertificateReducer from "./CertificateReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -14,7 +14,7 @@ const RootReducer = combineReducers({
   scrumboard: ScrumBoardReducer,
   notification: NotificationReducer,
   staff:StaffReducer,
-  address:AddressReducer
+  certificate: CertificateReducer
 });
 
 export default RootReducer;
