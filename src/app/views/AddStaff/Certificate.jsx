@@ -42,7 +42,6 @@ const Certificates = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [certificate, setCertificate] = useState({});
   const form = useRef(null);
-
   const updatePageData = () => {
     const certificates = [...certificateList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
@@ -53,8 +52,19 @@ const Certificates = (props) => {
   };
   useEffect(() => {
     updatePageData();
-    // eslint-disabled-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagePagination]);
+  useEffect(() => {
+    ValidatorForm.addValidationRule("isValidIssueDate", (value) => {
+      const date = new Date(value);
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 1)
+      return date < currentDate;
+    });
+    return ()=>{
+      ValidatorForm.removeValidationRule("isValidIssueDate");
+    }
+  }, []);
   const handleSubmit = () => {
     if (certificate?.id) {
       dispatch(updateCertificate(certificate));
@@ -152,8 +162,8 @@ const Certificates = (props) => {
                 type="date"
                 name="issueDate"
                 value={certificate?.issueDate ? moment(certificate?.issueDate).format("YYYY-MM-DD") : ""}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
+                validators={["required","isValidIssueDate"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidDateOfIssuanceCard")]}
                 variant="outlined"
                 size="small"
               />

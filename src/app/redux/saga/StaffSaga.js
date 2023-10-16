@@ -52,6 +52,7 @@ function* deleteStaff(action) {
 function* addStaff(action) {
   try {
     //uploadImage
+    console.log("addStaff");
     let image = "";
     if (action?.payload?.file) {
       const { data } = yield call(
