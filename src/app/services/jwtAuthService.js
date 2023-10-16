@@ -23,33 +23,25 @@ class JwtAuthService {
     token: "faslkhfh423oiu4h4kj432rkj23h432u49ufjaklj423h4jkhkjh"
   }
   async getCurrentUser (){
-    let url = ConstantList.API_ENDPOINT + "/api/users/getCurrentUser";
+    let url = ConstantList.API_ENDPOINT + "api/users/getCurrentUser";
     return await axios.get(url);
   };
   async loginWithUserNameAndPassword (username, password) {
     let requestBody ='client_id=core_client&grant_type=password&client_secret=secret';
     requestBody =requestBody+'&username='+username +'&password='+password;
-    axios.post(ConstantList.API_ENDPOINT+'/oauth/token',requestBody,config).then(response=>{
+    await axios.post(ConstantList.API_ENDPOINT+'/oauth/token',requestBody,config).then(response=>{
       console.log('authService:',response);
       var dateObj = new Date(Date.now() + response.data.expires_in*1000);
-<<<<<<< Updated upstream
-=======
       console.log(new Date(Date.now() + response.data.expires_in*1))
->>>>>>> Stashed changes
       localStorageService.setItem("token_expire_time",dateObj);
       this.setSession(response.data.access_token);
     });
-    //alert('Here')
     await this.getCurrentUser().then(res=>{
-      console.log(res);
       this.setLoginUser(res.data);
     });
 
     await MenuService.getAllMenuItemByRoleList().then(res=>{
-      console.log('getAllMenuItemByRoleList',res);
-      //localStorageService.setSessionItem("navigations",res.data);
       localStorageService.setLocalStorageItem("navigations",res.data);
-      console.log(res)
     });
   };
 

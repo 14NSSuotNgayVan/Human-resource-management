@@ -4,39 +4,34 @@ import {
   PUT_STAFF_TO_LIST,
   DELETE_STAFF,
   SEARCH_BY_PAGE,
+  UPLOAD_IMAGE,
+  SET_IMAGE,
+  SET_ITEM,
 } from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
 export const getAllStaffAction = () => {
   return {
     type: GET_ALL_STAFF,
   };
 };
-export const addStaffAction = (staff) => {
-  return {
-    type: POST_STAFF_TO_LIST,
-    payload: staff,
-  };
-};
-<<<<<<< Updated upstream
-export const updateStaffAction = (id, data) => {
-  return {
-    type: PUT_STAFF_TO_LIST,
-    payload: { id, data },
-  };
-=======
-export const updateStaffAction = (staff, file) => {
+export const addStaffAction = (staff, file) => {
+
   if (file) {
     const formData = new FormData();
     formData.append('file', file);
     return {
-      type: PUT_STAFF_TO_LIST,
+      type: POST_STAFF_TO_LIST,
       payload: { staff: staff, file: formData }
     };
-  } else
-    return {
-      type: PUT_STAFF_TO_LIST,
-      payload: { staff: staff },
-    };
->>>>>>> Stashed changes
+  } else return {
+    type: POST_STAFF_TO_LIST,
+    payload: { staff: staff },
+  }
+};
+export const updateStaffAction = (staff) => {
+  return {
+    type: PUT_STAFF_TO_LIST,
+    payload: staff,
+  };
 };
 export const deleteStaffAction = (staffId) => {
   return {
@@ -50,4 +45,24 @@ export const searchByPageAction = (searchObj) => {
     payload: searchObj,
   };
 };
+export const uploadImageAction = (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return {
+    type: UPLOAD_IMAGE,
+    payload: formData,
+  }
+}
+export const setStaffImage = (url, file) => {
+  return {
+    type: SET_IMAGE,
+    payload: { url: url, file: file },
+  }
+}
+export const setItem = (staff) => {
+  return {
+    type: SET_ITEM,
+    payload: staff,
+  }
+}
 

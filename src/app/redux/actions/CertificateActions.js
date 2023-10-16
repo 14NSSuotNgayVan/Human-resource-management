@@ -1,4 +1,4 @@
-import { DELETE_CERTIFICATES, GET_CERTIFICATES, POST_CERTIFICATES, UPDATE_CERTIFICATES } from "../reducers/actionTypeConstant/CertificateActionTypeConstant"
+import { DELETE_CERTIFICATES, GET_CERTIFICATES, POST_CERTIFICATES, UPDATE_CERTIFICATES } from "../actionTypeConstant/CertificateActionTypeConstant"
 
 export const getAllCertificates =(employeeTd)=>{
     return {

@@ -1,4 +1,4 @@
-const { GET_CERTIFICATES_SUCCESS, GET_CERTIFICATES_FAIL, SET_SHOULD_UPDATE_CERTIFICATE } = require("./actionTypeConstant/CertificateActionTypeConstant");
+import { GET_CERTIFICATES_FAIL, GET_CERTIFICATES_SUCCESS, SET_SHOULD_UPDATE_CERTIFICATE } from "../actionTypeConstant/CertificateActionTypeConstant";
 
 const initState = {
     certificateList:[],

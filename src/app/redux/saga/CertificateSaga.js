@@ -3,7 +3,7 @@ import axios from 'axios';
 import ConstantList from "../../appConfig";
 import { toast } from 'react-toastify';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { DELETE_CERTIFICATES, GET_CERTIFICATES, GET_CERTIFICATES_FAIL, GET_CERTIFICATES_SUCCESS, POST_CERTIFICATES, SET_SHOULD_UPDATE_CERTIFICATE, UPDATE_CERTIFICATES } from '../reducers/actionTypeConstant/CertificateActionTypeConstant';
+import { DELETE_CERTIFICATES, GET_CERTIFICATES, GET_CERTIFICATES_FAIL, GET_CERTIFICATES_SUCCESS, POST_CERTIFICATES, SET_SHOULD_UPDATE_CERTIFICATE, UPDATE_CERTIFICATES } from '../actionTypeConstant/CertificateActionTypeConstant';
 
 toast.configure({
     autoClose: 2000,

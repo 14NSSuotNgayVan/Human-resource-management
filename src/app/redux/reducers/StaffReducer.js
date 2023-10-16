@@ -4,47 +4,35 @@ import {
   DELETE_STAFF,
   SEARCH_BY_PAGE_SUCCESS,
   SEARCH_BY_PAGE_FAIL,
-  SET_LOADING,
+  SET_SHOULD_UPDATE,
   SEARCH_BY_PAGE,
-<<<<<<< Updated upstream
-} from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
-=======
   SET_IMAGE,
   SET_ITEM,
   POST_STAFF_TO_LIST_SUCCESS,
   PUT_STAFF_TO_LIST_SUCCESS,
-} from "app/redux/reducers/actionTypeConstant/StaffActionTypeConstant.js";
->>>>>>> Stashed changes
+} from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
 const initState = {
+  item:{},
   itemList: [],
   totalElements: 0,
-  loading: false,
+  shouldUpdate: false,
+  image:"",
+  file:{},
 };
 const StaffReducer = (state = initState, action) => {
   switch (action?.type) {
-<<<<<<< Updated upstream
-
-    case SEARCH_BY_PAGE: {
-      return {
-        ...state,
-        loading: true,
-
-      };
-=======
     case SET_ITEM:{
       return{
         ...state,
         item:action?.payload
       }
->>>>>>> Stashed changes
     }
     case SEARCH_BY_PAGE_SUCCESS: {
       return {
         ...state,
         itemList: action?.payload.data,
         totalElements: action?.payload?.totalElements,
-        loading: false,
-
+        shouldUpdate: false,
       };
     }
     case SEARCH_BY_PAGE_FAIL: {
@@ -52,26 +40,15 @@ const StaffReducer = (state = initState, action) => {
         ...state,
         itemList: [],
         totalElements: 0,
-        loading: false,
+        shouldUpdate: false,
       };
     }
-<<<<<<< Updated upstream
-    case DELETE_STAFF: {
-      return {
-        ...state,
-        loading: true,
-      };
-    }
-=======
->>>>>>> Stashed changes
     case POST_STAFF_TO_LIST: {
       return {
         ...state,
-        loading: true,
+        shouldUpdate: false,
       };
     }
-<<<<<<< Updated upstream
-=======
     case POST_STAFF_TO_LIST_SUCCESS:{
       return{
         ...state,
@@ -79,16 +56,12 @@ const StaffReducer = (state = initState, action) => {
         shouldUpdate:true
       }
     }
->>>>>>> Stashed changes
     case PUT_STAFF_TO_LIST: {
       return {
         ...state,
-        loading: true,
+        shouldUpdate: false,
       };
     }
-<<<<<<< Updated upstream
-    case SET_LOADING: {
-=======
     case PUT_STAFF_TO_LIST_SUCCESS: {
       return {
         ...state,
@@ -104,10 +77,9 @@ const StaffReducer = (state = initState, action) => {
       }
     }
     case SET_SHOULD_UPDATE: {
->>>>>>> Stashed changes
       return {
         ...state,
-        loading: false,
+        shouldUpdate: true,
       };
     }
     default: {

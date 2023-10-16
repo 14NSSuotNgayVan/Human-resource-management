@@ -1,9 +1,5 @@
-import { GENDER } from "app/constants/staffConstant";
-import React from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-<<<<<<< Updated upstream
-const { Dialog, Paper, IconButton, Icon, DialogTitle, DialogContent, Grid, DialogActions, Button, FormControl, MenuItem } = require("@material-ui/core");
-=======
 import StaffInformation from "./StaffInfomation";
 import Certificates from "./Certificate";
 import Family from "./Family";
@@ -26,13 +22,14 @@ const {
   Tabs,
   Tab,
 } = require("@material-ui/core");
->>>>>>> Stashed changes
 const { default: Draggable } = require("react-draggable");
 
+toast.configure({
+  autoClose: 2000,
+  draggable: false,
+  limit: 3,
+});
 const AddStaffDialog = (props) => {
-<<<<<<< Updated upstream
-  const { staff, handleClose, t } = props;
-=======
   const { handleClose, t } = props;
   const staff = useSelector(staffSelector);
   const dispatch = useDispatch();
@@ -61,7 +58,6 @@ const AddStaffDialog = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [staff]);
 
->>>>>>> Stashed changes
   return (
     <Dialog
       open={true}
@@ -70,7 +66,7 @@ const AddStaffDialog = (props) => {
           <Paper {...props} />
         </Draggable>
       )}
-      maxWidth={"md"}
+      maxWidth={"lg"}
       fullWidth={true}
     >
       <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
@@ -81,88 +77,6 @@ const AddStaffDialog = (props) => {
           </Icon>
         </IconButton>
       </DialogTitle>
-<<<<<<< Updated upstream
-      <ValidatorForm className={"validatorForm"}>
-        <DialogContent dividers>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.name")}
-                  </span>
-                }
-                type="text"
-                name="name"
-                value={staff?.name || ""}
-                validators={["required"]}
-                errorMessages={[t("general.errorMessages_required")]}
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.code")}
-                  </span>
-                }
-                type="text"
-                name="code"
-                value={staff?.code || ""}
-                validators={["required", "matchRegexp:^nv\\d{5}$", "minStringLength:6", "maxStringLength:10"]}
-                errorMessages={[
-                  t("general.errorMessages_required"),
-                  t("general.invalidCodeFormat"),
-                  t("general.minLength_required"),
-                  t("general.maxLength_required"),
-                ]}
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              <FormControl fullWidth={true} variant="outlined" className="" size="small">
-                <SelectValidator
-                  variant="outlined"
-                  size="small"
-                  label={
-                    <span className="inputLabel">
-                      <span style={{ color: "red" }}> * </span>
-                      {t("staff.gender_display")}
-                    </span>
-                  }
-                  value={staff?.provinceId || ""}
-                  onChange={(provinceId) =>{}}
-                  validators={["required"]}
-                  errorMessages={[t("general.errorMessages_required")]}
-                  inputProps={{
-                    name: "provinces",
-                    id: "provinces",
-                  }}
-                  className="w-100 mb-16"
-                >
-                  {GENDER?.map((item) => {
-                    return (
-                      <MenuItem key={item?.id} value={item?.id}>
-                        {t(`staff.gender.${item?.name}`)}
-                      </MenuItem>
-                    );
-                  })}
-                </SelectValidator>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions spacing={4} className="flex flex-center flex-middle">
-          <Button variant="contained" color="secondary" onClick={() => props.handleClose()}>
-            {t("general.cancel")}
-=======
       <DialogContent dividers spacing={1}>
         <Tabs
           value={tab}
@@ -196,14 +110,10 @@ const AddStaffDialog = (props) => {
         {informationSaved && (
           <Button variant="contained" color="primary" onClick={() => {}}>
             {t("general.register")}
->>>>>>> Stashed changes
           </Button>
-          <Button variant="contained" color="primary" type="submit">
-            {t("general.save")}
-          </Button>
-        </DialogActions>
-      </ValidatorForm>
+        )}
+      </DialogActions>
     </Dialog>
   );
 };
-export default AddStaffDialog;
+export default memo(AddStaffDialog);

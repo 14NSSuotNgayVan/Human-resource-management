@@ -14,28 +14,25 @@ class Auth extends Component {
     super(props);
     let user = localStorageService.getItem("auth_user");
     let token = localStorageService.getItem("jwt_token");
-    //let tokenData = localStorageService.getSessionItem("token_data");
-    //console.log(tokenData);
     let expire_time= localStorageService.getItem("token_expire_time");
     let dateObj = new Date(expire_time);
-    //alert('Auth:'+expire_time);
     if(token){
       jwtAuthService.setSession(token);
     }
     var isExpired = false;
-    if(dateObj!=null){
+    if(dateObj){
       if(dateObj<Date.now()){
         isExpired=true;
       }
-    }
-    if(user!=null && (isExpired==false)){      
+    }else history.push(ConstantList.LOGIN_PAGE);
+    if(user!=null && (isExpired===false)){      
       this.props.setUserData(user);
     }else {
-      history.push(ConstantList.LOGIN_PAGE)
+      localStorageService.removeItem("token_expire_time");
+      history.push(ConstantList.LOGIN_PAGE);
+      alert("Phiên đăng nhập hết hạn");
     }
-    
-    //this.checkJwtAuth();
-    // this.checkFirebaseAuth();
+
   }
 
   checkJwtAuth = () => {
