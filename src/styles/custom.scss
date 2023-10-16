@@ -1,0 +1,147 @@
+.MuiTableRow-root .MuiTableCell-head {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.MuiTableCell-root {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.MuiTableRow-root .MuiTableCell-paddingNone {
+  padding: 0px;
+}
+
+.MuiIconButton-root {
+  cursor: pointer;
+}
+.MuiTableCell-body {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.asset_department {
+  background-color: #fff;
+  padding: 8px;
+  height: auto;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.none_wrap {
+  white-space: nowrap !important;
+}
+
+.validator-form-scroll-dialog {
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.logo-login {
+  max-width: 400px !important;
+}
+.logo-login img {
+  width: 100% !important;
+}
+
+// .logo-menu{
+//     max-width: 100px !important;
+// }
+// .logo-menu img{
+//     width: 100% !important;
+// }
+.inputLabel {
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  // font-weight: bold;
+  color: #0d4b8c;
+  padding: 0 2px;
+  background: #ffffff;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.headerStyle {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.MuiIconButton-label{
+    color:#FF9E43;
+    font-size: 12px;
+}
+.MuiTablePagination-selectRoot{
+  margin-right: 32px;
+  @include media(375px) {
+    margin-right: 8px!important;
+  }
+}
+.MuiTablePagination-selectRoot{
+  margin-left: 32px;
+  @include media(375px) {
+    margin-left: 8px!important;
+  }
+}
+.MuiToolbar-gutters{
+  padding-left: 16px;
+  @include media(375px) {
+    padding-left: 0!important;
+  }
+}
+.MuiIconButton-root{
+  padding: 12px;
+  @include media(375px) {
+    padding: 4px!important;
+  }
+}
+.MuiTablePagination-actions{
+  margin-left: 20px;
+  @include media(375px) {
+    margin-left: 4px!important;
+  }
+}
+.sm-hide{
+  @include media(375px) {
+    display: none!important;;
+  }
+}
+.draggableDialogTitle {
+  cursor: move;
+  padding: 12px 24px 12px 24px;
+}
+.buttonClose{
+  position: absolute!important;
+  right: 4px;
+  top: 4px;
+}
+.validatorForm{
+  overflow-Y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.staff-avatar{
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  border:1px solid rgba(0,0,0,0.1);
+  margin: 16px!important;
+}
+.staff-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hidden{
+  display: none;
+}
+.MuiTab-wrapper{
+  font-size: 1rem;
+}
