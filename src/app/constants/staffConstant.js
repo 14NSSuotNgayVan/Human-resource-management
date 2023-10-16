@@ -35,8 +35,10 @@ export const SUBMIT_PROFILE_STATUS = [
 export const TEAM = [
     { id: 0, name: 'BA' },
     { id: 1, name: 'BackEnd' },
-    { id: 2, name: 'FrontEnd' },
+    { id: 2, name: 'FrontEnd - ReactJs' },
     { id: 3, name: 'Tester' },
+    { id: 4, name: 'FrontEnd - ASP.NET' },
+    { id: 5, name: 'Mobile - ReactNative' },
 ];
 
 export const STAFF_STATUS = {

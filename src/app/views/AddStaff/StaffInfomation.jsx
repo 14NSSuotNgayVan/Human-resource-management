@@ -64,7 +64,7 @@ const StaffInformation = (props) => {
   };
   const handleSubmit = () => {
     const lodash = require("lodash");
-    if (lodash.isEqual(staff, props?.item)) {
+    if (lodash.isEqual(staff, props?.item) && props?.item?.image === staffImageUrl) {
       handleCloseDialog();
     } else {
       if (staff?.id) dispatch(updateStaffAction(staff, file));
