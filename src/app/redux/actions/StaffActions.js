@@ -27,11 +27,19 @@ export const addStaffAction = (staff, file) => {
     payload: { staff: staff },
   }
 };
-export const updateStaffAction = (staff) => {
-  return {
-    type: PUT_STAFF_TO_LIST,
-    payload: staff,
-  };
+export const updateStaffAction = (staff, file) => {
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return {
+      type: PUT_STAFF_TO_LIST,
+      payload: { staff: staff, file: formData }
+    };
+  } else
+    return {
+      type: PUT_STAFF_TO_LIST,
+      payload: { staff: staff },
+    };
 };
 export const deleteStaffAction = (staffId) => {
   return {
