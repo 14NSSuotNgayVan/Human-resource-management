@@ -1,15 +1,16 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import StaffInformation from "./StaffInfomation";
 import Certificates from "./Certificate";
 import Family from "./Family";
 import { ADD_STAFF_TABS } from "app/constants/staffConstant";
 import { useDispatch, useSelector } from "react-redux";
-import { addStaffAction, setStaffImage } from "app/redux/actions/StaffActions";
+import { setStaffImage } from "app/redux/actions/StaffActions";
 import { toast } from "react-toastify";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import { getAllCertificates } from "app/redux/actions/CertificateActions";
 import { getShouldUpdateCertificate } from "app/redux/selectors/CertificateSelector";
+import { getShouldUpdateFamily } from "app/redux/selectors/FamilySelector";
+import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
 const {
   Dialog,
   Paper,
@@ -36,20 +37,29 @@ const AddStaffDialog = (props) => {
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
   const [informationSaved, setInformationSaved] = useState(false);
   const shouldUpdateCertificate = useSelector(getShouldUpdateCertificate);
+  const shouldUpdateFamily = useSelector(getShouldUpdateFamily);
   const informationFormRef = useRef(null);
   const handleSubmit = () => {
-    informationFormRef.current.submit();
+    if(tab === ADD_STAFF_TABS.INFORMATION.value){
+      informationFormRef.current.submit();
+    }else{
+      handleClose();
+    }
     
   };
   useEffect(()=>{
     if(staff?.id){
       if(shouldUpdateCertificate) dispatch(getAllCertificates(staff?.id));
+      if(shouldUpdateFamily)  dispatch(getAllFamilyMembers(staff?.id));
     }
-  },[shouldUpdateCertificate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[shouldUpdateCertificate,shouldUpdateFamily]);
   useEffect(()=>{
     if(staff?.id){
       dispatch(getAllCertificates(staff?.id));
+      dispatch(getAllFamilyMembers(staff?.id));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   useEffect(() => {
@@ -95,13 +105,13 @@ const AddStaffDialog = (props) => {
           <Tab label={t(`staff.${ADD_STAFF_TABS.RELATIONSHIP.name}`)} value={ADD_STAFF_TABS.RELATIONSHIP.value} />
         </Tabs>
         {tab === ADD_STAFF_TABS.INFORMATION.value && (
-          <StaffInformation item={staff} t={t} formRef={informationFormRef} />
+          <StaffInformation item={staff} t={t} formRef={informationFormRef} handleCloseDialog ={handleClose}/>
         )}
         {tab === ADD_STAFF_TABS.CERTIFICATES.value && <Certificates staffId={staff?.id} t={t} />}
         {tab === ADD_STAFF_TABS.RELATIONSHIP.value && <Family staffId={staff?.id} t={t} />}
       </DialogContent>
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        <Button variant="contained" color="secondary" onClick={() => props.handleClose()}>
+        <Button variant="contained" color="secondary" onClick={handleClose}>
           {t("general.cancel")}
         </Button>
         <Button variant="contained" color="primary" onClick={handleSubmit}>

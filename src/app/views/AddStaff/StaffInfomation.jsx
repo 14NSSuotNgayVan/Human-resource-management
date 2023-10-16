@@ -1,5 +1,5 @@
 import { PhotoCamera } from "@material-ui/icons";
-import { GENDER, TEAM } from "app/constants/staffConstant";
+import { GENDER, NAME_REGEX, TEAM } from "app/constants/staffConstant";
 import { addStaffAction, setStaffImage, updateStaffAction } from "app/redux/actions/StaffActions";
 import { fileSelector, imageSelector } from "app/redux/selectors/StaffSelector";
 import moment from "moment";
@@ -14,8 +14,7 @@ toast.configure({
   limit: 3,
 });
 const StaffInformation = (props) => {
-  console.log("rerender -staffInfo");
-  const { t, formRef } = props;
+  const { t, formRef, handleCloseDialog } = props;
   const [staff, setStaff] = useState(props?.item);
   const staffImageUrl = useSelector(imageSelector);
   const file = useSelector(fileSelector);
@@ -24,15 +23,14 @@ const StaffInformation = (props) => {
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
         return false;
-      } 
+      }
     }
     return true;
   };
   const isImage = (file) => {
-    if(file){
-      console.log(file)
+    if (file) {
       const imageTypes = ["image/jpeg", "image/png", "image/gif"];
-      console.log(imageTypes.indexOf(file.type))
+      console.log(imageTypes.indexOf(file.type));
       if (imageTypes.indexOf(file.type) === -1) {
         return false;
       }
@@ -65,10 +63,13 @@ const StaffInformation = (props) => {
     }
   };
   const handleSubmit = () => {
-    if(staff?.id)
-      dispatch(updateStaffAction(staff, file));
-    else
-      dispatch(addStaffAction(staff, file));
+    const lodash = require("lodash");
+    if (lodash.isEqual(staff, props?.item)) {
+      handleCloseDialog();
+    } else {
+      if (staff?.id) dispatch(updateStaffAction(staff, file));
+      else dispatch(addStaffAction(staff, file));
+    }
   };
   useEffect(() => {
     ValidatorForm.addValidationRule("isValidCitizenIdentificationNumber", (value) => {
@@ -81,17 +82,17 @@ const StaffInformation = (props) => {
 
       return age >= 18;
     });
-    ValidatorForm.addValidationRule("isValidDateOfIssuanceCard", (value) => {
+    ValidatorForm.addValidationRule("isPreviousToday", (value) => {
       const date = new Date(value);
       const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1)
+      currentDate.setDate(currentDate.getDate() - 1);
       return date < currentDate;
     });
-    return ()=>{
+    return () => {
       ValidatorForm.removeValidationRule("isValidCitizenIdentificationNumber");
       ValidatorForm.removeValidationRule("isValidBirthday");
-      ValidatorForm.removeValidationRule("isValidDateOfIssuanceCard");
-    }
+      ValidatorForm.removeValidationRule("isPreviousToday");
+    };
   }, []);
   return (
     <ValidatorForm onSubmit={handleSubmit} ref={formRef} className="p-12">
@@ -139,8 +140,8 @@ const StaffInformation = (props) => {
               name="name"
               value={staff?.name || ""}
               onChange={(e) => onChange(e, "name")}
-              validators={["required"]}
-              errorMessages={[t("staff.notify.errorMessages_required")]}
+              validators={["required", `matchRegexp:${NAME_REGEX}`]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
               variant="outlined"
               size="small"
             />
@@ -207,7 +208,7 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "dateOfBirth")}
               type="date"
               name="dateOfBirth"
-              value={staff ? moment(staff?.dateOfBirth).format("YYYY-MM-DD") : ""}
+              value={staff?.dateOfBirth ? moment(staff?.dateOfBirth).format("YYYY-MM-DD") : ""}
               validators={["required", "isValidBirthday"]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidBirthday")]}
               variant="outlined"
@@ -298,9 +299,9 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "dateOfIssuanceCard")}
               type="date"
               name="dateOfIssuanceCard"
-              value={staff ? moment(staff?.dateOfIssuanceCard).format("YYYY-MM-DD") : ""}
-              validators={["required","isValidDateOfIssuanceCard"]}
-              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidDateOfIssuanceCard")]}
+              value={staff?.dateOfIssuanceCard ? moment(staff?.dateOfIssuanceCard).format("YYYY-MM-DD") : ""}
+              validators={["required", "isPreviousToday"]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidDateOfIssuanceCard")]}
               variant="outlined"
               size="small"
             />

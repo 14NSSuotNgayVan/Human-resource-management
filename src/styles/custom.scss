@@ -127,8 +127,8 @@
   flex-direction: column;
 }
 .staff-avatar{
-  width: 200px;
-  height: 200px;
+  width: calc((20vh + 20vw)/2);
+  height: calc((20vh + 20vw)/2);
   overflow: hidden;
   border-radius: 50%;
   border:1px solid rgba(0,0,0,0.1);
