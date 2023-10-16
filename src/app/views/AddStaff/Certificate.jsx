@@ -52,19 +52,22 @@ const Certificates = (props) => {
   };
   useEffect(() => {
     updatePageData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagePagination]);
   useEffect(() => {
     ValidatorForm.addValidationRule("isValidIssueDate", (value) => {
       const date = new Date(value);
       const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1)
+      currentDate.setDate(currentDate.getDate() - 1);
       return date < currentDate;
     });
-    return ()=>{
+    return () => {
       ValidatorForm.removeValidationRule("isValidIssueDate");
-    }
+    };
   }, []);
+  useEffect(() => {
+    form.current.resetValidations();
+  }, [isEditing]);
   const handleSubmit = () => {
     if (certificate?.id) {
       dispatch(updateCertificate(certificate));
@@ -75,19 +78,19 @@ const Certificates = (props) => {
     setCertificate(null);
     setShowConfirmationDialog(false);
     setIsEditing(false);
-    form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setCertificate({ ...certificate, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
+    setIsEditing(false);
     setShowConfirmationDialog(true);
-    setCertificate({id: id });
+    setCertificate({ id: id });
   };
-  const handleConfirmDelete=()=>{
+  const handleConfirmDelete = () => {
     dispatch(deleteCertificate(certificate.id));
     setShowConfirmationDialog(false);
-  }
+  };
   const handleUpdate = (item) => {
     setIsEditing(true);
     setCertificate({ ...item });
@@ -98,7 +101,9 @@ const Certificates = (props) => {
       field: "custom",
       align: "center",
       minWidth: "80px",
-      render: (rowData) => <Action item={rowData} handleShowDeleteConfirm={handleShowDeleteConfirm} handleUpdate={handleUpdate} />,
+      render: (rowData) => (
+        <Action item={rowData} handleShowDeleteConfirm={handleShowDeleteConfirm} handleUpdate={handleUpdate} />
+      ),
     },
     {
       title: t("staff.certificate.certificateName"),
@@ -162,8 +167,8 @@ const Certificates = (props) => {
                 type="date"
                 name="issueDate"
                 value={certificate?.issueDate ? moment(certificate?.issueDate).format("YYYY-MM-DD") : ""}
-                validators={["required","isValidIssueDate"]}
-                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidDateOfIssuanceCard")]}
+                validators={["required", "isValidIssueDate"]}
+                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidDateOfIssuanceCard")]}
                 variant="outlined"
                 size="small"
               />

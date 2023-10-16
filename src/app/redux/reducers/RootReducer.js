@@ -6,6 +6,7 @@ import ScrumBoardReducer from "./ScrumBoardReducer";
 import NotificationReducer from "./NotificationReducer";
 import StaffReducer  from "./StaffReducer";
 import CertificateReducer from "./CertificateReducer";
+import FamilyReducer from "./FamilyReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -14,7 +15,8 @@ const RootReducer = combineReducers({
   scrumboard: ScrumBoardReducer,
   notification: NotificationReducer,
   staff:StaffReducer,
-  certificate: CertificateReducer
+  certificate: CertificateReducer,
+  family: FamilyReducer
 });
 
 export default RootReducer;

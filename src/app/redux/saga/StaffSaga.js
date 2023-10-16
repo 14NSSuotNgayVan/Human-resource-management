@@ -101,7 +101,7 @@ function* updateStaff(action) {
       } else {
         toast.error("Thêm ảnh không thành công");
       }
-    }
+    }else image = action?.payload?.staff?.image;
     //update staff with image
     const { data } = yield call(
       axios.put,
