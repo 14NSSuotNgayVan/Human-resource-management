@@ -2,6 +2,7 @@
   "Dashboard": {
     "dashboard": "Trang chủ",
     "addStaff": "Thêm mới nhân viên",
+    "LeadershipApproval":"Lãnh đạo chờ duyệt",
     "profile": "Thông tin tài khoản",
     "logout": "Đăng xuất"
   },
@@ -22,6 +23,9 @@
     "exportToExcel": "Xuất Excel",
     "importExcel": "Nhập Excel",
     "select": "Chọn",
+    "additionalRequest": "Yêu cầu bổ xung",
+    "reject":"Từ chối",
+    "approve":"Duyệt",
     "select_asset": "Chọn tài sản",
     "saveUpdate": "Thêm mới/Cập nhật",
     "update": "Cập nhật",

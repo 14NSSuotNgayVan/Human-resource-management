@@ -5,6 +5,12 @@ export const navigations = [
     isVisible: true,
     path: ConstantList.ROOT_PATH + "staff_manager/AddStaff",
     icon: "person"
+  },
+  {
+    name: "Dashboard.LeadershipApproval",
+    isVisible: true,
+    path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproval",
+    icon: "receipt"
   }
 
 ];
