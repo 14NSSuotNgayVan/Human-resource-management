@@ -12,6 +12,7 @@ import {
   updateCertificate,
 } from "app/redux/actions/CertificateActions";
 import { ConfirmationDialog } from "egret";
+import { NAME_REGEX } from "app/constants/staffConstant";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm } = props;
@@ -108,7 +109,7 @@ const Certificates = (props) => {
     {
       title: t("staff.certificate.certificateName"),
       field: "certificateName",
-      align: "center",
+      align: "left",
       minWidth: "150px",
     },
     {
@@ -118,15 +119,15 @@ const Certificates = (props) => {
       minWidth: "120px",
       render: (props) => <span>{moment(new Date(props?.issueDate)).format("DD/MM/YYYY")}</span>,
     },
-    { title: t("staff.certificate.content"), field: "content", align: "center", minWidth: "170px" },
-
     {
       title: t("staff.certificate.field"),
       field: "field",
       align: "left",
       minWidth: "150px",
-      maxWidth: "150px",
+      maxWidth: "250px",
     },
+    { title: t("staff.certificate.content"), field: "content", align: "left", minWidth: "170px" },
+
   ];
   return (
     <Grid container>
@@ -146,9 +147,9 @@ const Certificates = (props) => {
                 type="text"
                 name="certificateName"
                 value={certificate?.certificateName || ""}
-                validators={["required"]}
                 onChange={(e) => onChange(e, "certificateName")}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
+                validators={["required",`matchRegexp:${NAME_REGEX}`]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidName")]}
                 variant="outlined"
                 size="small"
               />
@@ -187,8 +188,8 @@ const Certificates = (props) => {
                 name="field"
                 onChange={(e) => onChange(e, "field")}
                 value={certificate?.field || ""}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
+                validators={["required",`matchRegexp:${NAME_REGEX}`]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidField")]}
                 variant="outlined"
                 size="small"
               />
@@ -207,8 +208,8 @@ const Certificates = (props) => {
                 name="content"
                 onChange={(e) => onChange(e, "content")}
                 value={certificate?.content || ""}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
+                validators={["required","maxStringLength:1000"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidStringContent")]}
                 variant="outlined"
                 size="small"
               />

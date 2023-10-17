@@ -114,7 +114,7 @@ function Staff(props) {
       align: "center",
       minWidth: "150px",
     },
-    { title: t("staff.name"), field: "name", align: "center", minWidth: "170px" },
+    { title: t("staff.name"), field: "name", align: "left", minWidth: "170px" },
     {
       title: t("staff.dateOfBirth"),
       field: "dateOfBirth",
@@ -132,7 +132,7 @@ function Staff(props) {
     {
       title: t("staff.team"),
       field: "team",
-      align: "center",
+      align: "left",
       minWidth: "100px",
       render: (props) => <span>{TEAM[props.team]?.name}</span>,
     },
@@ -153,7 +153,7 @@ function Staff(props) {
     {
       title: t("staff.submit_profile_status_display"),
       field: "submitProfileStatus",
-      align: "center",
+      align: "left",
       minWidth: "150px",
       render: (props) => (
         <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.submitProfileStatus]}`)}</span>
