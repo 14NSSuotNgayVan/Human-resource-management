@@ -22,6 +22,30 @@
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
+.rejected{
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  color: rgb(255, 61, 87);
+  background-color: rgba(255, 61, 87, 0.1);
+}
+.new{
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  color: rgb(61, 255, 109);
+  background-color: rgba(61, 255, 109, 0.1);
+}
+.addition{
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  color: rgb(255, 158, 67);
+  background-color: rgba(255, 158, 67, 0.1);
+}
+.delivered{
+  border-radius: 8px;
+  padding: 0.3rem 0.5rem;
+  color: rgb(116, 103, 239);
+  background-color: rgba(116, 103, 239, 0.1);
+}
 .asset_department {
   background-color: #fff;
   padding: 8px;
