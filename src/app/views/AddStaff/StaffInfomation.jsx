@@ -339,8 +339,8 @@ const StaffInformation = (props) => {
               name="ethnic"
               value={staff?.ethnic || ""}
               onChange={(e) => onChange(e, "ethnic")}
-              validators={["required"]}
-              errorMessages={[t("staff.notify.errorMessages_required")]}
+              validators={["required",`matchRegexp:${NAME_REGEX}`]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidEthnic")]}
               variant="outlined"
               size="small"
             />
@@ -358,8 +358,9 @@ const StaffInformation = (props) => {
               name="religion"
               value={staff?.religion || ""}
               onChange={(e) => onChange(e, "religion")}
-              validators={["required"]}
-              errorMessages={[t("staff.notify.errorMessages_required")]}
+              validators={["required",`matchRegexp:${NAME_REGEX}`]}
+              errorMessages={[t("staff.notify.errorMessages_required"),
+              t("staff.notify.invalidReligion"),]}
               variant="outlined"
               size="small"
             />

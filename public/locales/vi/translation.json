@@ -197,6 +197,9 @@
       "deleted_unused": "Đã xoá nhân viên chưa sử dụng",
       "dupli_code": "Mã đã được sử dụng",
       "invalidName":"Tên không hợp lệ",
+      "invalidReligion":"Tên tôn giáo không được chứa số hoặc kí tự đặc biệt",
+      "invalidEthnic":"Tên dân tộc không được chứa số hoặc kí tự đặc biệt",
+      "invalidField":"Tên lĩnh vực không được chứa số hoặc kí tự đặc biệt",
       "isNotImage": "Chỉ chấp nhận ảnh",
       "inSingleFile": "Chỉ chọn 1 ảnh",
       "inValidFileSize": "Kích thước ảnh không vượt quá 10MB",
@@ -214,7 +217,8 @@
       "minLength_required": "Chưa đủ độ dài tối thiểu",
       "maxLength_required": "Độ dài tối đa là 10",
       "maxAgeValue_required": "Tuổi không phù hợp",
-      "minAgeValue_required": "Tuổi phải lớn hơn 18"
+      "minAgeValue_required": "Tuổi phải lớn hơn 18",
+      "invalidStringContent":"Vượt quá độ dài cho phép(1000 kí tự)"
     }
   }
 }

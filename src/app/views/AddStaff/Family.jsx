@@ -106,7 +106,7 @@ const Family = (props) => {
         <Action item={rowData} handleUpdate={handleUpdate} handleShowDeleteConfirm={handleShowDeleteConfirm} />
       ),
     },
-    { title: t("staff.family.name"), field: "name", align: "center", minWidth: "170px" },
+    { title: t("staff.family.name"), field: "name", align: "left", minWidth: "170px" },
     {
       title: t("staff.family.dateOfBirth"),
       field: "dateOfBirth",
@@ -117,7 +117,7 @@ const Family = (props) => {
     {
       title: t("staff.family.relationShip"),
       field: "relationShip",
-      align: "center",
+      align: "left",
       minWidth: "150px",
       render: (props) => <span>{RELATIONSHIP.find((item) => item.id === props.relationShip).name}</span>,
     },
