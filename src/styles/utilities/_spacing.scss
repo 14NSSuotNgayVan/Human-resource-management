@@ -13,7 +13,8 @@ $spaces: (
   36: 36px,
   40: 40px,
   44: 44px,
-  48: 48px
+  48: 48px,
+  72: 72px,
 );
 
 @each $name, $value in $spaces {

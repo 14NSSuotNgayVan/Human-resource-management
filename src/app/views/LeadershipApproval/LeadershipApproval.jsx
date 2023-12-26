@@ -13,6 +13,7 @@ import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "
 import moment from "moment";
 import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
+import LeadershipApprovalDialog from "./LeadershipApprovalDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -26,13 +27,11 @@ function LeadershipApproval(props) {
   const totalElements = useSelector(totalElementsSelector);
   const shouldUpdate = useSelector(shouldUpdateSelector);
   const { t } = props;
-  const [id, setId] = useState("");
   const [pagePagination, setPagePagination] = useState({
     page: 0,
     rowsPerPage: 10,
   });
   const [showEditorDialog, setShowEditorDialog] = useState(false);
-  const [shouldOpenConfirmationDialog, setShouldOpenConfirmationDialog] = useState(false);
   const [keyword, setKeyword] = useState("");
   const updatePageData = async () => {
     var searchObject = {};
@@ -52,36 +51,20 @@ function LeadershipApproval(props) {
     if (shouldUpdate) updatePageData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldUpdate]);
-
-  const handleDelete = (id) => {
-    setId(id);
-    setShouldOpenConfirmationDialog(true);
-  };
-
-  const handleDialogClose = useCallback(() => {
-    setShowEditorDialog(false);
-    setShouldOpenConfirmationDialog(false);
-  },[]);
-
-  const handleConfirmationResponse = async () => {
-    if (staffList?.length === 1 && setPagePagination.page === 1) {
-      setPagePagination({ ...pagePagination, page: 0 });
-    }
-    dispatch(deleteStaffAction(id));
-    handleDialogClose();
-  };
-
-  const handleAddItem = (item) => {
-    dispatch(setItem(item));
-    setShowEditorDialog(true);
-  };
-
+const handleShowDialog = (item)=>{
+  dispatch(setItem(item));
+  setShowEditorDialog(true);
+}
+const handleCloseDialog=()=>{
+  dispatch(setItem({}));
+  setShowEditorDialog(false);
+}
   const Action = (props) => {
-    const item = props.item;
+    const {item,handleShowDialog} = props;
     return (
       <div className="none_wrap">
         {STAFF_STATUS.VIEW.includes(item.submitProfileStatus)&&
-        <IconButton size="small" onClick={() => {}}>
+        <IconButton size="small" onClick={() => handleShowDialog(item)}>
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>}
       </div>
@@ -93,7 +76,7 @@ function LeadershipApproval(props) {
       field: "custom",
       align: "center",
       minWidth: "80px",
-      render: (rowData) => <Action item={rowData} />,
+      render: (rowData) => <Action item={rowData} handleShowDialog ={handleShowDialog} />,
     },
     {
       title: t("staff.code"),
@@ -167,14 +150,9 @@ function LeadershipApproval(props) {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <div>
-            {/* {showEditorDialog && (
-            <AddStaffDialog
-            handleClose ={handleDialogClose}
-            t ={t}
-            />
-            )} */}
-          </div>
+          {showEditorDialog&&(
+            <LeadershipApprovalDialog t ={t} handleCloseDialog ={handleCloseDialog}/>
+          )}
           <CustomTable
             data={staffList}
             columns={columns}

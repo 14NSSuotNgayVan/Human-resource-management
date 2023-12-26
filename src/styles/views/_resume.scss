@@ -1,0 +1,125 @@
+.resume-wrapper{
+    font-family: Times New Roman,sans-serif;
+    width: 1009px;
+    padding: 38px 60px;
+    margin: auto ;
+    background-color: #fff;
+}
+.resume-image{
+    width: 140px;
+    height: 210px;
+}
+.resume-image img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.resume-sub-heading{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+.heading-underline{
+    text-decoration: underline;
+    text-underline-position: under;
+    text-transform:none;
+    padding-bottom: 4px;
+    margin-bottom: 32px;
+}
+.resume-heading{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.resume-body{
+    margin-top: 32px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+.information-heading, .reassurance-heading,.family-heading{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 12px auto;
+}
+.information-details{
+    margin-left: 18px;
+    display: flex;
+    flex-direction: column;
+}
+.detail-tittle{
+}
+.detail-content{
+    display: inline-block;
+    padding-left: 12px;
+    flex-grow: 1;
+}
+.underline-dashed{
+    position: relative;
+}
+.underline-dashed::after{
+    content: "";
+    position: absolute;
+    bottom: 0.4em;
+    left: 0;
+    right: 0;
+    border-bottom: 1px dashed;
+}
+.relative{
+    position: relative;
+}
+.table-head{
+    font-weight: 400;
+}
+.table-head,.table-cell{
+    font-family: Times New Roman,sans-serif!important;
+    font-size: 1.1rem;
+    border-bottom: #000000;
+}
+.reassurance-heading{
+    margin: 24px 0  24px 0;
+}
+.resume-reassurance p {
+    margin-left: 18px;
+    font-size: 1.1rem;
+
+}
+.resume-footer{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.2rem;
+}
+.footer-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 40%;
+}
+.resume-date{
+    display: flex;
+    width: 100%;
+    font-style: italic;
+}
+.reassurance-day,.reassurance-month,.reassurance-year{
+    flex-grow: 1;
+    display: flex;
+}
+.date-content{
+    flex-grow: 1;
+}
+.footer-label{
+    margin: 12px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.footer-sub-label{
+    font-style: italic;
+    font-size: 0.9rem;
+}
+.footer-signature{
+    margin-top: 32px;
+}

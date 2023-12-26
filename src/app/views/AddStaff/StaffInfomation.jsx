@@ -95,13 +95,13 @@ const StaffInformation = (props) => {
     };
   }, []);
   return (
-    <ValidatorForm onSubmit={handleSubmit} ref={formRef} className="p-12">
+    <ValidatorForm onSubmit={handleSubmit} ref={formRef} className="p-8">
       <Grid container spacing={1}>
         <Grid
           container
           alignItems="center"
           direction="column"
-          className="flex-center p-12"
+          className="flex-center p-8"
           xs={12}
           sm={12}
           md={4}
@@ -126,7 +126,7 @@ const StaffInformation = (props) => {
             </label>
           </Grid>
         </Grid>
-        <Grid container spacing={1} xs={12} sm={12} md={8} lg={8} className="p-12">
+        <Grid container spacing={1} xs={12} sm={12} md={8} lg={8} className="p-8">
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <TextValidator
               className={"w-100 mb-16"}

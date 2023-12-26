@@ -95,7 +95,7 @@
 }
 
 .headerStyle {
-  font-family: Arial, Helvetica, sans-serif !important;
+  font-family: "Roboto", Arial, Helvetica, sans-serif !important;
 }
 .MuiIconButton-label{
     color:#FF9E43;
@@ -130,6 +130,9 @@
   @include media(375px) {
     margin-left: 4px!important;
   }
+}
+.MuiTab-wrapper{
+  font-size :inherit!important;
 }
 .sm-hide{
   @include media(375px) {
@@ -168,4 +171,12 @@
 }
 .MuiTab-wrapper{
   font-size: 1rem;
+}
+.tabs-content{
+  background-color: #ccc;
+  height: 500px;
+  overflow-y: auto;
+}
+.MuiDialog-paper{
+  overflow-y: scroll!important;
 }

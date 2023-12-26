@@ -19,6 +19,20 @@ export const ADD_STAFF_TABS = {
         name : "family_relationship"
     }
 }
+export const LEADERSHIP_APPROVAL_TABS = {
+    DOCUMENTS:{
+        value:1,
+        name:"documents"
+    },
+    RESUME:{
+        value :2,
+        name :"resume"
+    },
+    CERTIFICATES:{
+        value :3,
+        name : "certificates"
+    },
+};
 export const SUBMIT_PROFILE_STATUS = [
     "savedProfile", //value 0
     "addNew", //value 1

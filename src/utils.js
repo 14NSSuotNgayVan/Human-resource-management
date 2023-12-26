@@ -16,12 +16,17 @@ export function debounce(func, wait, immediate) {
 
 export function isMobile() {
   if (window) {
-    return window.matchMedia(`(max-width: 767px)`).matches;
+    return window.matchMedia(`(max-width: 768px)`).matches;
   }
   return false;
 }
-
 export function isMdScreen() {
+  if (window) {
+    return window.matchMedia(`(max-width: 991px)`).matches;
+  }
+  return false;
+}
+export function isLgScreen() {
   if (window) {
     return window.matchMedia(`(max-width: 1199px)`).matches;
   }
