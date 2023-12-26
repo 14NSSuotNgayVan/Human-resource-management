@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -13,18 +13,27 @@ import {
   Tabs,
 } from "@material-ui/core";
 import Draggable from "react-draggable";
-import { LEADERSHIP_APPROVAL_TABS } from "app/constants/staffConstant";
+import { DOCUMENT_TABS } from "app/constants/staffConstant";
 import CustomCV from "app/component/CustomCV";
 import Resume from "app/component/CustomResume";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import CustomCertificate from "app/component/CustomCertificate";
 import { isMdScreen } from 'utils';
-const LeadershipApprovalDialog = (props) => {
+import { getAllCertificates } from "app/redux/actions/CertificateActions";
+import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
+const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog } = props;
   const staff = useSelector(staffSelector);
-
-  const [tab, setTab] = useState(LEADERSHIP_APPROVAL_TABS.DOCUMENTS.value);
+  const dispatch = useDispatch(); 
+  useEffect(()=>{
+    if(staff?.id){
+      dispatch(getAllCertificates(staff?.id));
+      dispatch(getAllFamilyMembers(staff?.id));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
+  const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   return (
     <Dialog
       open={true}
@@ -59,24 +68,24 @@ const LeadershipApprovalDialog = (props) => {
             className=""
           >
             <Tab
-              label={t(`staff.${LEADERSHIP_APPROVAL_TABS.DOCUMENTS.name}`)}
-              value={LEADERSHIP_APPROVAL_TABS.DOCUMENTS.value}
+              label={t(`staff.${DOCUMENT_TABS.DOCUMENTS.name}`)}
+              value={DOCUMENT_TABS.DOCUMENTS.value}
             />
             <Tab
-              label={t(`staff.${LEADERSHIP_APPROVAL_TABS.RESUME.name}`)}
-              value={LEADERSHIP_APPROVAL_TABS.RESUME.value}
+              label={t(`staff.${DOCUMENT_TABS.RESUME.name}`)}
+              value={DOCUMENT_TABS.RESUME.value}
             />
             <Tab
-              label={t(`staff.${LEADERSHIP_APPROVAL_TABS.CERTIFICATES.name}`)}
-              value={LEADERSHIP_APPROVAL_TABS.CERTIFICATES.value}
+              label={t(`staff.${DOCUMENT_TABS.CERTIFICATES.name}`)}
+              value={DOCUMENT_TABS.CERTIFICATES.value}
             />
           </Tabs>
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
           <DialogContent dividers spacing={1}>
-            {tab === LEADERSHIP_APPROVAL_TABS.DOCUMENTS.value && <CustomCV t={t} item={staff} />}
-            {tab === LEADERSHIP_APPROVAL_TABS.RESUME.value && <Resume t={t} item={staff} />}
-            {tab === LEADERSHIP_APPROVAL_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={staff} />}
+            {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} item={staff} />}
+            {tab === DOCUMENT_TABS.RESUME.value && <Resume t={t} item={staff} />}
+            {tab === DOCUMENT_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={staff} />}
           </DialogContent>
         </Grid>
       </Grid>
@@ -98,4 +107,4 @@ const LeadershipApprovalDialog = (props) => {
     </Dialog>
   );
 };
-export default LeadershipApprovalDialog;
+export default PendingApprovalDialog;

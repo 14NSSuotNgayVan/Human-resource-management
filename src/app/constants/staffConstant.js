@@ -19,7 +19,29 @@ export const ADD_STAFF_TABS = {
         name : "family_relationship"
     }
 }
-export const LEADERSHIP_APPROVAL_TABS = {
+export const LEADERSHIP_APPROVAL_TABS ={
+    PENDING:{
+        value :1,
+        name:"pending"
+    },
+    SALARY_INCREMENT:{
+        value:2,
+        name:"salary_increment"
+    },
+    PROMOTION:{
+        value:3,
+        name:"promotion"
+    },
+    PROPOSAL:{
+        value:4,
+        name:"proposal"
+    },
+    FINISH:{
+        value:5,
+        name:"finish"
+    }
+}
+export const DOCUMENT_TABS = {
     DOCUMENTS:{
         value:1,
         name:"documents"

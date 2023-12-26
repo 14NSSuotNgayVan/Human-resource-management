@@ -2,26 +2,27 @@ import { imageSelector } from 'app/redux/selectors/StaffSelector';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import '../../../src/styles/views/_cv.scss';
+import { GENDER, TEAM } from 'app/constants/staffConstant';
+import moment from 'moment';
 const CustomCV = (props) => {
-    const { t } = props;
+    const { t,item } = props;
     const staffImageUrl = useSelector(imageSelector);
-
     return (
         <>
             <div className="cv">
                 <div className='left-content'>
                     <div className="cv-profile">
                         <div className="profile-avatar">
-                            <img alt="avatar" src={staffImageUrl || "/assets/images/avatar.jpg"} />
+                            <img alt="avatar" src={item?.image || "/assets/images/avatar.jpg"} />
                         </div>
                         <p className="profile-email"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                         </svg>
-                            quynhmy92@gmail.com</p>
+                            {item?.email}</p>
                         <p className="profile-phone"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                         </svg>
-                            <span>0932445566</span></p>
+                            <span>{item?.phone}</span></p>
                     </div>
                     <div className="cv-skills">
                         <h4 className="skills-tittle">kỹ năng</h4>
@@ -99,21 +100,21 @@ const CustomCV = (props) => {
                 </div>
                 <div className='right-content'>
                     <div className="cv-tittle border-left">
-                        <h1 className="tittle-name">Nguyễn trúc quỳnh my</h1>
-                        <h4 className="job-tittle">nhân viên kinh doanh</h4>
+                        <h1 className="tittle-name">{item?.name}</h1>
+                        <h4 className="job-tittle">{TEAM[item?.team].name}</h4>
                     </div>
                     <div className="cv-details">
                         <div className="details-gender">
                             <img alt="icon" src="/assets/images/gender.png" />
-                            <span>Nữ</span>
+                            <span>{t(`staff.gender.${GENDER[item?.gender]?.name}`)}</span>
                         </div>
                         <div className="details-birthday">
                             <img alt="icon" src="/assets/images/cake.png" />
-                            <span>10/10/1992</span>
+                            <span>{moment(new Date(item?.dateOfBirth)).format("DD/MM/YYYY")}</span>
                         </div>
                         <div className="details-address">
                             <img alt="icon" src="/assets/images/location.png" />
-                            <span>23 Trần Cao Văn, Quận 1</span>
+                            <span>{item?.address}</span>
                         </div>
                     </div>
                     <div className="cv-goals border-left">
@@ -121,7 +122,7 @@ const CustomCV = (props) => {
                         <div className="goals-layer">
                             <span className="goals-quotes_left">&#699;&#699;</span>
                             <p className="goals-content">
-                                Áp dụng những king nghiệm về kỹ năng bán hàng và sự hiểu biết về thị trường để trở thành một nhân viên bán hàng chuyên nghiệp, mang đến nhiều giá trị cho khách hàng. Từ đó giúp Công ty tăng số lượng khách hàng và mở rộng tập khách hàng.
+                                Áp dụng những kinh nghiệm về kỹ năng bán hàng và sự hiểu biết về thị trường để trở thành một nhân viên bán hàng chuyên nghiệp, mang đến nhiều giá trị cho khách hàng. Từ đó giúp Công ty tăng số lượng khách hàng và mở rộng tập khách hàng.
                                 <span className="goals-quotes_right">&#700;&#700;</span>
                             </p>
 

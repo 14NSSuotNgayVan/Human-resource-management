@@ -78,6 +78,7 @@
     font-family: Times New Roman,sans-serif!important;
     font-size: 1.1rem;
     border-bottom: #000000;
+    padding:8px;
 }
 .reassurance-heading{
     margin: 24px 0  24px 0;
@@ -98,6 +99,9 @@
     align-items: center;
     text-align: center;
     width: 40%;
+}
+.reassurance-place{
+    text-transform: capitalize;
 }
 .resume-date{
     display: flex;

@@ -1,10 +1,13 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import { getCertificatesByEmployeeId } from "app/redux/selectors/CertificateSelector";
 import moment from "moment";
 
 import React from 'react';
+import { useSelector } from "react-redux";
 
 const CustomCertificate = (props) => {
     const { item, t } = props;
+    const certificate = useSelector(getCertificatesByEmployeeId);
     return (
         <>
             <div className="certificate-wrapper">
@@ -32,8 +35,8 @@ const CustomCertificate = (props) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {item.length > 0 ? (
-                                    item.map((certificate, index) => (
+                                {certificate.length > 0 ? (
+                                    certificate.map((certificate, index) => (
                                         <TableRow key={certificate.id}>
                                             <TableCell align="center" className="table-cell">
                                                 {index + 1}

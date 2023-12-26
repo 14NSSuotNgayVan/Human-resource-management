@@ -112,6 +112,13 @@
   "navigation": {
     "add_staff": "Thêm mới nhân viên"
   },
+  "leaderShipApproval":{
+    "pending":"Chờ duyệt",
+    "salary_increment":"Chờ duyệt tăng lương",
+    "promotion":"Chờ duyệt thăng chức",
+    "proposal":"Chờ duyệt đề xuất",
+    "finish":"Chờ duyệt kết thúc"
+  },
   "staff": {
     "title": "nhân viên",
     "name": "Tên nhân viên",

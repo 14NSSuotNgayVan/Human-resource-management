@@ -4,7 +4,7 @@ import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow 
 import { useSelector } from 'react-redux';
 import { imageSelector } from 'app/redux/selectors/StaffSelector';
 import moment from 'moment';
-import { RELATIONSHIP } from 'app/constants/staffConstant';
+import { GENDER, RELATIONSHIP } from 'app/constants/staffConstant';
 import MaterialTable from 'material-table';
 import { getAllFamilyMember } from 'app/redux/selectors/FamilySelector';
 
@@ -34,20 +34,20 @@ const Resume = (props) => {
                         <h4 className='information-heading'>I.Thông tin bản thân</h4>
                         <div className="information-details">
                             <Grid container spacing={2}>
-                                <Grid item md={8} lg={8} sm={8} className="flex"><span className="detail-tittle">1. Họ và tên nhân viên:</span><span className="detail-content underline-dashed"> Đàm Văn Anh</span></Grid>
-                                <Grid item md={4} lg={4} sm={4} className="flex"><span className="detail-tittle">2. Giới tính:</span><span className="detail-content underline-dashed"> Nam</span></Grid>
+                                <Grid item md={8} lg={8} sm={8} className="flex"><span className="detail-tittle">1. Họ và tên nhân viên:</span><span className="detail-content underline-dashed">{item?.name}</span></Grid>
+                                <Grid item md={4} lg={4} sm={4} className="flex"><span className="detail-tittle">2. Giới tính:</span><span className="detail-content underline-dashed">{GENDER[item?.gender]?.name}</span></Grid>
                             </Grid>
-                            <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">3. Ngày sinh:</span><span className="detail-content underline-dashed"> 03/11/2002</span></Grid></Grid>
-                            <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">4. Hộ khẩu thường trú:</span><span className="detail-content underline-dashed"> Hà Nội</span></Grid></Grid>
-                            <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">5. Điện thoại liên lạc: :</span><span className="detail-content underline-dashed"> 0868338306</span></Grid></Grid>
+                            <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">3. Ngày sinh:</span><span className="detail-content underline-dashed">{moment(new Date(item?.dateOfBirth)).format("DD/MM/YYYY")}</span></Grid></Grid>
+                            <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">4. Hộ khẩu thường trú:</span><span className="detail-content underline-dashed">{item?.address}</span></Grid></Grid>
+                            <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">5. Điện thoại liên lạc: :</span><span className="detail-content underline-dashed">{item?.phone}</span></Grid></Grid>
                             <Grid container spacing={2}>
-                                <Grid item md={6} lg={6} sm={6} className="flex"><span className="detail-tittle">6. Dân tộc:</span><span className="detail-content underline-dashed"> Kinh</span></Grid>
-                                <Grid item md={6} lg={6} sm={6} className="flex"><span className="detail-tittle">7. Tôn giáo:</span><span className="detail-content underline-dashed"> Không</span></Grid>
+                                <Grid item md={6} lg={6} sm={6} className="flex"><span className="detail-tittle">6. Dân tộc:</span><span className="detail-content underline-dashed">{item?.ethnic}</span></Grid>
+                                <Grid item md={6} lg={6} sm={6} className="flex"><span className="detail-tittle">7. Tôn giáo:</span><span className="detail-content underline-dashed">{item?.religion}</span></Grid>
                             </Grid>
                             <Grid container spacing={2}>
-                                <Grid item md={6} lg={6} sm={6} className="flex"><span className="detail-tittle">8. Căn cước công dân:</span><span className="detail-content underline-dashed"> 2012388234234</span></Grid>
-                                <Grid item md={3} lg={3} sm={3} className="flex"><span className="detail-tittle">9. Ngày cấp:</span><span className="detail-content underline-dashed">10/10/2022</span></Grid>
-                                <Grid item md={3} lg={3} sm={3} className="flex"><span className="detail-tittle">10. Nơi cấp :</span><span className="detail-content underline-dashed"> Hà nội</span></Grid>
+                                <Grid item md={6} lg={6} sm={6} className="flex"><span className="detail-tittle">8. Căn cước công dân:</span><span className="detail-content underline-dashed">{item?.citizenIdentificationNumber}</span></Grid>
+                                <Grid item md={3} lg={3} sm={3} className="flex"><span className="detail-tittle">9. Ngày cấp:</span><span className="detail-content underline-dashed">{moment(new Date(item?.dateOfIssuanceCard)).format("DD/MM/YYYY")}</span></Grid>
+                                <Grid item md={3} lg={3} sm={3} className="flex"><span className="detail-tittle">10. Nơi cấp :</span><span className="detail-content underline-dashed">{item?.placeOfIssueCard}</span></Grid>
                             </Grid>
 
                         </div>
@@ -135,15 +135,15 @@ const Resume = (props) => {
                 <div className="resume-footer">
                     <div className="footer-container">
                         <div className="resume-date">
-                            <span className="reassurance-place">Hà Nội</span>,
-                            <span className="reassurance-day"><span className="date-tittle">ngày</span><span className="date-content underline-dashed">12</span></span>
-                            <span className="reassurance-month"><span className="date-tittle">tháng</span><span className="date-content underline-dashed">12</span></span>
-                            <span className="reassurance-year"><span className="date-tittle">năm</span><span className="date-content underline-dashed">2022</span></span>
+                            <span className="reassurance-place">{item?.address}</span>,
+                            <span className="reassurance-day"><span className="date-tittle">ngày</span><span className="date-content underline-dashed">{moment(new Date(item?.submitDay)).format("DD/MM/YYYY").split("/")[0]}</span></span>
+                            <span className="reassurance-month"><span className="date-tittle">tháng</span><span className="date-content underline-dashed">{moment(new Date(item?.submitDay)).format("DD/MM/YYYY").split("/")[1]}</span></span>
+                            <span className="reassurance-year"><span className="date-tittle">năm</span><span className="date-content underline-dashed">{moment(new Date(item?.submitDay)).format("DD/MM/YYYY").split("/")[2]}</span></span>
 
                         </div>
                         <h4 className="footer-label">Người khai</h4>
                         <span className="footer-sub-label">(kí và ghi rõ họ tên)</span>
-                        <div className="footer-signature">aaaaa</div>
+                        <div className="footer-signature">{item?.name}</div>
                     </div>
                 </div>
 
