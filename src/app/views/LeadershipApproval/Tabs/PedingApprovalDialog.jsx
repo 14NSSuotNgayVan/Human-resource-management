@@ -22,8 +22,11 @@ import CustomCertificate from "app/component/CustomCertificate";
 import { isMdScreen } from 'utils';
 import { getAllCertificates } from "app/redux/actions/CertificateActions";
 import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
+import ApprovalDialog from "../ApprovalDialog";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog } = props;
+  const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
+  const [shouldOpenApprovalDialog,setShouldOpenApprovalDialog] = useState(false);
   const staff = useSelector(staffSelector);
   const dispatch = useDispatch(); 
   useEffect(()=>{
@@ -33,7 +36,12 @@ const PendingApprovalDialog = (props) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-  const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
+  const handleOpenApprovalConfirmDialog=()=>{
+    setShouldOpenApprovalDialog(true);
+  }
+  const handleCloseApprovalConfirmDialog=()=>{
+    setShouldOpenApprovalDialog(false);
+  }
   return (
     <Dialog
       open={true}
@@ -89,18 +97,18 @@ const PendingApprovalDialog = (props) => {
           </DialogContent>
         </Grid>
       </Grid>
-
+      {shouldOpenApprovalDialog && (<ApprovalDialog t={t} handleCloseDialog={handleCloseApprovalConfirmDialog} item ={staff}/>)}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        <Button variant="contained" color="primary" onClick={() => {}}>
+        <Button variant="contained" color="primary" onClick={() => {handleOpenApprovalConfirmDialog()}}>
           {t("general.approve")}
         </Button>
         <Button variant="contained" color="primary" onClick={() => {}}>
           {t("general.additionalRequest")}
         </Button>
-        <Button variant="contained" color="primary" onClick={() => {}}>
+        <Button variant="contained" color="secondary" onClick={() => {}}>
           {t("general.reject")}
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleCloseDialog}>
+        <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           {t("general.cancel")}
         </Button>
       </DialogActions>
