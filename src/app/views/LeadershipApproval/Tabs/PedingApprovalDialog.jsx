@@ -17,7 +17,7 @@ import { DOCUMENT_TABS } from "app/constants/staffConstant";
 import CustomCV from "app/component/CustomCV";
 import Resume from "app/component/CustomResume";
 import { useDispatch, useSelector } from "react-redux";
-import { staffSelector } from "app/redux/selectors/StaffSelector";
+import { shouldUpdateSelector, staffSelector } from "app/redux/selectors/StaffSelector";
 import CustomCertificate from "app/component/CustomCertificate";
 import { isMdScreen } from "utils";
 import { getAllCertificates } from "app/redux/actions/CertificateActions";
@@ -32,6 +32,7 @@ const PendingApprovalDialog = (props) => {
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
   const staff = useSelector(staffSelector);
+  const shouldUpdateStaff = useSelector(shouldUpdateSelector);
   const dispatch = useDispatch();
   useEffect(() => {
     if (staff?.id) {
@@ -40,7 +41,13 @@ const PendingApprovalDialog = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  useEffect(()=>{
+    if(shouldUpdateStaff) {
+    setShouldOpenRejectionDialog(false);
+    setShouldOpenAdditionalDialog(false);
+    setShouldOpenApprovalDialog(false);
+    }
+  },[shouldUpdateStaff])
   const handleOpenRejectionDialog = () => {
     setShouldOpenRejectionDialog(true);
   };
@@ -59,6 +66,7 @@ const PendingApprovalDialog = (props) => {
   const handleCloseApprovalConfirmDialog = useCallback(() => {
     setShouldOpenApprovalDialog(false);
   }, []);
+
   return (
     <Dialog
       open={true}

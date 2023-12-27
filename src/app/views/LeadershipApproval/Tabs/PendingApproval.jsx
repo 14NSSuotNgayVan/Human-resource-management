@@ -48,25 +48,30 @@ function PendingApproval(props) {
   }, [pagePagination.rowsPerPage, pagePagination.page, keyword]);
 
   useEffect(() => {
-    if (shouldUpdate) updatePageData();
+    if (shouldUpdate) {
+      updatePageData();
+      setShowEditorDialog(false);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldUpdate]);
-const handleShowDialog = (item)=>{
-  dispatch(setItem(item));
-  setShowEditorDialog(true);
-}
-const handleCloseDialog=()=>{
-  dispatch(setItem({}));
-  setShowEditorDialog(false);
-}
+  const handleShowDialog = (item) => {
+    dispatch(setItem(item));
+    setShowEditorDialog(true);
+  };
+  const handleCloseDialog = () => {
+    dispatch(setItem({}));
+    setShowEditorDialog(false);
+  };
   const Action = (props) => {
-    const {item,handleShowDialog} = props;
+    const { item, handleShowDialog } = props;
     return (
       <div className="none_wrap">
-        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus)&&
-        <IconButton size="small" onClick={() => handleShowDialog(item)}>
-          <VisibilityIcon fontSize="small"></VisibilityIcon>
-        </IconButton>}
+        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus) && (
+          <IconButton size="small" onClick={() => handleShowDialog(item)}>
+            <VisibilityIcon fontSize="small"></VisibilityIcon>
+          </IconButton>
+        )}
       </div>
     );
   };
@@ -76,7 +81,7 @@ const handleCloseDialog=()=>{
       field: "custom",
       align: "center",
       minWidth: "80px",
-      render: (rowData) => <Action item={rowData} handleShowDialog ={handleShowDialog} />,
+      render: (rowData) => <Action item={rowData} handleShowDialog={handleShowDialog} />,
     },
     {
       title: t("staff.code"),
@@ -119,43 +124,41 @@ const handleCloseDialog=()=>{
       field: "phone",
       align: "center",
       minWidth: "150px",
-    }
+    },
   ];
   return (
-      <Grid container spacing={2} justify="flex-end">
-        <Grid item md={4} sm={12} xs={12}>
-          <FormControl fullWidth style={{ marginTop: "6px" }}>
-            <Input
-              className="search_box w-100"
-              onChange={(event) => {
-                setKeyword(event.target.value);
-              }}
-              placeholder={t("general.enterSearch")}
-              id="search_box"
-              startAdornment={
-                <InputAdornment>
-                  <Link to="#">
-                    {" "}
-                    <SearchIcon style={{ position: "absolute", top: "0", right: "0" }} />
-                  </Link>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          {showEditorDialog&&(
-            <PendingApprovalDialog t ={t} handleCloseDialog ={handleCloseDialog}/>
-          )}
-          <CustomTable
-            data={staffList}
-            columns={columns}
-            totalElements={totalElements}
-            pagePagination={pagePagination}
-            setPagination={setPagePagination}
+    <Grid container spacing={2} justify="flex-end">
+      <Grid item md={4} sm={12} xs={12}>
+        <FormControl fullWidth style={{ marginTop: "6px" }}>
+          <Input
+            className="search_box w-100"
+            onChange={(event) => {
+              setKeyword(event.target.value);
+            }}
+            placeholder={t("general.enterSearch")}
+            id="search_box"
+            startAdornment={
+              <InputAdornment>
+                <Link to="#">
+                  {" "}
+                  <SearchIcon style={{ position: "absolute", top: "0", right: "0" }} />
+                </Link>
+              </InputAdornment>
+            }
           />
-        </Grid>
+        </FormControl>
       </Grid>
+      <Grid item xs={12}>
+        {showEditorDialog && <PendingApprovalDialog t={t} handleCloseDialog={handleCloseDialog} />}
+        <CustomTable
+          data={staffList}
+          columns={columns}
+          totalElements={totalElements}
+          pagePagination={pagePagination}
+          setPagination={setPagePagination}
+        />
+      </Grid>
+    </Grid>
   );
 }
 export default PendingApproval;

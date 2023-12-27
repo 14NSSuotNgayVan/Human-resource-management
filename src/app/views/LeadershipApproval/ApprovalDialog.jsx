@@ -62,9 +62,6 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
               variant="contained"
               color="primary"
               type="submit"
-              onClick={() => {
-                handleSubmit();
-              }}
             >
               {t("general.approve")}
             </Button>
