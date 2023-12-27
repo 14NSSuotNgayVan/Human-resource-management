@@ -26,7 +26,9 @@ export const searchByPage = async (searchObj) => {
 export const getStaffById = async id => {
     return await axios.get(ConstantList.API_ENDPOINT + `/api/employees/${id}`);
 };
-
+export const getStaffExperience = async id=>{
+    return await axios.get(ConstantList.API_ENDPOINT + `/experience?employeeId=${id}`);
+}
 // address
 
 

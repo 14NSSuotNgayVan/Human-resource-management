@@ -86,8 +86,6 @@ const AddStaffDialog = (props) => {
             close
           </Icon>
         </IconButton>
-      </DialogTitle>
-      <DialogContent dividers spacing={1}>
         <Tabs
           value={tab}
           onChange={(event, newValue) => {
@@ -99,11 +97,15 @@ const AddStaffDialog = (props) => {
           textColor="primary"
           variant="fullWidth"
           centered
+          className =""
         >
           <Tab label={t(`staff.${ADD_STAFF_TABS.INFORMATION.name}`)} value={ADD_STAFF_TABS.INFORMATION.value} />
           <Tab label={t(`staff.${ADD_STAFF_TABS.CERTIFICATES.name}`)} value={ADD_STAFF_TABS.CERTIFICATES.value} />
           <Tab label={t(`staff.${ADD_STAFF_TABS.RELATIONSHIP.name}`)} value={ADD_STAFF_TABS.RELATIONSHIP.value} />
         </Tabs>
+      </DialogTitle>
+
+      <DialogContent dividers spacing={1}>
         {tab === ADD_STAFF_TABS.INFORMATION.value && (
           <StaffInformation item={staff} t={t} formRef={informationFormRef} handleCloseDialog ={handleClose}/>
         )}

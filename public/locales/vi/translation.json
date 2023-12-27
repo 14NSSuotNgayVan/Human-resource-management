@@ -112,6 +112,13 @@
   "navigation": {
     "add_staff": "Thêm mới nhân viên"
   },
+  "leaderShipApproval":{
+    "pending":"Chờ duyệt",
+    "salary_increment":"Chờ duyệt tăng lương",
+    "promotion":"Chờ duyệt thăng chức",
+    "proposal":"Chờ duyệt đề xuất",
+    "finish":"Chờ duyệt kết thúc"
+  },
   "staff": {
     "title": "nhân viên",
     "name": "Tên nhân viên",
@@ -119,6 +126,8 @@
     "age": "Tuổi",
     "address": "Địa chỉ",
     "team": "Nhóm",
+    "documents": "Hồ sơ",
+    "resume":"Sơ yếu lí lịch",
     "citizenIdentificationNumber": "Số CMND/ CCCD",
     "dateOfIssuanceCard":"Ngày cấp",
     "placeOfIssueCard":"Nơi cấp",
@@ -188,7 +197,8 @@
     "action": {
       "addStaff": "Thêm mới nhân viên",
       "deleteStaff": "Xóa nhân viên",
-      "updateStaff": "Cập nhật thông tin nhân viên"
+      "updateStaff": "Cập nhật thông tin nhân viên",
+      "staffDocument":"Hồ sơ nhân viên"
     },
     "notify": {
       "enterInformation": "Vui lòng điền thông tin nhân viên",
