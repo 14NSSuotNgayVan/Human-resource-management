@@ -23,10 +23,12 @@ import { isMdScreen } from 'utils';
 import { getAllCertificates } from "app/redux/actions/CertificateActions";
 import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
 import ApprovalDialog from "../ApprovalDialog";
+import AdditionalDialog from "../AdditionalDialog";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog } = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   const [shouldOpenApprovalDialog,setShouldOpenApprovalDialog] = useState(false);
+  const [shouldOpenAdditionalDialog,setShouldOpenAdditionalDialog] = useState(false);
   const staff = useSelector(staffSelector);
   const dispatch = useDispatch(); 
   useEffect(()=>{
@@ -36,6 +38,13 @@ const PendingApprovalDialog = (props) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
+
+  const handleOpenAdditionalDialog=()=>{
+    setShouldOpenAdditionalDialog(true);
+  }
+  const handleCloseAdditionalDialog=()=>{
+    setShouldOpenAdditionalDialog(false);
+  }
   const handleOpenApprovalConfirmDialog=()=>{
     setShouldOpenApprovalDialog(true);
   }
@@ -98,11 +107,12 @@ const PendingApprovalDialog = (props) => {
         </Grid>
       </Grid>
       {shouldOpenApprovalDialog && (<ApprovalDialog t={t} handleCloseDialog={handleCloseApprovalConfirmDialog} item ={staff}/>)}
+      {shouldOpenAdditionalDialog && (<AdditionalDialog t={t} handleCloseDialog={handleCloseAdditionalDialog} item ={staff}/>)}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         <Button variant="contained" color="primary" onClick={() => {handleOpenApprovalConfirmDialog()}}>
           {t("general.approve")}
         </Button>
-        <Button variant="contained" color="primary" onClick={() => {}}>
+        <Button variant="contained" color="primary" onClick={() => {handleOpenAdditionalDialog()}}>
           {t("general.additionalRequest")}
         </Button>
         <Button variant="contained" color="secondary" onClick={() => {}}>

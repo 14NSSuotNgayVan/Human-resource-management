@@ -119,7 +119,9 @@
     "proposal":"Chờ duyệt đề xuất",
     "finish":"Chờ duyệt kết thúc",
     "ApprovalConfirm":"Phê duyệt",
-    "appointmentDate":"Ngày hẹn"
+    "appointmentDate":"Ngày hẹn",
+    "Additional":"Yêu cầu bổ sung",
+    "AdditionalContent":"Nội dung yêu cầu bổ sung"
   },
   "staff": {
     "title": "nhân viên",

@@ -4,22 +4,11 @@ import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
-const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
-  const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
-  useEffect(() => {
-    ValidatorForm.addValidationRule("isAfterDay", (value) => {
-      const date = new Date(value);
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1);
-      return date > currentDate;
-    });
-    return () => {
-      ValidatorForm.removeValidationRule("isAfterDay");
-    };
-  }, []);
+const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
+  const [content, setContent] = useState("");
   const handleSubmit = () => {};
   const onChange = (event) => {
-    setAppointmentDate(event.target.value);
+    setContent(event.target.value.trim());
   };
   return (
     <>
@@ -34,7 +23,7 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
         fullWidth={true}
       >
         <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
-          <span className="headerStyle">{t("leaderShipApproval.ApprovalConfirm")}</span>
+          <span className="headerStyle">{t("leaderShipApproval.Additional")}</span>
           <IconButton className="buttonClose" onClick={handleCloseDialog}>
             <Icon color="error" title={t("close")}>
               close
@@ -44,19 +33,19 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
           <DialogContent dividers spacing={1}>
             <TextValidator
-              className="w-100 mb-16"
+              className={"w-100 mb-16"}
               label={
                 <span className="inputLabel">
                   <span style={{ color: "red" }}> * </span>
-                  {t("leaderShipApproval.appointmentDate")}
+                  {t("leaderShipApproval.AdditionalContent")}
                 </span>
               }
-              onChange={(e) => onChange(e)}
-              type="date"
-              name="appointmentDate"
-              value={appointmentDate}
-              validators={["required", "isAfterDay"]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidAppointmentDate")]}
+              type="text"
+              name="additionalRequest"
+              onChange={(e) => onChange(e, "additionalRequest")}
+              value={content}
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
               variant="outlined"
               size="small"
             />
@@ -81,4 +70,4 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
     </>
   );
 };
-export default ApprovalDialog;
+export default AdditionalDialog;
