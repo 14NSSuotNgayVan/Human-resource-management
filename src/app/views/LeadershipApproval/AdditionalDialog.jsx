@@ -1,7 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Paper } from "@material-ui/core";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import Draggable from "react-draggable";
+import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
@@ -14,11 +12,6 @@ const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
     <>
       <Dialog
         open={true}
-        PaperComponent={(props) => (
-          <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-            <Paper {...props} />
-          </Draggable>
-        )}
         maxWidth={"sm"}
         fullWidth={true}
       >
@@ -59,7 +52,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
                 handleSubmit();
               }}
             >
-              {t("general.approve")}
+              {t("general.save")}
             </Button>
             <Button variant="contained" color="secondary" onClick={handleCloseDialog}>
               {t("general.cancel")}

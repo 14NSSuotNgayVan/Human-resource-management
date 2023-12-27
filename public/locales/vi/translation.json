@@ -121,7 +121,10 @@
     "ApprovalConfirm":"Phê duyệt",
     "appointmentDate":"Ngày hẹn",
     "Additional":"Yêu cầu bổ sung",
-    "AdditionalContent":"Nội dung yêu cầu bổ sung"
+    "AdditionalContent":"Nội dung yêu cầu bổ sung",
+    "rejection":"Từ chối",
+    "rejectionDate":"Ngày từ chối",
+    "reasonForRejection":"Lí do từ chối"
   },
   "staff": {
     "title": "nhân viên",
