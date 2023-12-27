@@ -10,8 +10,6 @@ import {
   SEARCH_BY_PAGE_SUCCESS,
   SEARCH_BY_PAGE_FAIL,
   SET_SHOULD_UPDATE,
-  UPLOAD_IMAGE,
-  GET_IMAGE,
   POST_STAFF_TO_LIST_SUCCESS,
   PUT_STAFF_TO_LIST_SUCCESS,
 } from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
@@ -41,7 +39,7 @@ function* deleteStaff(action) {
     const { data } = yield call(axios.delete, ConstantList.API_ENDPOINT + `employee/${action.payload}`);
     if (checkResponseCode(data?.code)) {
       yield put({ type: SET_SHOULD_UPDATE });
-      toast.success("Xóa thành công");
+      toast.success("Thành công");
     } else {
       toast.error(data?.message);
     }
@@ -77,7 +75,7 @@ function* addStaff(action) {
     );
     if (checkResponseCode(data?.code)) {
       yield put({ type: POST_STAFF_TO_LIST_SUCCESS, payload: data?.data });
-      toast.success("Tạo thông tin nhân viên thành công");
+      toast.success("Thành công");
     } else {
       toast.error(data?.message);
     }
@@ -112,7 +110,7 @@ function* updateStaff(action) {
       }
     );
     if (checkResponseCode(data?.code)) {
-      toast.success("Chỉnh sửa thông tin nhân viên thành công!");
+      toast.success("Thành công!");
       yield put({ type: PUT_STAFF_TO_LIST_SUCCESS, payload: data?.data });
     } else {
       toast.error(data?.message);
