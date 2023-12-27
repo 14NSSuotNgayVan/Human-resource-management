@@ -7,17 +7,26 @@ import {
   Icon,
   IconButton,
 } from "@material-ui/core";
+import { updateStaffAction } from "app/redux/actions/StaffActions";
 import moment from "moment";
 import React, {useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { useDispatch } from "react-redux";
 
 const RejectionDialog = (props) => {
+  const dispatch = useDispatch();
   const { t, handleCloseDialog, item } = props;
   const [formData,setFormData] = useState({
     rejectionDate:moment().format("YYYY-MM-DD"),
     reasonForRejection:""
   });
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(updateStaffAction({
+      ...item,
+      ...formData,
+      submitProfileStatus:"5"
+    }))
+  };
   const handleChange = (event) => {
     event.persist();
     const { name, value } = event.target;
