@@ -1,10 +1,19 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Paper } from "@material-ui/core";
+import { updateStaffAction } from "app/redux/actions/StaffActions";
 import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { useDispatch } from "react-redux";
 
 const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
+  const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(updateStaffAction({
+      ...item,
+      additionalRequest:content,
+      submitProfileStatus:"4"
+    }))
+  };
   const onChange = (event) => {
     setContent(event.target.value.trim());
   };
@@ -48,9 +57,6 @@ const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
               variant="contained"
               color="primary"
               type="submit"
-              onClick={() => {
-                handleSubmit();
-              }}
             >
               {t("general.save")}
             </Button>

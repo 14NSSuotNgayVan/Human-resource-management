@@ -4,14 +4,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Icon,
   IconButton,
-  Paper,
 } from "@material-ui/core";
 import moment from "moment";
 import React, {useState } from "react";
-import Draggable from "react-draggable";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 const RejectionDialog = (props) => {
@@ -89,9 +86,6 @@ const RejectionDialog = (props) => {
               variant="contained"
               color="primary"
               type="submit"
-              onClick={() => {
-                handleSubmit();
-              }}
             >
               {t("general.reject")}
             </Button>
