@@ -1,12 +1,21 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Paper } from "@material-ui/core";
+import { updateStaffAction } from "app/redux/actions/StaffActions";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import Draggable from "react-draggable";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { useDispatch } from "react-redux";
 
 const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
+  const dispatch = useDispatch();
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(updateStaffAction({
+      ...item,
+      appointmentDate:appointmentDate,
+      submitProfileStatus:"3"
+    }));
+    handleCloseDialog();
+  };
   const onChange = (event) => {
     setAppointmentDate(event.target.value);
   };
