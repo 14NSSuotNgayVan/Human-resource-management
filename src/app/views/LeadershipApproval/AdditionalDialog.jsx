@@ -31,7 +31,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item }) => {
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
-          <DialogContent dividers spacing={1}>
+          <DialogContent dividers spacing={1} className="overflow-none">
             <TextValidator
               className={"w-100 mb-16"}
               label={
