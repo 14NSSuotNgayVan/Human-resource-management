@@ -117,7 +117,9 @@
     "salary_increment":"Chờ duyệt tăng lương",
     "promotion":"Chờ duyệt thăng chức",
     "proposal":"Chờ duyệt đề xuất",
-    "finish":"Chờ duyệt kết thúc"
+    "finish":"Chờ duyệt kết thúc",
+    "ApprovalConfirm":"Phê duyệt",
+    "appointmentDate":"Ngày hẹn"
   },
   "staff": {
     "title": "nhân viên",
@@ -232,7 +234,8 @@
       "maxLength_required": "Độ dài tối đa là 10",
       "maxAgeValue_required": "Tuổi không phù hợp",
       "minAgeValue_required": "Tuổi phải lớn hơn 18",
-      "invalidStringContent":"Vượt quá độ dài cho phép(1000 kí tự)"
+      "invalidStringContent":"Vượt quá độ dài cho phép(1000 kí tự)",
+      "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại"
     }
   }
 }

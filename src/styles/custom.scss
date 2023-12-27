@@ -180,9 +180,16 @@
 .MuiDialog-paper{
   overflow-y: scroll!important;
 }
+.MuiDialog-paper.MuiDialog-paperScrollPaper::-webkit-scrollbar{
+width: 0!important;
+}
 .text-center{
   text-align: center;
 }
 .text-left{
   text-align: left;
+}
+.color-error{
+  background-color: #f44336!important;
+  color: #fff!important;
 }
