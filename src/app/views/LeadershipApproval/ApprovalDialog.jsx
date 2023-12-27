@@ -6,17 +6,6 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
   const [appointmentDate, setAppointmentDate] = useState(moment().format("YYYY-MM-DD"));
-  useEffect(() => {
-    ValidatorForm.addValidationRule("isAfterDay", (value) => {
-      const date = new Date(value);
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1);
-      return date > currentDate;
-    });
-    return () => {
-      ValidatorForm.removeValidationRule("isAfterDay");
-    };
-  }, []);
   const handleSubmit = () => {};
   const onChange = (event) => {
     setAppointmentDate(event.target.value);
@@ -25,11 +14,6 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
     <>
       <Dialog
         open={true}
-        PaperComponent={(props) => (
-          <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-            <Paper {...props} />
-          </Draggable>
-        )}
         maxWidth={"sm"}
         fullWidth={true}
       >
@@ -56,9 +40,12 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
               name="appointmentDate"
               value={appointmentDate}
               validators={["required", "isAfterDay"]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidAppointmentDate")]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
               variant="outlined"
               size="small"
+              inputProps={{
+                min: moment().format("YYYY-MM-DD"),
+              }}
             />
           </DialogContent>
           <DialogActions spacing={4} className="flex flex-center flex-middle">

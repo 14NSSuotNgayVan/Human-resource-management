@@ -19,38 +19,46 @@ import Resume from "app/component/CustomResume";
 import { useDispatch, useSelector } from "react-redux";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import CustomCertificate from "app/component/CustomCertificate";
-import { isMdScreen } from 'utils';
+import { isMdScreen } from "utils";
 import { getAllCertificates } from "app/redux/actions/CertificateActions";
 import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
 import ApprovalDialog from "../ApprovalDialog";
 import AdditionalDialog from "../AdditionalDialog";
+import RejectionDialog from "../RejectionDialog";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog } = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
-  const [shouldOpenApprovalDialog,setShouldOpenApprovalDialog] = useState(false);
-  const [shouldOpenAdditionalDialog,setShouldOpenAdditionalDialog] = useState(false);
+  const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
+  const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
+  const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
   const staff = useSelector(staffSelector);
-  const dispatch = useDispatch(); 
-  useEffect(()=>{
-    if(staff?.id){
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (staff?.id) {
       dispatch(getAllCertificates(staff?.id));
       dispatch(getAllFamilyMembers(staff?.id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const handleOpenAdditionalDialog=()=>{
+  const handleOpenRejectionDialog = () => {
+    setShouldOpenRejectionDialog(true);
+  };
+  const handleCloseRejectionDialog = useCallback(() => {
+    setShouldOpenRejectionDialog(false);
+  }, []);
+  const handleOpenAdditionalDialog = () => {
     setShouldOpenAdditionalDialog(true);
-  }
-  const handleCloseAdditionalDialog=()=>{
+  };
+  const handleCloseAdditionalDialog = useCallback(() => {
     setShouldOpenAdditionalDialog(false);
-  }
-  const handleOpenApprovalConfirmDialog=()=>{
+  }, []);
+  const handleOpenApprovalConfirmDialog = () => {
     setShouldOpenApprovalDialog(true);
-  }
-  const handleCloseApprovalConfirmDialog=()=>{
+  };
+  const handleCloseApprovalConfirmDialog = useCallback(() => {
     setShouldOpenApprovalDialog(false);
-  }
+  }, []);
   return (
     <Dialog
       open={true}
@@ -74,28 +82,19 @@ const PendingApprovalDialog = (props) => {
         <Grid item lg={2} md={2} sm={12} className="tabs-left">
           <Tabs
             value={tab}
-            onChange={(event, newValue) => { 
+            onChange={(event, newValue) => {
               setTab(newValue);
             }}
-            orientation= {isMdScreen() ? "horizontal":"vertical"} 
+            orientation={isMdScreen() ? "horizontal" : "vertical"}
             indicatorColor="primary"
             textColor="primary"
             variant="fullWidth"
             centered
             className=""
           >
-            <Tab
-              label={t(`staff.${DOCUMENT_TABS.DOCUMENTS.name}`)}
-              value={DOCUMENT_TABS.DOCUMENTS.value}
-            />
-            <Tab
-              label={t(`staff.${DOCUMENT_TABS.RESUME.name}`)}
-              value={DOCUMENT_TABS.RESUME.value}
-            />
-            <Tab
-              label={t(`staff.${DOCUMENT_TABS.CERTIFICATES.name}`)}
-              value={DOCUMENT_TABS.CERTIFICATES.value}
-            />
+            <Tab label={t(`staff.${DOCUMENT_TABS.DOCUMENTS.name}`)} value={DOCUMENT_TABS.DOCUMENTS.value} />
+            <Tab label={t(`staff.${DOCUMENT_TABS.RESUME.name}`)} value={DOCUMENT_TABS.RESUME.value} />
+            <Tab label={t(`staff.${DOCUMENT_TABS.CERTIFICATES.name}`)} value={DOCUMENT_TABS.CERTIFICATES.value} />
           </Tabs>
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
@@ -106,16 +105,41 @@ const PendingApprovalDialog = (props) => {
           </DialogContent>
         </Grid>
       </Grid>
-      {shouldOpenApprovalDialog && (<ApprovalDialog t={t} handleCloseDialog={handleCloseApprovalConfirmDialog} item ={staff}/>)}
-      {shouldOpenAdditionalDialog && (<AdditionalDialog t={t} handleCloseDialog={handleCloseAdditionalDialog} item ={staff}/>)}
+      {shouldOpenApprovalDialog && (
+        <ApprovalDialog t={t} handleCloseDialog={handleCloseApprovalConfirmDialog} item={staff} />
+      )}
+      {shouldOpenAdditionalDialog && (
+        <AdditionalDialog t={t} handleCloseDialog={handleCloseAdditionalDialog} item={staff} />
+      )}
+      {shouldOpenRejectionDialog && (
+        <RejectionDialog t={t} handleCloseDialog={handleCloseRejectionDialog} item={staff} />
+      )}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        <Button variant="contained" color="primary" onClick={() => {handleOpenApprovalConfirmDialog()}}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            handleOpenApprovalConfirmDialog();
+          }}
+        >
           {t("general.approve")}
         </Button>
-        <Button variant="contained" color="primary" onClick={() => {handleOpenAdditionalDialog()}}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            handleOpenAdditionalDialog();
+          }}
+        >
           {t("general.additionalRequest")}
         </Button>
-        <Button variant="contained" color="secondary" onClick={() => {}}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            handleOpenRejectionDialog();
+          }}
+        >
           {t("general.reject")}
         </Button>
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
