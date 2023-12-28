@@ -12,6 +12,9 @@ import {
   SET_SHOULD_UPDATE,
   POST_STAFF_TO_LIST_SUCCESS,
   PUT_STAFF_TO_LIST_SUCCESS,
+  GET_STAFF_BY_ID_SUCCESS,
+  GET_STAFF_BY_ID_FAIL,
+  GET_STAFF_BY_ID,
 } from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
 import { takeLatest, put, call } from "redux-saga/effects";
 toast.configure({
@@ -34,6 +37,21 @@ function* searchByPage(action) {
     toast.error(err);
   }
 }
+function* getStaffById(action) {
+  try {
+    const { data } = yield call(axios.get, ConstantList.API_ENDPOINT + `employee/${action.payload}`);
+    if (checkResponseCode(data.code)) {
+      if (data.data) {
+        yield put({
+          type: GET_STAFF_BY_ID_SUCCESS,
+          payload: data.data,
+        });
+      } else yield put({ type: GET_STAFF_BY_ID_FAIL});
+    } else toast.error(data.message);
+  } catch (err) {
+    toast.error(err);
+  }
+}
 function* deleteStaff(action) {
   try {
     const { data } = yield call(axios.delete, ConstantList.API_ENDPOINT + `employee/${action.payload}`);
@@ -50,7 +68,6 @@ function* deleteStaff(action) {
 function* addStaff(action) {
   try {
     //uploadImage
-    console.log("addStaff");
     let image = "";
     if (action?.payload?.file) {
       const { data } = yield call(
@@ -126,4 +143,5 @@ export function* StaffSaga() {
   yield takeLatest(DELETE_STAFF, deleteStaff);
   yield takeLatest(POST_STAFF_TO_LIST, addStaff);
   yield takeLatest(PUT_STAFF_TO_LIST, updateStaff);
+  yield takeLatest(GET_STAFF_BY_ID, getStaffById);
 }

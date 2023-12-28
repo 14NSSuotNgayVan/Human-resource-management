@@ -7,10 +7,17 @@ import {
   UPLOAD_IMAGE,
   SET_IMAGE,
   SET_ITEM,
+  GET_STAFF_BY_ID,
 } from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
 export const getAllStaffAction = () => {
   return {
     type: GET_ALL_STAFF,
+  };
+};
+export const getStaffByIdAction = (staffId) => {
+  return {
+    type: GET_STAFF_BY_ID,
+    payload: staffId,
   };
 };
 export const addStaffAction = (staff, file) => {

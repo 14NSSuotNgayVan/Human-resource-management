@@ -10,6 +10,8 @@ import {
   SET_ITEM,
   POST_STAFF_TO_LIST_SUCCESS,
   PUT_STAFF_TO_LIST_SUCCESS,
+  GET_STAFF_BY_ID_SUCCESS,
+  GET_STAFF_BY_ID_FAIL,
 } from "app/redux/actionTypeConstant/StaffActionTypeConstant.js";
 const initState = {
   item:{},
@@ -25,6 +27,18 @@ const StaffReducer = (state = initState, action) => {
       return{
         ...state,
         item:action?.payload
+      }
+    }
+    case GET_STAFF_BY_ID_SUCCESS:{
+      return {
+        ...state,
+        item:action?.payload
+      }
+    }
+    case GET_STAFF_BY_ID_FAIL:{
+      return {
+        ...state,
+        item:{}
       }
     }
     case SEARCH_BY_PAGE_SUCCESS: {
