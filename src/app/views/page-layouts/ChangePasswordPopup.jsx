@@ -161,9 +161,9 @@ class ChangePasswordPopup extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button
-              className="mb-16 mr-8 align-bottom"
+              className="mb-16 mr-8 align-bottom color-error" 
               variant="contained"
-              color="secondary"
+              
               onClick={() => handleClose()}>{t('general.cancel')}
             </Button>
             <Button

@@ -13,7 +13,32 @@ export function debounce(func, wait, immediate) {
     if (immediate && !timeout) func.apply(context, args);
   };
 }
+export function splitStringByNewLine(inputString) {
+  if(inputString!==null){
 
+    const resultArray = inputString.split("\n");
+    const filteredArray = resultArray
+    .map((item) => item.trim())
+    .filter(Boolean);
+    return filteredArray;
+  } return null;
+}
+export function wrapText(inputString, lineWidth) {
+  let resultString = '';
+  let currentLine = '';
+
+  for (const char of inputString) {
+    if (char === ' ' && currentLine.length > lineWidth) {
+      resultString += '\n'; // Chèn dấu xuống dòng nếu độ rộng đã vượt quá
+      currentLine = '';
+    } else {
+      currentLine += char;
+      resultString += char;
+    }
+  }
+
+  return resultString;
+}
 export function isMobile() {
   if (window) {
     return window.matchMedia(`(max-width: 768px)`).matches;

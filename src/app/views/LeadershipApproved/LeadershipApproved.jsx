@@ -13,7 +13,7 @@ import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "
 import moment from "moment";
 import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
-import PendingApprovalDialog from "./PedingApprovalDialog";
+import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -21,7 +21,7 @@ toast.configure({
   limit: 3,
 });
 
-function PendingApproval(props) {
+function LeadershipApproved(props) {
   const dispatch = useDispatch();
   const staffList = useSelector(staffListSelector);
   const totalElements = useSelector(totalElementsSelector);
@@ -38,7 +38,7 @@ function PendingApproval(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS.VIEW;
+    searchObject.listStatus = STAFF_STATUS.APPROVED;
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -67,7 +67,7 @@ function PendingApproval(props) {
     const { item, handleShowDialog } = props;
     return (
       <div className="none_wrap">
-        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus) && (
+        {STAFF_STATUS.APPROVED.includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleShowDialog(item)}>
             <VisibilityIcon fontSize="small"></VisibilityIcon>
           </IconButton>
@@ -124,9 +124,23 @@ function PendingApproval(props) {
       field: "phone",
       align: "center",
       minWidth: "150px",
-    },
+    },{
+        title: t("staff.submit_profile_status_display"),
+        field: "submitProfileStatus",
+        align: "left",
+        minWidth: "150px",
+        render: (props) => (
+          <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.submitProfileStatus]}`)}</span>
+        ),
+      },
   ];
   return (
+    <div className="m-sm-24">
+      <div className="mb-sm-24 sm-hide">
+        <Breadcrumb
+          routeSegments={[{ name: t("Dashboard.LeadershipApproved"), path: "staff_manager/LeadershipApproved" }]}
+        />
+      </div>
     <Grid container spacing={2} justify="flex-end">
       <Grid item md={4} sm={12} xs={12}>
         <FormControl fullWidth style={{ marginTop: "6px" }}>
@@ -149,7 +163,7 @@ function PendingApproval(props) {
         </FormControl>
       </Grid>
       <Grid item xs={12}>
-        {showEditorDialog && <PendingApprovalDialog isPendingRegister={true} t={t} handleCloseDialog={handleCloseDialog} />}
+        {showEditorDialog && <PendingApprovalDialog t={t} handleCloseDialog={handleCloseDialog} />}
         <CustomTable
           data={staffList}
           columns={columns}
@@ -159,6 +173,7 @@ function PendingApproval(props) {
         />
       </Grid>
     </Grid>
+    </div>
   );
 }
-export default PendingApproval;
+export default LeadershipApproved;

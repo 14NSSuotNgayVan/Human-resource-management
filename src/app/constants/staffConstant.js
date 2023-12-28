@@ -82,7 +82,8 @@ export const STAFF_STATUS = {
     ADD: "1,2,4,5",
     REMOVE: "1",
     EDIT: "1,4,5",
-    VIEW: "2"
+    VIEW: "2",
+    APPROVED:"0,3,7"
 }
 export const RELATIONSHIP = [
     {

@@ -138,8 +138,7 @@ class OTPDialog extends Component {
             <div className="flex flex-space-between flex-middle mt-12">
               <Button
                 variant="contained"
-                className="mr-12"
-                color="secondary"
+                className="mr-12 color-error"
                 onClick={() => this.props.handleClose()}
               >
                 {t("general.cancel")}

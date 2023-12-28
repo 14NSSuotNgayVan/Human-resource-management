@@ -31,7 +31,7 @@ toast.configure({
   limit: 3,
 });
 const AddStaffDialog = (props) => {
-  const { handleClose, t } = props;
+  const { handleClose, t, handleShowDocumentDialog } = props;
   const staff = useSelector(staffSelector);
   const dispatch = useDispatch();
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
@@ -113,17 +113,17 @@ const AddStaffDialog = (props) => {
         {tab === ADD_STAFF_TABS.RELATIONSHIP.value && <Family staffId={staff?.id} t={t} />}
       </DialogContent>
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        <Button variant="contained" color="secondary" onClick={handleClose}>
-          {t("general.cancel")}
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          {t("general.save")}
-        </Button>
         {informationSaved && (
-          <Button variant="contained" color="primary" onClick={() => {}}>
+          <Button variant="contained" color="primary" onClick={() => {handleShowDocumentDialog(staff,true)}}>
             {t("general.register")}
           </Button>
         )}
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          {t("general.save")}
+        </Button>
+        <Button variant="contained" className="color-error" onClick={handleClose}>
+          {t("general.cancel")}
+        </Button>
       </DialogActions>
     </Dialog>
   );

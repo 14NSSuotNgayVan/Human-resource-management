@@ -65,7 +65,7 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
             >
               {t("general.approve")}
             </Button>
-            <Button variant="contained" color="secondary" onClick={handleCloseDialog}>
+            <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
               {t("general.cancel")}
             </Button>
           </DialogActions>
