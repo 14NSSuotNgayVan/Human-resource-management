@@ -235,7 +235,7 @@ const Certificates = (props) => {
               </Button>
             )}
             {isEditing && (
-              <Button className="align-bottom mr-8 mb-4" variant="contained" color="secondary" onClick={handleClose}>
+              <Button className="align-bottom mr-8 mb-4 color-error" variant="contained"  onClick={handleClose}>
                 {t("general.cancel")}
               </Button>
             )}

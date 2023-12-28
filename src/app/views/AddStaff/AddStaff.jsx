@@ -14,6 +14,7 @@ import moment from "moment";
 import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import AddStaffDialog from "./AddStaffDialog";
+import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -33,6 +34,8 @@ function Staff(props) {
   });
   const [showEditorDialog, setShowEditorDialog] = useState(false);
   const [shouldOpenConfirmationDialog, setShouldOpenConfirmationDialog] = useState(false);
+  const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const [keyword, setKeyword] = useState("");
   const updatePageData = async () => {
     var searchObject = {};
@@ -53,6 +56,15 @@ function Staff(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldUpdate]);
 
+  const handleShowDocumentDialog =useCallback((item,register) => {
+    console.log(register);
+    dispatch(setItem(item));
+    setIsRegister(register);
+    setShouldOpenDocumentDialog(true);
+    // setShowEditorDialog(false);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
   const handleDelete = (id) => {
     setId(id);
     setShouldOpenConfirmationDialog(true);
@@ -61,6 +73,9 @@ function Staff(props) {
   const handleDialogClose = useCallback(() => {
     setShowEditorDialog(false);
     setShouldOpenConfirmationDialog(false);
+  },[]);
+  const handleCloseDocumentDialog = useCallback(() => {
+    setShouldOpenDocumentDialog(false);
   },[]);
 
   const handleConfirmationResponse = async () => {
@@ -94,7 +109,7 @@ function Staff(props) {
           </Icon>
         </IconButton>}
         {STAFF_STATUS.VIEW.includes(item.submitProfileStatus)&&
-        <IconButton size="small" onClick={() => {}}>
+        <IconButton size="small" onClick={() => {handleShowDocumentDialog(item,false)}}>
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>}
       </div>
@@ -217,8 +232,17 @@ function Staff(props) {
             <AddStaffDialog
             handleClose ={handleDialogClose}
             t ={t}
+            handleShowDocumentDialog={handleShowDocumentDialog}
             />
             )}
+            {shouldOpenDocumentDialog && (
+            <PendingApprovalDialog
+            handleCloseDialog ={handleCloseDocumentDialog}
+            t ={t}
+            isRegister={isRegister}
+            />
+            )}
+            
           </div>
           <CustomTable
             data={staffList}

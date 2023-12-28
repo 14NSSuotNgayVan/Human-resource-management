@@ -98,7 +98,7 @@ const RejectionDialog = (props) => {
             >
               {t("general.reject")}
             </Button>
-            <Button variant="contained" color="secondary" onClick={handleCloseDialog}>
+            <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
               {t("general.cancel")}
             </Button>
           </DialogActions>

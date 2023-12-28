@@ -6,6 +6,7 @@ import ConstantList from "./appConfig";
 import pageLayoutRoutes from "./views/page-layouts/PageLayoutRoutees";  
 import StaffRoutes from "./views/AddStaff/AddStaffRoutes"
 import LeadershipApprovalRoutes from "./views/LeadershipApproval/LeadershipApprovalRoutes";
+import LeadershipApprovedRoutes from "./views/LeadershipApproved/LeadershipApprovedRoutes";
 
 const redirectRoute = [
   {
@@ -27,6 +28,7 @@ const routes = [
   ...pageLayoutRoutes,  
   ...StaffRoutes,
   ...LeadershipApprovalRoutes,
+  ...LeadershipApprovedRoutes,
   ...errorRoute,
 ];
 

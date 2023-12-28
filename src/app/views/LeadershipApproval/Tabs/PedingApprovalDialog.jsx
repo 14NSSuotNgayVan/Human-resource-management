@@ -26,7 +26,8 @@ import ApprovalDialog from "../ApprovalDialog";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
 const PendingApprovalDialog = (props) => {
-  const { t, handleCloseDialog } = props;
+  const { t, handleCloseDialog,isPendingRegister,isRegister} = props;
+  console.log(isRegister);
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
@@ -123,7 +124,26 @@ const PendingApprovalDialog = (props) => {
         <RejectionDialog t={t} handleCloseDialog={handleCloseRejectionDialog} item={staff} />
       )}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        <Button
+        
+        {isRegister && <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            
+          }}
+        >
+          {t("general.sendLeader")}
+        </Button>}
+        {isRegister && <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            
+          }}
+        >
+          {t("general.save")}
+        </Button>}
+        {isPendingRegister && <Button
           variant="contained"
           color="primary"
           onClick={() => {
@@ -131,8 +151,8 @@ const PendingApprovalDialog = (props) => {
           }}
         >
           {t("general.approve")}
-        </Button>
-        <Button
+        </Button>}
+        {isPendingRegister && <Button
           variant="contained"
           color="primary"
           onClick={() => {
@@ -140,8 +160,8 @@ const PendingApprovalDialog = (props) => {
           }}
         >
           {t("general.additionalRequest")}
-        </Button>
-        <Button
+        </Button>}
+        {isPendingRegister&& <Button
           variant="contained"
           color="secondary"
           onClick={() => {
@@ -149,7 +169,7 @@ const PendingApprovalDialog = (props) => {
           }}
         >
           {t("general.reject")}
-        </Button>
+        </Button>}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           {t("general.cancel")}
         </Button>
