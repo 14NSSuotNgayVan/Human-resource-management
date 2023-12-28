@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../src/styles/views/_resume.scss';
+import '../../../../src/styles/views/_resume.scss';
 import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { imageSelector } from 'app/redux/selectors/StaffSelector';
@@ -10,7 +10,6 @@ import { getAllFamilyMember } from 'app/redux/selectors/FamilySelector';
 
 const Resume = (props) => {
     const { t, item } = props;
-    const familyList = useSelector(getAllFamilyMember);
 
     return (
         <>
@@ -83,8 +82,8 @@ const Resume = (props) => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {familyList.length > 0 ? (
-                                            familyList.map((family, index) => (
+                                        {item?.employeeFamilyDtos?.length > 0 ? (
+                                            item?.employeeFamilyDtos?.map((family, index) => (
                                                 <TableRow key={family.id}>
                                                     <TableCell align="center" className="table-cell">
                                                         {index + 1}

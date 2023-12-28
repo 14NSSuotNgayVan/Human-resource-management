@@ -12,36 +12,30 @@ import {
   Tab,
   Tabs,
 } from "@material-ui/core";
-import Draggable from "react-draggable";
 import { DOCUMENT_TABS } from "app/constants/staffConstant";
-import CustomCV from "app/component/CustomCV";
-import Resume from "app/component/CustomResume";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { shouldUpdateSelector, staffSelector } from "app/redux/selectors/StaffSelector";
-import CustomCertificate from "app/component/CustomCertificate";
 import { isMdScreen } from "utils";
-import { getAllCertificates } from "app/redux/actions/CertificateActions";
-import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
 import ApprovalDialog from "../ApprovalDialog";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
+import { ValidatorForm } from "react-material-ui-form-validator";
+import CustomCV from "app/views/StaffDocument/CustomCV";
+import Resume from "app/views/StaffDocument/CustomResume";
+import CustomCertificate from "app/views/StaffDocument/CustomCertificate";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog,isPendingRegister,isRegister} = props;
-  console.log(isRegister);
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
   const staff = useSelector(staffSelector);
+  const [formData,setFormData] =useState({});
   const shouldUpdateStaff = useSelector(shouldUpdateSelector);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (staff?.id) {
-      dispatch(getAllCertificates(staff?.id));
-      dispatch(getAllFamilyMembers(staff?.id));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(()=>{
+    setFormData(staff);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[staff]); 
   useEffect(()=>{
     if(shouldUpdateStaff) {
     setShouldOpenRejectionDialog(false);
@@ -71,11 +65,6 @@ const PendingApprovalDialog = (props) => {
   return (
     <Dialog
       open={true}
-      PaperComponent={(props) => (
-        <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-          <Paper {...props} />
-        </Draggable>
-      )}
       maxWidth={"lg"}
       fullWidth={true}
     >
@@ -87,6 +76,7 @@ const PendingApprovalDialog = (props) => {
           </Icon>
         </IconButton>
       </DialogTitle>
+        <ValidatorForm  className="p-8">
       <Grid container>
         <Grid item lg={2} md={2} sm={12} className="tabs-left">
           <Tabs
@@ -108,9 +98,9 @@ const PendingApprovalDialog = (props) => {
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
           <DialogContent dividers spacing={1}>
-            {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} item={staff} />}
-            {tab === DOCUMENT_TABS.RESUME.value && <Resume t={t} item={staff} />}
-            {tab === DOCUMENT_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={staff} />}
+            {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} item={formData} setFormData={setFormData} formData={formData}/>}
+            {tab === DOCUMENT_TABS.RESUME.value && <Resume t={t} item={formData} />}
+            {tab === DOCUMENT_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={formData} />}
           </DialogContent>
         </Grid>
       </Grid>
@@ -174,6 +164,7 @@ const PendingApprovalDialog = (props) => {
           {t("general.cancel")}
         </Button>
       </DialogActions>
+      </ValidatorForm>
     </Dialog>
   );
 };

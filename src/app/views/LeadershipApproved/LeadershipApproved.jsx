@@ -84,6 +84,12 @@ function LeadershipApproved(props) {
       render: (rowData) => <Action item={rowData} handleShowDialog={handleShowDialog} />,
     },
     {
+      title: t("STT"),
+      align: "center",
+      minWidth: "60px",
+      render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
+    },
+    {
       title: t("staff.code"),
       field: "code",
       align: "center",

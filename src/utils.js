@@ -13,6 +13,20 @@ export function debounce(func, wait, immediate) {
     if (immediate && !timeout) func.apply(context, args);
   };
 }
+export function getNumberOfLines(inputString) {
+  // Sử dụng split để tách chuỗi thành mảng các dòng
+  if(inputString){
+    const lines = inputString.split(/\r?\n/);
+    return Math.min(lines.length, 4);
+    // Trả về số dòng, nhưng không vượt quá 4
+  }else return 1;
+}
+export function removeEmptyLines(inputString) {
+  // Sử dụng regex để thay thế các dòng trống bằng chuỗi rỗng
+  const resultString = inputString.replace(/^\s*[\r\n]/gm, '');
+
+  return resultString;
+}
 export function splitStringByNewLine(inputString) {
   if(inputString!==null){
 

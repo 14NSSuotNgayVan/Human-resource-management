@@ -134,6 +134,14 @@
     "code": "Mã nhân viên",
     "age": "Tuổi",
     "address": "Địa chỉ",
+    "Experience":"Kinh nghiệm làm việc",
+    "experience":{
+      "companyName":"Tên công ty",
+      "startDate":"Ngày bắt đầu",
+      "endDate":"Ngày kết thúc",
+      "jobDescription":"Mô tả công việc",
+      "leavingReason":"Lí do nghỉ việc"
+    },
     "team": "Nhóm",
     "documents": "Hồ sơ",
     "resume":"Sơ yếu lí lịch",
@@ -210,6 +218,7 @@
       "staffDocument":"Hồ sơ nhân viên"
     },
     "notify": {
+      "inValidAddress":"Địa chỉ không chứa kí tự đặc biệt ngoại trừ '/'",
       "enterInformation": "Vui lòng điền thông tin nhân viên",
       "addError": "Thêm không thành công!",
       "addSuccess": "Thêm nhân viên thành công !",
@@ -219,7 +228,7 @@
       "use_all": "Nhân viên đều đã sử dụng",
       "deleted_unused": "Đã xoá nhân viên chưa sử dụng",
       "dupli_code": "Mã đã được sử dụng",
-      "invalidName":"Tên không hợp lệ",
+      "invalidName":"Tên không chứa số và kí tự đặc biệt",
       "invalidReligion":"Tên tôn giáo không được chứa số hoặc kí tự đặc biệt",
       "invalidEthnic":"Tên dân tộc không được chứa số hoặc kí tự đặc biệt",
       "invalidField":"Tên lĩnh vực không được chứa số hoặc kí tự đặc biệt",
@@ -241,7 +250,7 @@
       "maxLength_required": "Độ dài tối đa là 10",
       "maxAgeValue_required": "Tuổi không phù hợp",
       "minAgeValue_required": "Tuổi phải lớn hơn 18",
-      "invalidStringContent":"Vượt quá độ dài cho phép(1000 kí tự)",
+      "invalidStringContent":"Vượt quá độ dài cho phép",
       "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại"
     }
   }

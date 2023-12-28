@@ -106,6 +106,12 @@ const Family = (props) => {
         <Action item={rowData} handleUpdate={handleUpdate} handleShowDeleteConfirm={handleShowDeleteConfirm} />
       ),
     },
+    {
+      title: t("STT"),
+      align: "center",
+      minWidth: "60px",
+      render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
+    },
     { title: t("staff.family.name"), field: "name", align: "left", minWidth: "170px" },
     {
       title: t("staff.family.dateOfBirth"),

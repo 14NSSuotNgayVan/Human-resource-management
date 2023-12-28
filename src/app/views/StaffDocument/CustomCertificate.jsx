@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const CustomCertificate = (props) => {
     const { item, t } = props;
-    const certificate = useSelector(getCertificatesByEmployeeId);
     return (
         <>
             <div className="certificate-wrapper">
@@ -35,8 +34,8 @@ const CustomCertificate = (props) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {certificate.length > 0 ? (
-                                    certificate.map((certificate, index) => (
+                                {item?.certificatesDto?.length > 0 ? (
+                                    item?.certificatesDto?.map((certificate, index) => (
                                         <TableRow key={certificate.id}>
                                             <TableCell align="center" className="table-cell">
                                                 {index + 1}

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { searchByPageAction, deleteStaffAction, setItem } from "app/redux/actions/StaffActions.js";
+import { searchByPageAction, deleteStaffAction, setItem, getStaffByIdAction } from "app/redux/actions/StaffActions.js";
 import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Breadcrumb, ConfirmationDialog } from "egret";
@@ -15,6 +15,7 @@ import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants
 import CustomTable from "app/component/CustomTable";
 import AddStaffDialog from "./AddStaffDialog";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
+import AppButton from "../material-kit/buttons/AppButton";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -57,8 +58,7 @@ function Staff(props) {
   }, [shouldUpdate]);
 
   const handleShowDocumentDialog =useCallback((item,register) => {
-    console.log(register);
-    dispatch(setItem(item));
+    dispatch(getStaffByIdAction(item?.id));
     setIsRegister(register);
     setShouldOpenDocumentDialog(true);
     // setShowEditorDialog(false);
@@ -122,6 +122,12 @@ function Staff(props) {
       align: "center",
       minWidth: "80px",
       render: (rowData) => <Action item={rowData} />,
+    },
+    {
+      title: t("STT"),
+      align: "center",
+      minWidth: "60px",
+      render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
     },
     {
       title: t("staff.code"),
