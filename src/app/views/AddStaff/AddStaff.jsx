@@ -53,7 +53,10 @@ function Staff(props) {
   }, [pagePagination.rowsPerPage, pagePagination.page, keyword]);
 
   useEffect(() => {
-    if (shouldUpdate) updatePageData();
+    if (shouldUpdate) {
+      updatePageData();
+      handleCloseDocumentDialog();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldUpdate]);
 
