@@ -56,17 +56,6 @@ const Certificates = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagePagination]);
   useEffect(() => {
-    ValidatorForm.addValidationRule("isValidIssueDate", (value) => {
-      const date = new Date(value);
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1);
-      return date < currentDate;
-    });
-    return () => {
-      ValidatorForm.removeValidationRule("isValidIssueDate");
-    };
-  }, []);
-  useEffect(() => {
     form.current.resetValidations();
   }, [isEditing]);
   const handleSubmit = () => {
@@ -174,8 +163,11 @@ const Certificates = (props) => {
                 type="date"
                 name="issueDate"
                 value={certificate?.issueDate ? moment(certificate?.issueDate).format("YYYY-MM-DD") : ""}
-                validators={["required", "isValidIssueDate"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidDateOfIssuanceCard")]}
+                inputProps={{
+                  max:moment().format("YYYY-MM-DD"),
+                }}
+                validators={["required"]}
+                errorMessages={[t("staff.notify.errorMessages_required")]}
                 variant="outlined"
                 size="small"
               />

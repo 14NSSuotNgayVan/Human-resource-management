@@ -1,6 +1,6 @@
 import { Button, FormControl, Grid, Icon, IconButton, MenuItem } from "@material-ui/core";
 import CustomTable from "app/component/CustomTable";
-import { GENDER, NAME_REGEX, RELATIONSHIP } from "app/constants/staffConstant";
+import { ADDRESS_REGEX, GENDER, NAME_REGEX, RELATIONSHIP } from "app/constants/staffConstant";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
@@ -54,15 +54,8 @@ const Family = (props) => {
     ValidatorForm.addValidationRule("isValidCitizenIdentificationNumber", (value) => {
       return value.length === 9 || value.length === 12;
     });
-    ValidatorForm.addValidationRule("isPreviousToday", (value) => {
-      const date = new Date(value);
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1);
-      return date < currentDate;
-    });
     return () => {
       ValidatorForm.removeValidationRule("isValidCitizenIdentificationNumber");
-      ValidatorForm.removeValidationRule("isPreviousToday");
     };
   }, []);
   useEffect(() => {
@@ -225,9 +218,12 @@ const Family = (props) => {
                 disabled={!isEditing}
                 type="date"
                 name="dateOfBirth"
+                inputProps={{
+                  max:moment().format("YYYY-MM-DD"),
+                }}
                 value={familyMember?.dateOfBirth ? moment(familyMember?.dateOfBirth).format("YYYY-MM-DD") : ""}
-                validators={["required", "isPreviousToday"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPreviousToday")]}
+                validators={["required"]}
+                errorMessages={[t("staff.notify.errorMessages_required")]}
                 variant="outlined"
                 size="small"
               />
@@ -282,8 +278,8 @@ const Family = (props) => {
                 onChange={(e) => {
                   handleChange(e, "address");
                 }}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
+                validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
                 variant="outlined"
                 size="small"
               />

@@ -9,7 +9,7 @@ class Brand extends Component {
       <div className="flex flex-middle flex-space-between brand-area">
         <div className="flex flex-middle brand logo-menu">
           <Link to={ConstantList.HOME_PAGE}>
-            <span className="brand__text">Quản Lí Nhân Viên</span>
+            <span className="brand__text">Quản Lý Nhân Viên</span>
           </Link>
         </div>
         {this.props.children}

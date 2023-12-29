@@ -1,5 +1,5 @@
 import { PhotoCamera } from "@material-ui/icons";
-import { GENDER, NAME_REGEX, TEAM } from "app/constants/staffConstant";
+import { ADDRESS_REGEX, GENDER, NAME_REGEX, TEAM } from "app/constants/staffConstant";
 import { addStaffAction, setStaffImage, updateStaffAction } from "app/redux/actions/StaffActions";
 import { fileSelector, imageSelector } from "app/redux/selectors/StaffSelector";
 import moment from "moment";
@@ -30,7 +30,6 @@ const StaffInformation = (props) => {
   const isImage = (file) => {
     if (file) {
       const imageTypes = ["image/jpeg", "image/png", "image/gif"];
-      console.log(imageTypes.indexOf(file.type));
       if (imageTypes.indexOf(file.type) === -1) {
         return false;
       }
@@ -82,16 +81,9 @@ const StaffInformation = (props) => {
 
       return age >= 18;
     });
-    ValidatorForm.addValidationRule("isPreviousToday", (value) => {
-      const date = new Date(value);
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() - 1);
-      return date < currentDate;
-    });
     return () => {
       ValidatorForm.removeValidationRule("isValidCitizenIdentificationNumber");
       ValidatorForm.removeValidationRule("isValidBirthday");
-      ValidatorForm.removeValidationRule("isPreviousToday");
     };
   }, []);
   return (
@@ -228,8 +220,8 @@ const StaffInformation = (props) => {
               name="address"
               onChange={(e) => onChange(e, "address")}
               value={staff?.address || ""}
-              validators={["required"]}
-              errorMessages={[t("staff.notify.errorMessages_required")]}
+              validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
               variant="outlined"
               size="small"
             />
@@ -299,9 +291,13 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "dateOfIssuanceCard")}
               type="date"
               name="dateOfIssuanceCard"
+              inputProps={{
+                max:moment().format("YYYY-MM-DD"),
+                min:staff?.dateOfBirth
+              }}
               value={staff?.dateOfIssuanceCard ? moment(staff?.dateOfIssuanceCard).format("YYYY-MM-DD") : ""}
-              validators={["required", "isPreviousToday"]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidDateOfIssuanceCard")]}
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
               variant="outlined"
               size="small"
             />
@@ -320,8 +316,8 @@ const StaffInformation = (props) => {
               name="placeOfIssueCard"
               value={staff?.placeOfIssueCard || ""}
               onChange={(e) => onChange(e, "placeOfIssueCard")}
-              validators={["required"]}
-              errorMessages={[t("staff.notify.errorMessages_required")]}
+              validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
               variant="outlined"
               size="small"
             />
