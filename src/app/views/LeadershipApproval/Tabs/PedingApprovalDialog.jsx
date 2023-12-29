@@ -24,6 +24,7 @@ import CustomCV from "app/views/StaffDocument/CustomCV";
 import Resume from "app/views/StaffDocument/CustomResume";
 import CustomCertificate from "app/views/StaffDocument/CustomCertificate";
 import { getAllExperiences } from "app/redux/actions/ExperienceAction";
+import { updateStaffAction } from "app/redux/actions/StaffActions";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog,isPendingRegister,isRegister} = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
@@ -64,7 +65,9 @@ const PendingApprovalDialog = (props) => {
   const handleCloseApprovalConfirmDialog = useCallback(() => {
     setShouldOpenApprovalDialog(false);
   }, []);
-
+  const handleUpdateStaff =()=>{
+    dispatch(updateStaffAction(formData));
+  }
   return (
     <Dialog
       open={true}
@@ -79,7 +82,6 @@ const PendingApprovalDialog = (props) => {
           </Icon>
         </IconButton>
       </DialogTitle>
-        <ValidatorForm  className="p-8">
       <Grid container>
         <Grid item lg={2} md={2} sm={12} className="tabs-left">
           <Tabs
@@ -131,7 +133,7 @@ const PendingApprovalDialog = (props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            
+            handleUpdateStaff()
           }}
         >
           {t("general.save")}
@@ -167,7 +169,6 @@ const PendingApprovalDialog = (props) => {
           {t("general.cancel")}
         </Button>
       </DialogActions>
-      </ValidatorForm>
     </Dialog>
   );
 };
