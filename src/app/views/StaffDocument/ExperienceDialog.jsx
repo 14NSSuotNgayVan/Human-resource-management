@@ -7,25 +7,44 @@ import {
   Grid,
   Icon,
   IconButton,
-  Paper,
 } from "@material-ui/core";
 import { ADDRESS_REGEX, NAME_REGEX } from "app/constants/staffConstant";
-import { updateStaffAction } from "app/redux/actions/StaffActions";
+import { createExperiences, updateExperience } from "app/redux/actions/ExperienceAction";
+import { getExperiencesItem } from "app/redux/selectors/ExperienceSelector";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getNumberOfLines } from "utils";
 
-const ExperienceDialog = ({ t, handleCloseDialog, item }) => {
+const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
   const dispatch = useDispatch();
-  const [experience, setExperience] = useState({ ...item });
+  const currentItem = useSelector(getExperiencesItem);
+  const [experience,setExperience] = useState({});
   const [reasonRow, setReasonRow] = useState(4);
+  const [descRow, setDescRow] = useState(4);
+
+  const exForm = useRef(null);
   useEffect(() => {
     setReasonRow(getNumberOfLines(experience?.leavingReason));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [experience?.leavingReason]);
-  const handleSubmit = () => {};
+  useEffect(() => {
+    setDescRow(getNumberOfLines(experience?.jobDescription));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experience?.jobDescription]);
+  useEffect(()=>{
+    setExperience(currentItem);
+  },[currentItem]);
+  
+  const handleSubmit = () => {
+    if(currentItem?.id){
+      dispatch(updateExperience({...experience}));
+    }else{
+      dispatch(createExperiences(staffId,experience));
+    }
+    handleCloseDialog();
+  };
   const onChange = (event) => {
     const { name, value } = event.target;
     setExperience({
@@ -44,7 +63,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, item }) => {
             </Icon>
           </IconButton>
         </DialogTitle>
-        <ValidatorForm onSubmit={handleSubmit} className="p-8">
+        <ValidatorForm onSubmit ={handleSubmit} className="p-8" ref={exForm}>
           <DialogContent dividers spacing={1} className="overflow-none">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -117,7 +136,8 @@ const ExperienceDialog = ({ t, handleCloseDialog, item }) => {
                     </span>
                   }
                   inputProps={{
-                    min:moment().format("YYYY-MM-DD")
+                    max:moment().format("YYYY-MM-DD"),
+                    min:experience?.startDate
                   }}
                   onChange={(e) => onChange(e, "endDate")}
                   type="date"
@@ -131,6 +151,8 @@ const ExperienceDialog = ({ t, handleCloseDialog, item }) => {
               </Grid>
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextValidator
+                multiline
+                rows={descRow}
                   className={"w-100 mb-16"}
                   label={
                     <span className="inputLabel">
@@ -172,7 +194,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, item }) => {
             </Grid>
           </DialogContent>
           <DialogActions spacing={4} className="flex flex-center flex-middle">
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant="contained" color="primary" onClick ={()=>{exForm.current.submit();}}>
               {t("general.save")}
             </Button>
             <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
@@ -181,6 +203,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, item }) => {
           </DialogActions>
         </ValidatorForm>
       </Dialog>
+
     </>
   );
 };

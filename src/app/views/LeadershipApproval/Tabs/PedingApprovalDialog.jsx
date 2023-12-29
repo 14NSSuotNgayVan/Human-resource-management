@@ -13,7 +13,7 @@ import {
   Tabs,
 } from "@material-ui/core";
 import { DOCUMENT_TABS } from "app/constants/staffConstant";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { shouldUpdateSelector, staffSelector } from "app/redux/selectors/StaffSelector";
 import { isMdScreen } from "utils";
 import ApprovalDialog from "../ApprovalDialog";
@@ -23,6 +23,7 @@ import { ValidatorForm } from "react-material-ui-form-validator";
 import CustomCV from "app/views/StaffDocument/CustomCV";
 import Resume from "app/views/StaffDocument/CustomResume";
 import CustomCertificate from "app/views/StaffDocument/CustomCertificate";
+import { getAllExperiences } from "app/redux/actions/ExperienceAction";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog,isPendingRegister,isRegister} = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
@@ -32,8 +33,10 @@ const PendingApprovalDialog = (props) => {
   const staff = useSelector(staffSelector);
   const [formData,setFormData] =useState({});
   const shouldUpdateStaff = useSelector(shouldUpdateSelector);
+  const dispatch = useDispatch();
   useEffect(()=>{
     setFormData(staff);
+    dispatch(getAllExperiences(staff?.id));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[staff]); 
   useEffect(()=>{
@@ -98,7 +101,7 @@ const PendingApprovalDialog = (props) => {
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
           <DialogContent dividers spacing={1}>
-            {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} item={formData} setFormData={setFormData} formData={formData}/>}
+            {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} setFormData={setFormData} formData={formData}/>}
             {tab === DOCUMENT_TABS.RESUME.value && <Resume t={t} item={formData} />}
             {tab === DOCUMENT_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={formData} />}
           </DialogContent>

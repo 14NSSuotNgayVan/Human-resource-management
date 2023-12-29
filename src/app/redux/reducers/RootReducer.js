@@ -7,6 +7,7 @@ import NotificationReducer from "./NotificationReducer";
 import StaffReducer  from "./StaffReducer";
 import CertificateReducer from "./CertificateReducer";
 import FamilyReducer from "./FamilyReducer";
+import ExperienceReducer from "./ExperienceReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -16,7 +17,8 @@ const RootReducer = combineReducers({
   notification: NotificationReducer,
   staff:StaffReducer,
   certificate: CertificateReducer,
-  family: FamilyReducer
+  family: FamilyReducer,
+  experience: ExperienceReducer
 });
 
 export default RootReducer;
