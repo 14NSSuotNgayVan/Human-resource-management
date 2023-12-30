@@ -8,7 +8,11 @@ export const themeColors = {
       },
       secondary: {
         main: "#ff9e43"
+      },
+      error:{
+        main:"#f44336"
       }
+
     }
   },
   slateDark1: {
@@ -52,7 +56,14 @@ export const themeColors = {
       },
       secondary: {
         main: "#ff9e43"
+      },
+      error:{
+        main:"#f44336"
+      },
+      none:{
+        main:"rgba(0,0,0,.87)"
       }
+
     }
   },
   purple2: {
@@ -80,7 +91,14 @@ export const themeColors = {
       background: {
         paper: "#222A45",
         default: "#1a2038"
+      },
+      error:{
+        main:"#f44336"
+      },
+      none:{
+        main:"rgba(0,0,0,.87)"
       }
+
     }
   },
   purpleDark2: {
