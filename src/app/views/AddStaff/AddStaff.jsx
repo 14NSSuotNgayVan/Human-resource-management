@@ -16,6 +16,8 @@ import CustomTable from "app/component/CustomTable";
 import AddStaffDialog from "./AddStaffDialog";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 import AppButton from "../material-kit/buttons/AppButton";
+import AdditionalDialog from "../LeadershipApproval/AdditionalDialog";
+import RejectionDialog from "../LeadershipApproval/RejectionDialog";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -28,7 +30,7 @@ function Staff(props) {
   const totalElements = useSelector(totalElementsSelector);
   const shouldUpdate = useSelector(shouldUpdateSelector);
   const { t } = props;
-  const [id, setId] = useState("");
+  const [currentItem, setCurrentItem] = useState({});
   const [pagePagination, setPagePagination] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -36,6 +38,8 @@ function Staff(props) {
   const [showEditorDialog, setShowEditorDialog] = useState(false);
   const [shouldOpenConfirmationDialog, setShouldOpenConfirmationDialog] = useState(false);
   const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
+  const [shouldOpenAdditionalDialog, setShouldOpenNotifyDialog] = useState(false);
+  const [iShowAdditional,setIsShowAddition] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [keyword, setKeyword] = useState("");
   const updatePageData = async () => {
@@ -68,16 +72,21 @@ function Staff(props) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-  const handleDelete = (id) => {
-    setId(id);
+  const handleDelete = (staff) => {
+    setCurrentItem(staff);
     setShouldOpenConfirmationDialog(true);
   };
-
+  const handleShowNotify = (staff,ShowAddition) => {
+    setIsShowAddition(ShowAddition);
+    setCurrentItem(staff);
+    setShouldOpenNotifyDialog(true);
+  };
+  
   const handleDialogClose = useCallback(() => {
-    console.log("handleDialogClose")
     setShowEditorDialog(false);
     setShouldOpenConfirmationDialog(false);
     setShouldOpenDocumentDialog(false);
+    setShouldOpenNotifyDialog(false);
   },[]);
   const handleCloseDocumentDialog = useCallback(() => {
     setShouldOpenDocumentDialog(false);
@@ -87,7 +96,7 @@ function Staff(props) {
     if (staffList?.length === 1 && setPagePagination.page === 1) {
       setPagePagination({ ...pagePagination, page: 0 });
     }
-    dispatch(deleteStaffAction(id));
+    dispatch(deleteStaffAction(currentItem?.id));
     handleDialogClose();
   };
 
@@ -108,7 +117,7 @@ function Staff(props) {
           </IconButton>
         )}
         {STAFF_STATUS.REMOVE.includes(item.submitProfileStatus)&&
-        <IconButton size="small" onClick={()=>handleDelete(item.id)}>
+        <IconButton size="small" onClick={()=>handleDelete(item)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
@@ -117,6 +126,18 @@ function Staff(props) {
         <IconButton size="small" onClick={() => {handleShowDocumentDialog(item,false)}}>
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>}
+        {STAFF_STATUS.ADDITIONAL.includes(item.submitProfileStatus)&&
+        <IconButton size="small" onClick={()=>handleShowNotify(item,true)}>
+        <Icon fontSize="small" color="secondary">
+        notifications
+        </Icon>
+      </IconButton>}
+        {STAFF_STATUS.REJECT.includes(item.submitProfileStatus)&&
+        <IconButton size="small" onClick={()=>handleShowNotify(item,false)}>
+        <Icon fontSize="small" color="secondary">
+        notifications
+        </Icon>
+      </IconButton>}
       </div>
     );
   };
@@ -252,6 +273,22 @@ function Staff(props) {
             handleCloseAllDialog ={handleDialogClose}
             t ={t}
             isRegister={isRegister}
+            />
+            )}
+            {iShowAdditional && shouldOpenAdditionalDialog && (
+            <AdditionalDialog
+            handleCloseDialog ={handleDialogClose}
+            t ={t}
+            item={currentItem}
+            iShowAdditional={true}
+            />
+            )}
+            {!iShowAdditional && shouldOpenAdditionalDialog && (
+            <RejectionDialog
+            handleCloseDialog ={handleDialogClose}
+            t ={t}
+            item={currentItem}
+            isShowRejectReason={true}
             />
             )}
             
