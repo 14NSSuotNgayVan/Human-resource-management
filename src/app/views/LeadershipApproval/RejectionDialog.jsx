@@ -7,19 +7,25 @@ import { useDispatch } from "react-redux";
 
 const RejectionDialog = (props) => {
   const dispatch = useDispatch();
-  const { t, handleCloseDialog, item, isShowRejectReason } = props;
-  const [formData, setFormData] = useState({
-    rejectionDate: moment().format("YYYY-MM-DD"),
-    reasonForRejection: "",
-  });
+  const { t, handleCloseDialog, item, isShowRejectReason,isManage } = props;
+  const [formData, setFormData] = useState({...item});
   const handleSubmit = () => {
-    dispatch(
-      updateStaffAction({
-        ...item,
-        ...formData,
-        submitProfileStatus: "5",
-      })
-    );
+    if(isManage){
+      dispatch(
+        updateStaffAction({
+          ...formData,
+          submitProfileStatus: "9",
+        })
+      );
+    }else{
+      dispatch(
+        updateStaffAction({
+          ...formData,
+          submitProfileStatus: "5",
+        })
+      );
+    }
+
   };
   const handleChange = (event) => {
     event.persist();
@@ -53,8 +59,8 @@ const RejectionDialog = (props) => {
                 }
                 onChange={handleChange}
                 type="date"
-                name="rejectionDate"
-                value={formData?.rejectionDate}
+                name={isManage ? "refuseEndProfileDay":"rejectionDate"}
+                value={ (isManage ? formData?.refuseEndProfileDay : formData?.rejectionDate) ?? moment().format("YYYY-MM-DD")}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
                 variant="outlined"
@@ -72,8 +78,8 @@ const RejectionDialog = (props) => {
                   </span>
                 }
                 type="text"
-                name="reasonForRejection"
-                value={formData?.reasonForRejection}
+                name= {isManage? "reasonForRefuseEndProfile" : "reasonForRejection"}
+                value={(isManage ? formData?.reasonForRefuseEndProfile : formData?.reasonForRejection) || ""}
                 onChange={handleChange}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
@@ -82,7 +88,7 @@ const RejectionDialog = (props) => {
               />
             </>
           )}
-          {isShowRejectReason&&<p>{item?.reasonForRejection}</p>}
+          {isShowRejectReason&&<p>{isManage ? formData?.reasonForRefuseEndProfile : formData?.reasonForRejection}</p>}
         </DialogContent>
         <DialogActions spacing={4} className="flex flex-center flex-middle">
           {!isShowRejectReason && (

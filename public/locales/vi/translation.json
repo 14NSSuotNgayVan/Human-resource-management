@@ -5,7 +5,10 @@
     "LeadershipApproval":"Lãnh đạo chờ duyệt",
     "LeadershipApproved":"Lãnh đạo đã duyệt",
     "profile": "Thông tin tài khoản",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "manage":"Quản lý",
+    "manageStaff":"Quản lý nhân viên",
+    "leader":"Lãnh đạo"
   },
   "login": {
     "title": "Đăng nhập",
@@ -212,11 +215,11 @@
       "accepted": "Đã được chấp nhận",
       "additionalRequest": "Yêu cầu bổ xung",
       "rejected": "Từ chối",
-      "sendingEndProfile": "Chờ Duyệt yêu cầu kết thúc hồ sơ",
-      "endProfileAccepted": "Chấp nhận yêu cầu kết thúc hồ sơ",
-      "endProfileAdditionalRequest": "Yêu cầu bổ xung yêu cầu kết thúc hồ sơ",
-      "EndProfileRejected": "Từ chối yêu cầu kết thúc hồ sơ",
-      "savedProfile": "Nộp lưu hồ sơ"
+      "sendingEndProfile": "Chờ Duyệt yêu cầu kết thúc",
+      "endProfileAccepted": "Chấp nhận yêu cầu kết thúc",
+      "endProfileAdditionalRequest": "Yêu cầu bổ xung yêu cầu kết thúc",
+      "EndProfileRejected": "Từ chối yêu cầu kết thúc",
+      "savedProfile": " Đã nộp lưu"
     },
     "action": {
       "addStaff": "Thêm mới nhân viên",
