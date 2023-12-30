@@ -27,7 +27,7 @@ import { getAllExperiences } from "app/redux/actions/ExperienceAction";
 import { updateStaffAction } from "app/redux/actions/StaffActions";
 import SendLeaderDialog from "app/views/StaffDocument/SendLeaderDialog";
 const PendingApprovalDialog = (props) => {
-  const { t, handleCloseDialog,isPendingRegister,isRegister} = props;
+  const { t, handleCloseDialog,isPendingRegister,isRegister,handleCloseAllDialog} = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
@@ -124,7 +124,7 @@ const PendingApprovalDialog = (props) => {
         <RejectionDialog t={t} handleCloseDialog={handleCloseRejectionDialog} item={staff} />
       )}
       {shouldOpenSendLeaderDialog && (
-        <SendLeaderDialog t={t} handleCloseDialog={handleCloseSendLeaderDialog} item={staff} />
+        <SendLeaderDialog t={t} handleCloseDialog={handleCloseSendLeaderDialog} handleCloseParentDialog={handleCloseAllDialog} item={staff} />
       )}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         
