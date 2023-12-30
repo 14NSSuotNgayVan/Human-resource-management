@@ -16,6 +16,7 @@ import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 import AdditionalDialog from "../LeadershipApproval/AdditionalDialog";
 import RejectionDialog from "../LeadershipApproval/RejectionDialog";
+import ManageStaffDialog from "./ManageStaffDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -259,6 +260,13 @@ function ManageStaff(props) {
             )}
           </div>
           <div>
+          {showEditorDialog && (
+            <ManageStaffDialog
+            handleClose ={handleDialogClose}
+            t ={t}
+            handleShowDocumentDialog={handleShowDocumentDialog}
+            />
+            )}
           {shouldOpenDocumentDialog && (
             <PendingApprovalDialog
             handleCloseDialog ={handleCloseDocumentDialog}

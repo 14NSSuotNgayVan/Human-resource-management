@@ -20,6 +20,16 @@ export const ADD_STAFF_TABS = {
         name : "family_relationship"
     }
 }
+export const MANAGE_STAFF_TABS = {
+    SALARY_INCREMENT: {
+        value :1,
+        name : "salary_increment"
+    },
+    PROPOSAL:{
+        value :2,
+        name : "proposal"
+    }
+}
 export const LEADERSHIP_APPROVAL_TABS ={
     PENDING:{
         value :1,

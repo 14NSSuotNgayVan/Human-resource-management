@@ -138,6 +138,13 @@
     "leaderName":"Tên lãnh đạo",
     "leaderPosition":"Chức vụ"
   },
+  "manageStaff":{
+    "endProfile":"Kết thúc",
+    "showDocuments":"Xem hồ sơ",
+    "manageHappen":"Cập nhật diễn biến",
+    "salary_increment":"Tăng lương",
+    "proposal":"Thăng chức"
+  },
   "staff": {
     "title": "nhân viên",
     "name": "Tên nhân viên",
@@ -151,6 +158,13 @@
       "endDate":"Ngày kết thúc",
       "jobDescription":"Mô tả công việc",
       "leavingReason":"Lí do nghỉ việc"
+    },
+    "salary_increment":{
+      "startDate":"Ngày tăng lương",
+      "oldSalary":"Mức lương cũ",
+      "newSalary":"Mức lương mới",
+      "reason":"Lý do",
+      "note":"Ghi chú"
     },
     "team": "Nhóm",
     "documents": "Hồ sơ",
@@ -261,7 +275,8 @@
       "maxAgeValue_required": "Tuổi không phù hợp",
       "minAgeValue_required": "Tuổi phải lớn hơn 18",
       "invalidStringContent":"Vượt quá độ dài cho phép",
-      "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại"
+      "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại",
+      "invalidPositive":"Phải là số dương"
     }
   }
 }

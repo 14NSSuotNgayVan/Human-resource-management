@@ -206,7 +206,7 @@ const Certificates = (props) => {
                 name="content"
                 onChange={(e) => onChange(e, "content")}
                 value={certificate?.content || ""}
-                validators={["required","maxStringLength:1000"]}
+                validators={["required","maxStringLength:250"]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidStringContent")]}
                 variant="outlined"
                 size="small"
