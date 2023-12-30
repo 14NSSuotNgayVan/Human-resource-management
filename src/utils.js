@@ -2,11 +2,11 @@ import moment from "moment";
 
 export function debounce(func, wait, immediate) {
   var timeout;
-  return function() {
+  return function () {
     var context = this,
       args = arguments;
     clearTimeout(timeout);
-    timeout = setTimeout(function() {
+    timeout = setTimeout(function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
     }, wait);
@@ -15,11 +15,11 @@ export function debounce(func, wait, immediate) {
 }
 export function getNumberOfLines(inputString) {
   // Sử dụng split để tách chuỗi thành mảng các dòng
-  if(inputString){
+  if (inputString) {
     const lines = inputString.split(/\r?\n/);
     return Math.min(lines.length, 4);
     // Trả về số dòng, nhưng không vượt quá 4
-  }else return 1;
+  } else return 1;
 }
 export function removeEmptyLines(inputString) {
   // Sử dụng regex để thay thế các dòng trống bằng chuỗi rỗng
@@ -28,12 +28,12 @@ export function removeEmptyLines(inputString) {
   return resultString;
 }
 export function splitStringByNewLine(inputString) {
-  if(inputString!==null){
+  if (inputString !== null) {
 
     const resultArray = inputString.split("\n");
     const filteredArray = resultArray
-    .map((item) => item.trim())
-    .filter(Boolean);
+      .map((item) => item.trim())
+      .filter(Boolean);
     return filteredArray;
   } return null;
 }
@@ -50,7 +50,22 @@ export function wrapText(inputString, lineWidth) {
       resultString += char;
     }
   }
-
+  return resultString;
+}
+export function wrapText4(inputString, lineWidth) {
+  let resultString = '';
+  let currentLine = '';
+  let EnterCount = 0;
+  for (const char of inputString) {
+      if (char === ' ' && currentLine.length > lineWidth && EnterCount <3) {
+        resultString += '\n'; // Chèn dấu xuống dòng nếu độ rộng đã vượt quá
+        currentLine = '';
+        EnterCount++;
+      } else {
+        currentLine += char;
+        resultString += char;
+      }
+    }
   return resultString;
 }
 export function isMobile() {
@@ -116,7 +131,7 @@ export function scrollTo(scrollableElement, elmID) {
   if (stopY > startY) {
     for (var i = startY; i < stopY; i += step) {
       setTimeout(
-        (function(leapY) {
+        (function (leapY) {
           return () => {
             scrollableElement.scrollTo(0, leapY);
           };
@@ -131,7 +146,7 @@ export function scrollTo(scrollableElement, elmID) {
   }
   for (let i = startY; i > stopY; i -= step) {
     setTimeout(
-      (function(leapY) {
+      (function (leapY) {
         return () => {
           scrollableElement.scrollTo(0, leapY);
         };
@@ -173,7 +188,7 @@ export function getQueryParam(prop) {
     window.location.href.slice(window.location.href.indexOf("?") + 1)
   );
   var definitions = search.split("&");
-  definitions.forEach(function(val, key) {
+  definitions.forEach(function (val, key) {
     var parts = val.split("=", 2);
     params[parts[0]] = parts[1];
   });
