@@ -107,7 +107,7 @@ const PendingApprovalDialog = (props) => {
           </Tabs>
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
-          <DialogContent dividers spacing={1}>
+          <DialogContent className ="dialog-content-py">
             {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} setFormData={setFormData} formData={formData}/>}
             {tab === DOCUMENT_TABS.RESUME.value && <Resume t={t} item={formData} />}
             {tab === DOCUMENT_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={formData} />}

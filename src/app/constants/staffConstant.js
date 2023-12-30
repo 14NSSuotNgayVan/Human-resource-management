@@ -82,11 +82,12 @@ export const STAFF_STATUS = {
     NEW: "1",
     ADD: "1,2,4,5",
     REMOVE: "1",
-    EDIT: "1,4,5",
-    VIEW: "2",
+    EDIT: "1,4,5,3,8,9",
+    VIEW: "2,6,3,9",
     APPROVED:"0,3,7",
-    ADDITIONAL:"4",
-    REJECT:"5"
+    ADDITIONAL:"4,8",
+    REJECT:"5,9",
+    MANAGE:"3,6,8,9"
 }
 export const RELATIONSHIP = [
     {

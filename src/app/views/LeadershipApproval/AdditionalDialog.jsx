@@ -4,17 +4,28 @@ import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { useDispatch } from "react-redux";
 
-const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional }) => {
+const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const handleSubmit = () => {
-    dispatch(
-      updateStaffAction({
-        ...item,
-        additionalRequest: content,
-        submitProfileStatus: "4",
-      })
-    );
+    if(isManage){
+      dispatch(
+        updateStaffAction({
+          ...item,
+          additionalRequestTermination: content,
+          submitProfileStatus: "8",
+        })
+      );
+    }else{
+      dispatch(
+        updateStaffAction({
+          ...item,
+          additionalRequest: content,
+          submitProfileStatus: "4",
+        })
+      );
+    }
+    
   };
   const onChange = (event) => {
     setContent(event.target.value.trim());
@@ -42,8 +53,8 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional }) => {
                   </span>
                 }
                 type="text"
-                name="additionalRequest"
-                onChange={(e) => onChange(e, "additionalRequest")}
+                name={ isManage ? "additionalRequestTermination" : "additionalRequest"}
+                onChange={(e) => onChange(e)}
                 value={content}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
@@ -51,7 +62,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional }) => {
                 size="small"
               />
             )}
-            {iShowAdditional && item?.additionalRequest && <p>{item?.additionalRequest}</p>}
+            {iShowAdditional && <p>{isManage? item?.additionalRequestTermination : item?.additionalRequest}</p>}
           </DialogContent>
           <DialogActions spacing={4} className="flex flex-center flex-middle">
             {!iShowAdditional && (

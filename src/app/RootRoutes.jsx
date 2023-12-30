@@ -7,6 +7,7 @@ import pageLayoutRoutes from "./views/page-layouts/PageLayoutRoutees";
 import StaffRoutes from "./views/AddStaff/AddStaffRoutes"
 import LeadershipApprovalRoutes from "./views/LeadershipApproval/LeadershipApprovalRoutes";
 import LeadershipApprovedRoutes from "./views/LeadershipApproved/LeadershipApprovedRoutes";
+import ManageStaffRoutes from "./views/ManageStaff/ManageStaffRoutes";
 
 const redirectRoute = [
   {
@@ -29,6 +30,7 @@ const routes = [
   ...StaffRoutes,
   ...LeadershipApprovalRoutes,
   ...LeadershipApprovedRoutes,
+  ...ManageStaffRoutes,
   ...errorRoute,
 ];
 

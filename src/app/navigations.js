@@ -1,22 +1,38 @@
 import ConstantList from "./appConfig";
 export const navigations = [
   {
-    name: "Dashboard.addStaff",
+    name:"Dashboard.manage",
     isVisible: true,
-    path: ConstantList.ROOT_PATH + "staff_manager/AddStaff",
-    icon: "person"
+    icon: "person",
+    children:[
+      {
+        name: "Dashboard.addStaff",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "staff_manager/AddStaff",
+      },
+      {
+        name: "Dashboard.manageStaff",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "staff_manager/ManageStaff",
+      },
+    ]
   },
   {
-    name: "Dashboard.LeadershipApproval",
+    name:"Dashboard.leader",
     isVisible: true,
-    path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproval",
-    icon: "receipt"
+        icon: "receipt",
+    children:[
+      {
+        name: "Dashboard.LeadershipApproval",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproval",
+      },
+      {
+        name: "Dashboard.LeadershipApproved",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproved",
+      }
+    ]
   },
-  {
-    name: "Dashboard.LeadershipApproved",
-    isVisible: true,
-    path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproved",
-    icon: "receipt"
-  }
 
 ];
