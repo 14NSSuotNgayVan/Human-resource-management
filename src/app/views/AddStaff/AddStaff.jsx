@@ -74,8 +74,10 @@ function Staff(props) {
   };
 
   const handleDialogClose = useCallback(() => {
+    console.log("handleDialogClose")
     setShowEditorDialog(false);
     setShouldOpenConfirmationDialog(false);
+    setShouldOpenDocumentDialog(false);
   },[]);
   const handleCloseDocumentDialog = useCallback(() => {
     setShouldOpenDocumentDialog(false);
@@ -247,6 +249,7 @@ function Staff(props) {
             {shouldOpenDocumentDialog && (
             <PendingApprovalDialog
             handleCloseDialog ={handleCloseDocumentDialog}
+            handleCloseAllDialog ={handleDialogClose}
             t ={t}
             isRegister={isRegister}
             />

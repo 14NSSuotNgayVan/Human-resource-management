@@ -2,9 +2,12 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl,
 import { LEADER, LEADER_POSITION } from "app/constants/staffConstant";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { useDispatch} from "react-redux";
 import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-const SendLeaderDialog = ({handleCloseDialog,t,item}) => {
+import { updateStaffAction } from "app/redux/actions/StaffActions";
+const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) => {
     const [formData,setFormData] = useState({});
+    const dispatch = useDispatch();
     useEffect(() =>{
         setFormData({
             ...item
@@ -17,6 +20,7 @@ const SendLeaderDialog = ({handleCloseDialog,t,item}) => {
                 setFormData({
                     ...formData,
                     leaderId: value,
+                    leaderName:LEADER.find(item=>item.id===value)?.leaderName,
                     leaderPosition: LEADER.find(item=>item.id===value)?.leaderPosition
                   });
                   break;
@@ -30,7 +34,11 @@ const SendLeaderDialog = ({handleCloseDialog,t,item}) => {
         }
       };
     const handleSubmit =()=>{
-        
+        dispatch(updateStaffAction({
+          ...formData,
+          submitProfileStatus:"2",
+        }));
+        handleCloseParentDialog();
     }
 
   return (
@@ -156,7 +164,7 @@ const SendLeaderDialog = ({handleCloseDialog,t,item}) => {
               color="primary"
               type ="submit"
             >
-              {t("general.save")}
+              {t("sendLeader.sendLeader_display")}
             </Button>
             <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
               {t("general.cancel")}
