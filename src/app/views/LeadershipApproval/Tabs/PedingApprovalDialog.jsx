@@ -25,12 +25,14 @@ import Resume from "app/views/StaffDocument/CustomResume";
 import CustomCertificate from "app/views/StaffDocument/CustomCertificate";
 import { getAllExperiences } from "app/redux/actions/ExperienceAction";
 import { updateStaffAction } from "app/redux/actions/StaffActions";
+import SendLeaderDialog from "app/views/StaffDocument/SendLeaderDialog";
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog,isPendingRegister,isRegister} = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
+  const [shouldOpenSendLeaderDialog, setShouldOpenSendLeaderDialog] = useState(false);
   const staff = useSelector(staffSelector);
   const [formData,setFormData] =useState({});
   const shouldUpdateStaff = useSelector(shouldUpdateSelector);
@@ -64,6 +66,9 @@ const PendingApprovalDialog = (props) => {
   };
   const handleCloseApprovalConfirmDialog = useCallback(() => {
     setShouldOpenApprovalDialog(false);
+  }, []);
+  const handleCloseSendLeaderDialog = useCallback(() => {
+    setShouldOpenSendLeaderDialog(false);
   }, []);
   const handleUpdateStaff =()=>{
     dispatch(updateStaffAction(formData));
@@ -118,13 +123,16 @@ const PendingApprovalDialog = (props) => {
       {shouldOpenRejectionDialog && (
         <RejectionDialog t={t} handleCloseDialog={handleCloseRejectionDialog} item={staff} />
       )}
+      {shouldOpenSendLeaderDialog && (
+        <SendLeaderDialog t={t} handleCloseDialog={handleCloseSendLeaderDialog} item={staff} />
+      )}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         
         {isRegister && <Button
           variant="contained"
           color="primary"
           onClick={() => {
-            
+            setShouldOpenSendLeaderDialog(true);
           }}
         >
           {t("general.sendLeader")}

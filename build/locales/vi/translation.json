@@ -128,6 +128,12 @@
     "rejectionDate":"Ngày từ chối",
     "reasonForRejection":"Lí do từ chối"
   },
+  "sendLeader":{
+    "submitDay":"Ngày trình",
+    "submitContent":"Nội dung",
+    "leaderName":"Tên lãnh đạo",
+    "leaderPosition":"Chức vụ"
+  },
   "staff": {
     "title": "nhân viên",
     "name": "Tên nhân viên",

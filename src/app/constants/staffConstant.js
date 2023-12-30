@@ -121,3 +121,48 @@ export const RELATIONSHIP = [
     },
 ]
 
+export const LEADER = [
+    {
+        "id": 36,
+        "leaderName": "Nguyen Van B",
+        "leaderPosition": 3,
+        "activeStatus": 1,
+        "userId": 7
+    },
+    {
+        "id": 35,
+        "leaderName": "Nguyen Van E",
+        "leaderPosition": 3,
+        "activeStatus": 2,
+        "userId": 6
+    },
+    {
+        "id": 34,
+        "leaderName": "Nguyen Van D",
+        "leaderPosition": 3,
+        "activeStatus": 1,
+        "userId": 5
+    },
+    {
+        "id": 2,
+        "leaderName": "Nguyen Van C",
+        "leaderPosition": 2,
+        "activeStatus": 1,
+        "userId": 4
+    },
+    {
+        "id": 1,
+        "leaderName": "Nguyen Van A",
+        "leaderPosition": 4,
+        "activeStatus": 1,
+        "userId": 3
+    }
+]
+export const LEADER_POSITION=[
+    {name: "Trưởng nhóm BA",id:0},
+    {name: "Trưởng nhóm Tester",id:1},
+    {name: "Trưởng nhóm Front-End",id:2},
+    {name: "Trưởng nhóm Back-End",id:3},
+    {name: "Trưởng nhóm PHP",id:4},
+    {name: "Trưởng nhóm Android",id:5},
+]
