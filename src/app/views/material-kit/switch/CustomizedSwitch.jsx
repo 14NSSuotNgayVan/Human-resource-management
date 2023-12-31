@@ -142,7 +142,7 @@ export default function CustomizedSwitch() {
         label="iOS style"
       />
       <Typography component="div">
-        <Grid component="label" container alignItems="center" spacing={1}>
+        <Grid component="label" container alignItems="center" spacing={2}>
           <Grid item>Off</Grid>
           <Grid item>
             <AntSwitch

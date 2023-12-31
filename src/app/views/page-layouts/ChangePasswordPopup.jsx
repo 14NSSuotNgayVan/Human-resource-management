@@ -100,7 +100,7 @@ class ChangePasswordPopup extends React.Component {
         </DialogTitle>
         <ValidatorForm ref="form">
           <DialogContent>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
               <Grid item md={12} sm={12} xs={12}>
                 <FormControl fullWidth margin="dense">
                   <TextValidator

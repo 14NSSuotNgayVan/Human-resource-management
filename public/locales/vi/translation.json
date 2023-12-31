@@ -143,7 +143,8 @@
     "showDocuments":"Xem hồ sơ",
     "manageHappen":"Cập nhật diễn biến",
     "salary_increment":"Tăng lương",
-    "proposal":"Thăng chức"
+    "proposal":"Đề xuất",
+    "promotion":"Thăng chức"
   },
   "staff": {
     "title": "nhân viên",
@@ -164,6 +165,12 @@
       "oldSalary":"Mức lương cũ",
       "newSalary":"Mức lương mới",
       "reason":"Lý do",
+      "note":"Ghi chú"
+    },
+    "promotion":{
+      "promotionDay":"Ngày thăng chức",
+      "currentPosition":"Chức vụ hiện tại",
+      "newPosition":"Chức vụ đề xuất",
       "note":"Ghi chú"
     },
     "team": "Nhóm",

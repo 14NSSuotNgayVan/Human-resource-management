@@ -148,7 +148,7 @@ const CustomCV = (props) => {
                       multiline
                       rows={skillLine}
                       fullWidth
-                      variant="outlined"
+                      
                       className="mt-16 profile-input-text"
                       name="skill"
                       value={formData?.skill || ""}
@@ -239,7 +239,7 @@ const CustomCV = (props) => {
                           multiline
                           rows={activityLine}
                           fullWidth
-                          variant="outlined"
+                          
                           className="mt-16 profile-input-text"
                           name="activity"
                           value={formData?.activity || ""}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import SalaryIncrement from "./Tabs/SalaryIncrement";
+import Promotion from "./Tabs/Promotion";
 const {
   Dialog,
   Paper,
@@ -51,7 +52,7 @@ const AddStaffDialog = (props) => {
           </Icon>
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers spacing={1}>
+      <DialogContent dividers spacing={2}>
         <Grid container>
           <Grid item xs={12} lg={12} md={12} sm={12}>
             <Grid container spacing={2} className="pb-16"> 
@@ -150,14 +151,17 @@ const AddStaffDialog = (props) => {
                 value={MANAGE_STAFF_TABS.SALARY_INCREMENT.value}
               />
               <Tab
-                label={t(`manageStaff.${MANAGE_STAFF_TABS.PROPOSAL.name}`)}
-                value={MANAGE_STAFF_TABS.PROPOSAL.value}
+                label={t(`manageStaff.${MANAGE_STAFF_TABS.PROMOTION.name}`)}
+                value={MANAGE_STAFF_TABS.PROMOTION.value}
               />
             </Tabs>
           </Grid>
           <Grid item xs={12} lg={12} md={12} sm={12}>
             {tab === MANAGE_STAFF_TABS.SALARY_INCREMENT.value &&
             <SalaryIncrement item={staff} t={t}/>
+            }
+            {tab === MANAGE_STAFF_TABS.PROMOTION.value &&
+            <Promotion item={staff} t={t}/>
             }
               </Grid>
         </Grid>

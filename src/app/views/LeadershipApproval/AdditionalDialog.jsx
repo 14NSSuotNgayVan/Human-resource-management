@@ -42,7 +42,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
-          <DialogContent dividers spacing={1} className="overflow-none">
+          <DialogContent dividers spacing={2} className="overflow-none">
             {!iShowAdditional && (
               <TextValidator
                 className={"w-100 mb-16"}
@@ -58,7 +58,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
                 value={content}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
-                variant="outlined"
+                
                 size="small"
               />
             )}

@@ -64,7 +64,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit ={handleSubmit} className="p-8" ref={exForm}>
-          <DialogContent dividers spacing={1} className="overflow-none">
+          <DialogContent dividers spacing={2} className="overflow-none">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <TextValidator
@@ -81,7 +81,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   value={experience?.companyName || ""}
                   validators={["required",`matchRegexp:${NAME_REGEX}`]}
                   errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
-                  variant="outlined"
+                  
                   size="small"
                 />
               </Grid>
@@ -100,7 +100,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   value={experience?.companyAddress || ""}
                   validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
                   errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
-                  variant="outlined"
+                  
                   size="small"
                 />
               </Grid>
@@ -119,10 +119,13 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   inputProps={{
                     max:moment().format("YYYY-MM-DD")
                   }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   value={experience?.startDate ? moment(experience?.startDate).format("YYYY-MM-DD") : ""}
                   validators={["required"]}
                   errorMessages={[t("staff.notify.errorMessages_required")]}
-                  variant="outlined"
+                  
                   size="small"
                 />
               </Grid>
@@ -145,7 +148,9 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   value={experience?.endDate ? moment(experience?.endDate).format("YYYY-MM-DD") : ""}
                   validators={["required"]}
                   errorMessages={[t("staff.notify.errorMessages_required")]}
-                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}      
                   size="small"
                 />
               </Grid>
@@ -166,7 +171,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   value={experience?.jobDescription || ""}
                   validators={["required","maxStringLength:250"]}
                   errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidStringContent")]}
-                  variant="outlined"
+                  
                   size="small"
                 />
               </Grid>
@@ -175,7 +180,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   multiline
                   rows={reasonRow}
                   fullWidth
-                  variant="outlined"
+                  
                   className={"w-100 mb-16"}
                   label={
                     <span className="inputLabel">

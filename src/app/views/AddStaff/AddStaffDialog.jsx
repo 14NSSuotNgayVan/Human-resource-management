@@ -105,7 +105,7 @@ const AddStaffDialog = (props) => {
         </Tabs>
       </DialogTitle>
 
-      <DialogContent dividers spacing={1}>
+      <DialogContent dividers spacing={2}>
         {tab === ADD_STAFF_TABS.INFORMATION.value && (
           <StaffInformation item={staff} t={t} formRef={informationFormRef} handleCloseDialog ={handleClose}/>
         )}

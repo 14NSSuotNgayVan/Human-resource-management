@@ -25,9 +25,9 @@ export const MANAGE_STAFF_TABS = {
         value :1,
         name : "salary_increment"
     },
-    PROPOSAL:{
+    PROMOTION:{
         value :2,
-        name : "proposal"
+        name : "promotion"
     }
 }
 export const LEADERSHIP_APPROVAL_TABS ={
@@ -178,4 +178,13 @@ export const LEADER_POSITION=[
     {name: "Trưởng nhóm Back-End",id:3},
     {name: "Trưởng nhóm PHP",id:4},
     {name: "Trưởng nhóm Android",id:5},
+]
+export const STAFF_POSITION =[
+    {name:"Nhân viên",id:1},
+    {name:"Phó nhóm",id:2},
+    {name:"Trưởng nhóm",id:3},
+    {name:"Phó phòng",id:4},
+    {name:"Trưởng phòng",id:5},
+    {name:"Phó giám đốc",id:6},
+    {name:"Giám đốc",id:7},
 ]

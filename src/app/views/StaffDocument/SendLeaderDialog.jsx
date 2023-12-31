@@ -53,7 +53,7 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
-          <DialogContent dividers spacing={1} className="overflow-none">
+          <DialogContent dividers spacing={2} className="overflow-none">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <TextValidator
@@ -73,14 +73,16 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
                   value={formData?.submitDay ? moment(formData?.submitDay).format("YYYY-MM-DD") : ""}
                   validators={["required"]}
                   errorMessages={[t("staff.notify.errorMessages_required")]}
-                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}      
                   size="small"
                 />
               </Grid>
               <Grid item lg={4} md={4} sm={12} xs={12}>
-                <FormControl fullWidth={true} variant="outlined" className="" size="small">
+                <FormControl fullWidth={true}  className="" size="small">
                   <SelectValidator
-                    variant="outlined"
+                    
                     size="small"
                     label={
                       <span className="inputLabel">
@@ -108,9 +110,9 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
                 </FormControl>
               </Grid>
               <Grid item lg={4} md={4} sm={12} xs={12}>
-                <FormControl fullWidth={true} variant="outlined" className="" size="small">
+                <FormControl fullWidth={true}  className="" size="small">
                   <SelectValidator
-                    variant="outlined"
+                    
                     size="small"
                     inputProps={{
                         readOnly: true
@@ -140,7 +142,7 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextValidator
                   fullWidth
-                  variant="outlined"
+                  
                   className={"w-100 mb-16"}
                   label={
                     <span className="inputLabel">

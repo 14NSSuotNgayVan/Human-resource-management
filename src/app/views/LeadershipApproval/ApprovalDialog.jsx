@@ -35,7 +35,7 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
-          <DialogContent dividers spacing={1}>
+          <DialogContent dividers spacing={2}>
             <TextValidator
               className="w-100 mb-16"
               label={
@@ -50,7 +50,9 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
               value={appointmentDate}
               validators={["required", "isAfterDay"]}
               errorMessages={[t("staff.notify.errorMessages_required")]}
-              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}  
               size="small"
               inputProps={{
                 min: moment().format("YYYY-MM-DD"),

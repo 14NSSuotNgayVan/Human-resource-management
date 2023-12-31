@@ -5,7 +5,7 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { LEADER, NAME_REGEX, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
+import { LEADER, NAME_REGEX, STAFF_POSITION, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import { wrapText4 } from "utils";
 
@@ -26,23 +26,23 @@ const Action = (props) => {
     </div>
   );
 };
-const SalaryIncrement = (props) => {
+const Promotion = (props) => {
   const { t, item } = props;
   const dispatch = useDispatch();
-  const salaryList = [];
-  const [salariesByPage, setSalariesByPage] = useState([]);
+  const promotionList = [];
+  const [promotionsByPage, setPromotionsByPage] = useState([]);
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
 
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  const [salary, setSalary] = useState({});
+  const [promotion, setPromotion] = useState({});
   const form = useRef(null);
   const updatePageData = () => {
-    const salaries = [...salaryList];
+    const salaries = [...promotionList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
     const pageData = salaries.slice(startOfPage, endOfPage);
-    setSalariesByPage(pageData);
+    setPromotionsByPage(pageData);
     setTotalElement(salaries.length);
   };
   useEffect(() => {
@@ -51,21 +51,21 @@ const SalaryIncrement = (props) => {
   }, [pagePagination]);
   const handleSubmit = () => {};
   const handleClose = () => {
-    setSalary(null);
+    setPromotion(null);
     setShowConfirmationDialog(false);
   };
   const onChange = (event, field) => {
-    setSalary({ ...salary, [field]: event.target.value });
+    setPromotion({ ...promotion, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
     setShowConfirmationDialog(true);
-    setSalary({ id: id });
+    setPromotion({ id: id });
   };
   const handleConfirmDelete = () => {
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
-    setSalary({ ...item });
+    setPromotion({ ...item });
   };
   let columns = [
     {
@@ -84,28 +84,34 @@ const SalaryIncrement = (props) => {
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
     {
-      title: t("staff.salary_increment.startDate"),
-      field: "startDate",
+      title: t("staff.promotion.promotionDay"),
+      field: "promotionDay",
       align: "center",
       minWidth: "120px",
-      render: (props) => <span>{moment(new Date(props?.startDate)).format("DD/MM/YYYY")}</span>,
+      render: (props) => <span>{moment(new Date(props?.promotionDay)).format("DD/MM/YYYY")}</span>,
     },
     {
-      title: t("staff.salary_increment.oldSalary"),
-      field: "oldSalary",
-      align: "right",
+      title: t("staff.promotion.currentPosition"),
+      field: "currentPosition",
+      align: "left",
       minWidth: "150px",
       maxWidth: "250px",
     },
     {
-      title: t("staff.salary_increment.newSalary"),
-      field: "newSalary",
-      align: "right",
+      title: t("staff.promotion.newPosition"),
+      field: "newPosition",
+      align: "left",
       minWidth: "150px",
       maxWidth: "250px",
     },
-    { title: t("staff.salary_increment.reason"), field: "reason", align: "left", minWidth: "170px",maxWidth: "200px",
-    render: (props) => wrapText4(props?.reason,200), },
+    {
+      title: t("staff.promotion.note"),
+      field: "note",
+      align: "left",
+      minWidth: "170px",
+      maxWidth: "200px",
+      render: (props) => wrapText4(props?.note,200),
+    },
     {
       title: t("staff.submit_profile_status_display"),
       field: "submitProfileStatus",
@@ -127,59 +133,80 @@ const SalaryIncrement = (props) => {
                 label={
                   <span className="inputLabel">
                     <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.startDate")}
+                    {t("staff.promotion.promotionDay")}
                   </span>
                 }
-                onChange={(e) => onChange(e, "startDate")}
+                onChange={(e) => onChange(e, "promotionDay")}
                 type="date"
-                name="startDate"
-                value={
-                  salary?.startDate ? moment(salary?.startDate).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD")
-                }
                 InputLabelProps={{
                   shrink: true,
                 }}    
+                name="promotionDay"
+                value={
+                  promotion?.promotionDay
+                    ? moment(promotion?.promotionDay).format("YYYY-MM-DD")
+                    : moment().format("YYYY-MM-DD")
+                }
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
                 size="small"
               />
             </Grid>
             <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.oldSalary")}
-                  </span>
-                }
-                type="text"
-                name="oldSalary"
-                value={salary?.oldSalary || ""}
-                onChange={(e) => onChange(e, "oldSalary")}
-                validators={["required", "isPositive"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive")]}
-                size="small"
-              />
+              <FormControl fullWidth={true} className="" size="small">
+                <SelectValidator
+                  size="small"
+                  label={
+                    <span className="inputLabel">
+                      <span style={{ color: "red" }}> * </span>
+                      {t("staff.promotion.currentPosition")}
+                    </span>
+                  }
+                  value={promotion?.currentPosition ?? 1}
+                  inputProps={{
+                    readOnly: true,
+                  }}
+                  onChange={(e) => onChange(e, "currentPosition")}
+                  validators={["required"]}
+                  errorMessages={[t("staff.notify.errorMessages_required")]}
+                  className="w-100 mb-16"
+                >
+                  {STAFF_POSITION?.map((item) => {
+                    return (
+                      <MenuItem key={item?.id} value={item?.id}>
+                        {item?.name}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectValidator>
+              </FormControl>
             </Grid>
 
             <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.newSalary")}
-                  </span>
-                }
-                type="text"
-                name="newSalary"
-                onChange={(e) => onChange(e, "newSalary")}
-                value={salary?.newSalary || ""}
-                validators={["required", "isPositive"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive")]}
-                size="small"
-              />
+              <FormControl fullWidth={true} className="" size="small">
+                <SelectValidator
+                  size="small"
+                  label={
+                    <span className="inputLabel">
+                      <span style={{ color: "red" }}> * </span>
+                      {t("staff.promotion.newPosition")}
+                    </span>
+                  }
+                  value={promotion?.newPosition ?? ""}
+                  onChange={(e) => onChange(e, "newPosition")}
+                  validators={["required"]}
+                  errorMessages={[t("staff.notify.errorMessages_required")]}
+                  className="w-100 mb-16"
+                >
+                  {STAFF_POSITION?.map((item) => {
+                    return (
+                      <MenuItem key={item?.id} value={item?.id}>
+                        {item?.name}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectValidator>
+              </FormControl>
             </Grid>
             <Grid item xs={6} sm={6} md={3} lg={3}>
               <TextValidator
@@ -187,34 +214,13 @@ const SalaryIncrement = (props) => {
                 label={
                   <span className="inputLabel">
                     <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.reason")}
-                  </span>
-                }
-                type="text"
-                name="reason"
-                onChange={(e) => onChange(e, "reason")}
-                value={salary?.reason || ""}
-                validators={["required", "maxStringLength:250"]}
-                errorMessages={[
-                  t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(250 kí tự)`,
-                ]}
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.note")}
+                    {t("staff.promotion.note")}
                   </span>
                 }
                 type="text"
                 name="note"
                 onChange={(e) => onChange(e, "note")}
-                value={salary?.note || ""}
+                value={promotion?.note || ""}
                 validators={["required", "maxStringLength:250"]}
                 errorMessages={[
                   t("staff.notify.errorMessages_required"),
@@ -233,9 +239,9 @@ const SalaryIncrement = (props) => {
                       {t("sendLeader.leaderName")}
                     </span>
                   }
-                  value={salary?.leaderId ?? ""}
+                  value={promotion?.leaderId ?? ""}
                   inputProps={{
-                    readOnly: salary?.leaderId && salary?.salaryIncreaseStatus === "4",
+                    readOnly: promotion?.leaderId && promotion?.salaryIncreaseStatus === "4",
                   }}
                   onChange={(e) => onChange(e, "leaderId")}
                   validators={["required"]}
@@ -276,7 +282,7 @@ const SalaryIncrement = (props) => {
       )}
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomTable
-          data={salariesByPage}
+          data={promotionsByPage}
           columns={columns}
           totalElements={totalElement}
           pagePagination={pagePagination}
@@ -286,4 +292,4 @@ const SalaryIncrement = (props) => {
     </Grid>
   );
 };
-export default SalaryIncrement;
+export default Promotion;
