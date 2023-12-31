@@ -1,10 +1,11 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useState } from "react";
 import { ADD_STAFF_TABS, GENDER, MANAGE_STAFF_TABS } from "app/constants/staffConstant";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import SalaryIncrement from "./Tabs/SalaryIncrement";
 import Promotion from "./Tabs/Promotion";
+import EndProfileDialog from "./EndProfileDialog";
 const {
   Dialog,
   Paper,
@@ -30,9 +31,15 @@ toast.configure({
 const AddStaffDialog = (props) => {
   const { handleClose, t, handleShowDocumentDialog } = props;
   const staff = useSelector(staffSelector);
-  const dispatch = useDispatch();
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
-  const handleSubmit = () => {};
+  const [showEndProfileDialog, setShowEndProfileDialog] = useState(false);
+  const handleSubmit = () => {
+    setShowEndProfileDialog(true);
+  };
+
+  const handleCloseEndProfileDialog = () => {
+    setShowEndProfileDialog(false);
+  };
   return (
     <Dialog
       open={true}
@@ -55,7 +62,7 @@ const AddStaffDialog = (props) => {
       <DialogContent dividers spacing={2}>
         <Grid container>
           <Grid item xs={12} lg={12} md={12} sm={12}>
-            <Grid container spacing={2} className="pb-16"> 
+            <Grid container spacing={2} className="pb-16">
               <Grid item xs={3} className="flex flex-center">
                 <Grid item className="staff-avatar max-width-height">
                   <img alt="avatar" src={staff?.image || "/assets/images/avatar.jpg"} />
@@ -157,14 +164,18 @@ const AddStaffDialog = (props) => {
             </Tabs>
           </Grid>
           <Grid item xs={12} lg={12} md={12} sm={12}>
-            {tab === MANAGE_STAFF_TABS.SALARY_INCREMENT.value &&
-            <SalaryIncrement item={staff} t={t}/>
-            }
-            {tab === MANAGE_STAFF_TABS.PROMOTION.value &&
-            <Promotion item={staff} t={t}/>
-            }
-              </Grid>
+            {tab === MANAGE_STAFF_TABS.SALARY_INCREMENT.value && <SalaryIncrement item={staff} t={t} />}
+            {tab === MANAGE_STAFF_TABS.PROMOTION.value && <Promotion item={staff} t={t} />}
+          </Grid>
         </Grid>
+        {showEndProfileDialog && (
+          <EndProfileDialog
+            t={t}
+            handleCloseParentDialog={handleClose}
+            item={staff}
+            handleCloseDialog={handleCloseEndProfileDialog}
+          />
+        )}
       </DialogContent>
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         <Button

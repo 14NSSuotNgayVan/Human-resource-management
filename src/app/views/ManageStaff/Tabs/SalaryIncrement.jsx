@@ -3,10 +3,9 @@ import { Button, FormControl, Grid, Icon, IconButton, MenuItem } from "@material
 import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import moment from "moment";
 import CustomTable from "app/component/CustomTable";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { LEADER, NAME_REGEX, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
-import { staffSelector } from "app/redux/selectors/StaffSelector";
+import { LEADER, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
 import { wrapText4 } from "utils";
 
 const Action = (props) => {
