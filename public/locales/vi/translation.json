@@ -102,7 +102,8 @@
     "confirmCalculator": "Bạn có chắc chắn muốn lưu?",
     "add_file": "Thêm tài liệu",
     "allProduct": "Tất cả sản phẩm"
-    ,"sendLeader":"Gửi lãnh đạo"
+    ,"sendLeader":"Gửi lãnh đạo",
+    "accept":"Chấp nhận"
   },
   "toast": {
     "error": "Có lỗi xảy ra, vui lòng thử lại."
@@ -172,6 +173,11 @@
       "currentPosition":"Chức vụ hiện tại",
       "newPosition":"Chức vụ đề xuất",
       "note":"Ghi chú"
+    },
+    "endProfile":{
+      "endDay":"Ngày yêu cầu nghỉ việc",
+      "reasonForEnding":"Lí do nghỉ việc",
+      "endProfile_display":"Kết thúc hồ sơ"
     },
     "team": "Nhóm",
     "documents": "Hồ sơ",

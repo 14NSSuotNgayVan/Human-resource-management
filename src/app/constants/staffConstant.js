@@ -93,7 +93,7 @@ export const STAFF_STATUS = {
     ADD: "1,2,4,5",
     REMOVE: "1",
     EDIT: "1,4,5,3,8,9",
-    VIEW: "2,6,3,9",
+    VIEW: "2,6,3,8,9",
     APPROVED:"0,3,7",
     ADDITIONAL:"4,8",
     REJECT:"5,9",
