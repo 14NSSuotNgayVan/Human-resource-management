@@ -456,7 +456,7 @@ class UserProfile extends Component {
                       this.handleChange(firstName, "firstName")
                     }
                     size="small"
-                    variant="outlined"
+                    
                     validators={["required"]}
                     errorMessages={[t("general.errorMessages_required")]}
                     className="w-100"
@@ -473,7 +473,7 @@ class UserProfile extends Component {
                       </span>
                     }
                     size="small"
-                    variant="outlined"
+                    
                     value={
                       this.state.person != null
                         ? this.state.person.lastName
@@ -498,7 +498,7 @@ class UserProfile extends Component {
                       </span>
                     }
                     size="small"
-                    variant="outlined"
+                    
                     value={
                       this.state.displayName != null
                         ? this.state.displayName
@@ -530,7 +530,7 @@ class UserProfile extends Component {
                       </span>
                     }
                     size="small"
-                    variant="outlined"
+                    
                     onChange={this.handleChange}
                     type="text"
                     name="email"
@@ -544,7 +544,7 @@ class UserProfile extends Component {
                   <TextValidator
                     className="w-100"
                     size="small"
-                    variant="outlined"
+                    
                     label={<span className="font">{t("user.username")}</span>}
                     onChange={this.handleChange}
                     type="text"
@@ -557,7 +557,7 @@ class UserProfile extends Component {
                 </Grid>
 
                 <Grid item lg={4} md={4} sm={12} xs={12}>
-                  <FormControl fullWidth={true} size="small" variant="outlined">
+                  <FormControl fullWidth={true} size="small" >
                     <InputLabel htmlFor="gender-simple">
                       {<span className="font">{t("user.gender")}</span>}
                     </InputLabel>
@@ -621,7 +621,7 @@ class UserProfile extends Component {
                     value={name}
                     validators={["required"]}
                     errorMessages={[t("general.errorMessages_required")]}
-                    variant="outlined"
+                    
                     size="small"
                   />
                 </Grid>
@@ -636,7 +636,7 @@ class UserProfile extends Component {
                     type="text"
                     name="code"
                     value={code}
-                    variant="outlined"
+                    
                     size="small"
                   />
                 </Grid>
@@ -655,7 +655,7 @@ class UserProfile extends Component {
                     value={address}
                     validators={["required"]}
                     errorMessages={[t("general.errorMessages_required")]}
-                    variant="outlined"
+                    
                     size="small"
                   />
                 </Grid>
@@ -672,7 +672,7 @@ class UserProfile extends Component {
                     type="number"
                     name="contactPhone"
                     value={contactPhone ? contactPhone : ""}
-                    variant="outlined"
+                    
                     size="small"
                     // validators={[ "matchRegexp:^[0-9]*$", "isLengthNumber"]}
                     // errorMessages={[ t("general.errorMessages_phone_number_invalid"),
@@ -697,7 +697,7 @@ class UserProfile extends Component {
                       t("general.errorMessages_required"),
                       t("general.errorMessages_email_valid"),
                     ]}
-                    variant="outlined"
+                    
                     size="small"
                   />
                 </Grid>
@@ -713,7 +713,7 @@ class UserProfile extends Component {
                     type="text"
                     name="contactName"
                     value={contactName ? contactName : ""}
-                    variant="outlined"
+                    
                     size="small"
                     validators={["required"]}
                     errorMessages={[t("general.errorMessages_required")]}
@@ -722,7 +722,7 @@ class UserProfile extends Component {
                 <Grid item lg={4} md={4} sm={12} xs={12}>
                   <FormControlLabel
                     disabled
-                    variant="outlined"
+                    
                     size="small"
                     label={
                       <span style={{ fontSize: "115%" }} className="font">

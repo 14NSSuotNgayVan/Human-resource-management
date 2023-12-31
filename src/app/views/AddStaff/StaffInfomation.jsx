@@ -118,7 +118,7 @@ const StaffInformation = (props) => {
             </label>
           </Grid>
         </Grid>
-        <Grid container spacing={1} xs={12} sm={12} md={8} lg={8} className="p-8">
+        <Grid container spacing={2} xs={12} sm={12} md={8} lg={8} className="p-8">
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <TextValidator
               className={"w-100 mb-16"}
@@ -134,7 +134,7 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "name")}
               validators={["required", `matchRegexp:${NAME_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
@@ -153,14 +153,14 @@ const StaffInformation = (props) => {
               value={staff?.code || ""}
               validators={["required", `matchRegexp:^NV${new Date().getFullYear().toString().slice(-2)}\\d{3}$`]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidCodeFormat")]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
-            <FormControl fullWidth={true} variant="outlined" className="" size="small">
+            <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
-                variant="outlined"
+                
                 size="small"
                 label={
                   <span className="inputLabel">
@@ -203,7 +203,9 @@ const StaffInformation = (props) => {
               value={staff?.dateOfBirth ? moment(staff?.dateOfBirth).format("YYYY-MM-DD") : ""}
               validators={["required", "isValidBirthday"]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidBirthday")]}
-              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}  
               size="small"
             />
           </Grid>
@@ -222,14 +224,14 @@ const StaffInformation = (props) => {
               value={staff?.address || ""}
               validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
-            <FormControl fullWidth={true} variant="outlined" className="" size="small">
+            <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
-                variant="outlined"
+                
                 size="small"
                 label={
                   <span className="inputLabel">
@@ -275,7 +277,7 @@ const StaffInformation = (props) => {
                 t("staff.notify.errorMessages_required"),
                 t("staff.notify.inValidCitizenIdentificationNumber"),
               ]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
@@ -298,7 +300,9 @@ const StaffInformation = (props) => {
               value={staff?.dateOfIssuanceCard ? moment(staff?.dateOfIssuanceCard).format("YYYY-MM-DD") : ""}
               validators={["required"]}
               errorMessages={[t("staff.notify.errorMessages_required")]}
-              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}  
               size="small"
             />
           </Grid>
@@ -318,7 +322,7 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "placeOfIssueCard")}
               validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
@@ -337,7 +341,7 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "ethnic")}
               validators={["required",`matchRegexp:${NAME_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidEthnic")]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
@@ -357,7 +361,7 @@ const StaffInformation = (props) => {
               validators={["required",`matchRegexp:${NAME_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),
               t("staff.notify.invalidReligion"),]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
@@ -380,7 +384,7 @@ const StaffInformation = (props) => {
                 t("staff.notify.errorMessages_number_required"),
                 t("staff.notify.invalidPhoneFormat"),
               ]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>
@@ -399,7 +403,7 @@ const StaffInformation = (props) => {
               value={staff?.email || ""}
               validators={["required", "isEmail"]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.errorMessages_email_valid")]}
-              variant="outlined"
+              
               size="small"
             />
           </Grid>

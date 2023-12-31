@@ -52,7 +52,7 @@ export function wrapText(inputString, lineWidth) {
   }
   return resultString;
 }
-export function wrapText4(inputString, lineWidth) {
+export function wrapText4(inputString, lineWidth = 200) {
   let resultString = '';
   let currentLine = '';
   let EnterCount = 0;

@@ -128,7 +128,7 @@ const Certificates = (props) => {
     <Grid container>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <ValidatorForm onSubmit={handleSubmit} ref={form}>
-          <Grid container spacing={1} className="p-12">
+          <Grid container spacing={2} className="p-12">
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <TextValidator
                 className={"w-100 mb-16"}
@@ -145,7 +145,7 @@ const Certificates = (props) => {
                 onChange={(e) => onChange(e, "certificateName")}
                 validators={["required",`matchRegexp:${NAME_REGEX}`]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidName")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
@@ -166,9 +166,12 @@ const Certificates = (props) => {
                 inputProps={{
                   max:moment().format("YYYY-MM-DD"),
                 }}
+                InputLabelProps={{
+                  shrink: true,
+                }}    
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
@@ -188,7 +191,7 @@ const Certificates = (props) => {
                 value={certificate?.field || ""}
                 validators={["required",`matchRegexp:${NAME_REGEX}`]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidField")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
@@ -208,7 +211,7 @@ const Certificates = (props) => {
                 value={certificate?.content || ""}
                 validators={["required","maxStringLength:250"]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidStringContent")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>

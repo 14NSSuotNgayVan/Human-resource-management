@@ -46,7 +46,7 @@ const RejectionDialog = (props) => {
         </IconButton>
       </DialogTitle>
       <ValidatorForm onSubmit={handleSubmit} className="p-8">
-        <DialogContent dividers spacing={1}>
+        <DialogContent dividers spacing={2}>
           {!isShowRejectReason && (
             <>
               <TextValidator
@@ -63,7 +63,9 @@ const RejectionDialog = (props) => {
                 value={ (isManage ? formData?.refuseEndProfileDay : formData?.rejectionDate) ?? moment().format("YYYY-MM-DD")}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
-                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}    
                 size="small"
                 inputProps={{
                   min: moment().format("YYYY-MM-DD"),
@@ -83,7 +85,7 @@ const RejectionDialog = (props) => {
                 onChange={handleChange}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
-                variant="outlined"
+                
                 size="small"
               />
             </>

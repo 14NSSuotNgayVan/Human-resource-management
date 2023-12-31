@@ -146,7 +146,7 @@ const Family = (props) => {
     <Grid container>
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <ValidatorForm onSubmit={handleSubmit} ref={form}>
-          <Grid container spacing={1} className="p-12">
+          <Grid container spacing={2} className="p-12">
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <TextValidator
                 className={"w-100 mb-16"}
@@ -165,14 +165,14 @@ const Family = (props) => {
                 }}
                 validators={["required", `matchRegexp:${NAME_REGEX}`]}
                 errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <FormControl fullWidth={true} variant="outlined" className="" size="small">
+              <FormControl fullWidth={true}  className="" size="small">
                 <SelectValidator
-                  variant="outlined"
+                  
                   size="small"
                   label={
                     <span className="inputLabel">
@@ -224,14 +224,16 @@ const Family = (props) => {
                 value={familyMember?.dateOfBirth ? moment(familyMember?.dateOfBirth).format("YYYY-MM-DD") : ""}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
-                variant="outlined"
+                InputLabelProps={{
+                  shrink: true,
+                }}    
                 size="small"
               />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <FormControl fullWidth={true} variant="outlined" className="" size="small">
+              <FormControl fullWidth={true}  className="" size="small">
                 <SelectValidator
-                  variant="outlined"
+                  
                   size="small"
                   label={
                     <span className="inputLabel">
@@ -280,7 +282,7 @@ const Family = (props) => {
                 }}
                 validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
@@ -305,7 +307,7 @@ const Family = (props) => {
                   t("staff.notify.errorMessages_required"),
                   t("staff.notify.inValidCitizenIdentificationNumber"),
                 ]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
@@ -331,7 +333,7 @@ const Family = (props) => {
                   t("general.errorMessages_number_required"),
                   t("general.invalidPhoneFormat"),
                 ]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
@@ -353,7 +355,7 @@ const Family = (props) => {
                 value={familyMember?.email || ""}
                 validators={["required", "isEmail"]}
                 errorMessages={[t("staff.notify.errorMessages_required"), t("general.errorMessages_email_valid")]}
-                variant="outlined"
+                
                 size="small"
               />
             </Grid>
