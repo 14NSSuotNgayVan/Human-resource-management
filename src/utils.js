@@ -69,6 +69,13 @@ export function wrapText4(inputString, lineWidth = 200) {
     }console.log(resultString)
   return resultString;
 }
+export function getOldestSalary(objectsArray) {
+  objectsArray.sort((a, b) => new Date(a.acceptanceDate) - new Date(b.acceptanceDate));
+
+  const filteredArray = objectsArray.filter(obj => obj.salaryIncreaseStatus === 3);
+
+  return filteredArray.length > 0 ? filteredArray[0].newSalary : 0;
+}
 export function isMobile() {
   if (window) {
     return window.matchMedia(`(max-width: 768px)`).matches;
