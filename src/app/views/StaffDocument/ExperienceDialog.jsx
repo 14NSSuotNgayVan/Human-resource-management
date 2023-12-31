@@ -169,8 +169,8 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   name="jobDescription"
                   onChange={(e) => onChange(e, "jobDescription")}
                   value={experience?.jobDescription || ""}
-                  validators={["required","maxStringLength:250"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidStringContent")]}
+                  validators={["required","maxStringLength:255"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`,]}
                   
                   size="small"
                 />
@@ -192,8 +192,8 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   name="leavingReason"
                   onChange={(e) => onChange(e, "leavingReason")}
                   value={experience?.leavingReason || ""}
-                  validators={["required","maxStringLength:250"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidStringContent")]}
+                  validators={["required","maxStringLength:255"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`,]}
                 />
               </Grid>
             </Grid>

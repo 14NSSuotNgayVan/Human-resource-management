@@ -16,7 +16,7 @@ const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS.EDIT.includes(item.salaryIncreaseStatus) && (
+      {STAFF_STATUS.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
@@ -70,6 +70,7 @@ const SalaryIncrement = (props) => {
   const [salariesByPage, setSalariesByPage] = useState([]);
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
+  const [isPending,setIsPending] = useState(false);
   const [isActiveEdit, setIsActiveEdit] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isSendLeader, setIsSendLeader] = useState(false);
@@ -93,9 +94,11 @@ const SalaryIncrement = (props) => {
         salaryList.every((item) => item.salaryIncreaseStatus === 3) ||
         salaryList.every((item) => item.salaryIncreaseStatus === 1)
     );
+    setIsPending(salaryList.some((item) => item.salaryIncreaseStatus === 2));
   }, [salaryList]);
   useEffect(() => {
     if (salary?.leaderId) setIsSendLeader(true);
+    else setIsSendLeader(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [salary?.leaderId]);
   const updatePageData = () => {
@@ -145,7 +148,7 @@ const SalaryIncrement = (props) => {
   };
   const handleUpdate = (item) => {
     setIsEditing(true);
-    setSalary({ ...item });
+    setSalary(item);
   };
   const handleShowNotify = (item) => {
     setShowNotify({
@@ -297,10 +300,10 @@ const SalaryIncrement = (props) => {
                 name="reason"
                 onChange={(e) => onChange(e, "reason")}
                 value={salary?.reason || ""}
-                validators={["required", "maxStringLength:250"]}
+                validators={["required", "maxStringLength:255"]}
                 errorMessages={[
                   t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(250 kí tự)`,
+                  `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
                 ]}
                 size="small"
               />
@@ -319,10 +322,10 @@ const SalaryIncrement = (props) => {
                 name="note"
                 onChange={(e) => onChange(e, "note")}
                 value={salary?.note || ""}
-                validators={["required", "maxStringLength:250"]}
+                validators={["required", "maxStringLength:255"]}
                 errorMessages={[
                   t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(250 kí tự)`,
+                  `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
                 ]}
                 size="small"
               />
@@ -358,7 +361,7 @@ const SalaryIncrement = (props) => {
             <Grid item justify="flex-end" className="mb-16">
               {(isActiveEdit || isEditing) && (
                 <>
-                  <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
+                  <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit" disabled ={isPending && isSendLeader}>
                     {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
                   </Button>
                   <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
