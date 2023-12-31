@@ -1,0 +1,65 @@
+.flex-center {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .mt-32 {
+    margin-top: 32px;
+  }
+  
+  .pb-12 {
+    padding-bottom: 12px;
+  }
+  
+  .mr-12 {
+    margin-right: 12px;
+  }
+  
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .wrapper-a4 {
+    background-color: #ededed !important;
+    padding: 12px 40px !important;
+  
+    @media screen and (max-width: 768px) {
+      padding: 12px !important;
+    }
+  }
+  
+  .A4 {
+    background-color: #fff;
+  }
+  
+  .A4-content {
+    padding: 40px 40px 80px 40px;
+    p {
+      font-family: 'Times New Roman', serif !important;
+    }
+  
+    @media screen and (max-width: 768px) {
+      padding: 10px 10px 20px 40px;
+    }
+  }
+  
+  .line-height-25 {
+    line-height: 2.5 !important;
+  }
+  
+  .text-right {
+    text-align: right;
+  }
+  
+  .sign-text {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .text-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

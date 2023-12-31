@@ -6,11 +6,12 @@ import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
 import { LEADER, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
-import { wrapText4 } from "utils";
+import { getOldestSalary, wrapText4 } from "utils";
 import { getSalaries } from "app/redux/selectors/SalarySelector";
 import { createSalaries, deleteSalary, updateSalary } from "app/redux/actions/SalaryAction";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import NotifyDialog from "app/component/CustomNotifyDialog";
+import SalaryIncreaseDialog from "app/component/Form/SalaryIncreaseDialog";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify } = props;
@@ -34,7 +35,7 @@ const Action = (props) => {
         <IconButton
           size="small"
           onClick={() => {
-            // handleShowDocumentDialog(item, false);
+            handleShowDocumentDialog(item);
           }}
         >
           <VisibilityIcon fontSize="small"></VisibilityIcon>
@@ -81,6 +82,7 @@ const SalaryIncrement = (props) => {
   });
   const form = useRef(null);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
   const [salary, setSalary] = useState({
     startDate: new Date(),
     reason: "",
@@ -95,6 +97,10 @@ const SalaryIncrement = (props) => {
         salaryList.every((item) => item.salaryIncreaseStatus === 1)
     );
     setIsPending(salaryList.some((item) => item.salaryIncreaseStatus === 2));
+    setSalary({
+      ...salary,
+      oldSalary: getOldestSalary(salaryList),
+    })
   }, [salaryList]);
   useEffect(() => {
     if (salary?.leaderId) setIsSendLeader(true);
@@ -134,6 +140,7 @@ const SalaryIncrement = (props) => {
     setIsSendLeader(false);
     setIsEditing(false);
     form.current.resetValidations();
+    setShouldOpenDocumentDialog(false);
   };
   const onChange = (event, field) => {
     setSalary({ ...salary, [field]: event.target.value });
@@ -157,6 +164,10 @@ const SalaryIncrement = (props) => {
       tittle: item?.tittle,
     });
   };
+  const handleShowDocumentDialog  = (salaryData) =>{
+    setSalary(salaryData);
+    setShouldOpenDocumentDialog(true);
+  }
   let columns = [
     {
       title: t("general.action"),
@@ -169,6 +180,7 @@ const SalaryIncrement = (props) => {
           handleShowDeleteConfirm={handleShowDeleteConfirm}
           handleUpdate={handleUpdate}
           handleShowNotify={handleShowNotify}
+          handleShowDocumentDialog={handleShowDocumentDialog}
         />
       ),
     },
@@ -191,6 +203,7 @@ const SalaryIncrement = (props) => {
       align: "right",
       minWidth: "150px",
       maxWidth: "250px",
+      render: (props) =>`${props?.oldSalary.toLocaleString('en-US')} VND`,
     },
     {
       title: t("staff.salary_increment.newSalary"),
@@ -198,6 +211,8 @@ const SalaryIncrement = (props) => {
       align: "right",
       minWidth: "150px",
       maxWidth: "250px",
+      render: (props) =>`${props?.newSalary.toLocaleString('en-US')} VND`,
+
     },
     {
       title: t("staff.salary_increment.reason"),
@@ -256,7 +271,7 @@ const SalaryIncrement = (props) => {
                 }
                 type="text"
                 name="oldSalary"
-                value={salary?.oldSalary || ""}
+                value={salary?.oldSalary}
                 inputProps={{
                   readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
                 }}
@@ -385,6 +400,7 @@ const SalaryIncrement = (props) => {
         />
       )}
       {showNotify?.shouldShowNotifyDialog&&  <NotifyDialog t = {t} handleCloseDialog ={handleClose} item={showNotify} />}
+      {shouldOpenDocumentDialog && <SalaryIncreaseDialog handleCloseDialog={handleClose} dataSalaryIncrease={salary} t={t}/>}
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomTable
           data={salariesByPage}
