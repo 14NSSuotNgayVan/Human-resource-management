@@ -8,6 +8,8 @@ import Promotion from "./Tabs/Promotion";
 import EndProfileDialog from "./EndProfileDialog";
 import { getAllSalaries } from "app/redux/actions/SalaryAction";
 import { getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
+import { getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
+import { getAllProcess } from "app/redux/actions/ProcessAction";
 const {
   Dialog,
   Paper,
@@ -34,6 +36,7 @@ const AddStaffDialog = (props) => {
   const { handleClose, t, handleShowDocumentDialog } = props;
   const staff = useSelector(staffSelector);
   const shouldUpdateSalary  = useSelector(getShouldUpdateSalary);
+  const shouldUpdateProcess  = useSelector(getShouldUpdateProcess);
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
   const [showEndProfileDialog, setShowEndProfileDialog] = useState(false);
   const dispatch = useDispatch();
@@ -47,12 +50,14 @@ const AddStaffDialog = (props) => {
   useEffect(()=>{
     if(staff?.id){
       if(shouldUpdateSalary) dispatch(getAllSalaries(staff?.id));
+      if(shouldUpdateProcess) dispatch(getAllProcess(staff?.id));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[shouldUpdateSalary]);
+  },[shouldUpdateSalary,shouldUpdateProcess]);
   useEffect(()=>{
     if(staff?.id){
       dispatch(getAllSalaries(staff?.id));
+      dispatch(getAllProcess(staff?.id));
     }
   },[]);
   return (

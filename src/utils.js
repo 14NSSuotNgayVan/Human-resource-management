@@ -56,6 +56,7 @@ export function wrapText4(inputString, lineWidth = 200) {
   let resultString = '';
   let currentLine = '';
   let EnterCount = 0;
+  console.log(lineWidth)
   for (const char of inputString) {
       if (char === ' ' && currentLine.length > lineWidth && EnterCount <3) {
         resultString += '\n'; // Chèn dấu xuống dòng nếu độ rộng đã vượt quá
@@ -65,7 +66,7 @@ export function wrapText4(inputString, lineWidth = 200) {
         currentLine += char;
         resultString += char;
       }
-    }
+    }console.log(resultString)
   return resultString;
 }
 export function isMobile() {

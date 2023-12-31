@@ -154,8 +154,8 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
                   name="submitContent"
                   onChange={(e) => onChange(e, "submitContent")}
                   value={formData?.submitContent || ""}
-                  validators={["required", "maxStringLength:250"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidStringContent")]}
+                  validators={["required", "maxStringLength:255"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`,]}
                 />
               </Grid>
             </Grid>
