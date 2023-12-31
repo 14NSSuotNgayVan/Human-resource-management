@@ -8,6 +8,7 @@ import StaffReducer  from "./StaffReducer";
 import CertificateReducer from "./CertificateReducer";
 import FamilyReducer from "./FamilyReducer";
 import ExperienceReducer from "./ExperienceReducer";
+import SalaryReducer from "./SalaryReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,
@@ -18,7 +19,8 @@ const RootReducer = combineReducers({
   staff:StaffReducer,
   certificate: CertificateReducer,
   family: FamilyReducer,
-  experience: ExperienceReducer
+  experience: ExperienceReducer,
+  salary:SalaryReducer,
 });
 
 export default RootReducer;

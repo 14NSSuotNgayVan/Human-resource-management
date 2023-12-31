@@ -1,11 +1,13 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { ADD_STAFF_TABS, GENDER, MANAGE_STAFF_TABS } from "app/constants/staffConstant";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import SalaryIncrement from "./Tabs/SalaryIncrement";
 import Promotion from "./Tabs/Promotion";
 import EndProfileDialog from "./EndProfileDialog";
+import { getAllSalaries } from "app/redux/actions/SalaryAction";
+import { getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
 const {
   Dialog,
   Paper,
@@ -31,8 +33,10 @@ toast.configure({
 const AddStaffDialog = (props) => {
   const { handleClose, t, handleShowDocumentDialog } = props;
   const staff = useSelector(staffSelector);
+  const shouldUpdateSalary  = useSelector(getShouldUpdateSalary);
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
   const [showEndProfileDialog, setShowEndProfileDialog] = useState(false);
+  const dispatch = useDispatch();
   const handleSubmit = () => {
     setShowEndProfileDialog(true);
   };
@@ -40,6 +44,17 @@ const AddStaffDialog = (props) => {
   const handleCloseEndProfileDialog = () => {
     setShowEndProfileDialog(false);
   };
+  useEffect(()=>{
+    if(staff?.id){
+      if(shouldUpdateSalary) dispatch(getAllSalaries(staff?.id));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[shouldUpdateSalary]);
+  useEffect(()=>{
+    if(staff?.id){
+      dispatch(getAllSalaries(staff?.id));
+    }
+  },[]);
   return (
     <Dialog
       open={true}
