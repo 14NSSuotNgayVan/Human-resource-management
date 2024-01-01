@@ -8,7 +8,6 @@ import {
   Grid,
   Icon,
   IconButton,
-  Paper,
   Tab,
   Tabs,
 } from "@material-ui/core";
@@ -19,7 +18,6 @@ import { isMdScreen } from "utils";
 import ApprovalDialog from "../ApprovalDialog";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
-import { ValidatorForm } from "react-material-ui-form-validator";
 import CustomCV from "app/views/StaffDocument/CustomCV";
 import Resume from "app/views/StaffDocument/CustomResume";
 import CustomCertificate from "app/views/StaffDocument/CustomCertificate";

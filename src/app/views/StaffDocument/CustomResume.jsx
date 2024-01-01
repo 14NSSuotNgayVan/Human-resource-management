@@ -34,7 +34,7 @@ const Resume = (props) => {
                         <div className="information-details">
                             <Grid container spacing={2}>
                                 <Grid item md={8} lg={8} sm={8} className="flex"><span className="detail-tittle">1. Họ và tên nhân viên:</span><span className="detail-content underline-dashed">{item?.name}</span></Grid>
-                                <Grid item md={4} lg={4} sm={4} className="flex"><span className="detail-tittle">2. Giới tính:</span><span className="detail-content underline-dashed">{GENDER[item?.gender]?.name}</span></Grid>
+                                <Grid item md={4} lg={4} sm={4} className="flex"><span className="detail-tittle">2. Giới tính:</span><span className="detail-content underline-dashed">{t(`staff.gender.${GENDER[item?.gender]?.name}`)}</span></Grid>
                             </Grid>
                             <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">3. Ngày sinh:</span><span className="detail-content underline-dashed">{moment(new Date(item?.dateOfBirth)).format("DD/MM/YYYY")}</span></Grid></Grid>
                             <Grid container spacing={2}><Grid item md={12} lg={12} sm={12} className="flex"><span className="detail-tittle">4. Hộ khẩu thường trú:</span><span className="detail-content underline-dashed">{item?.address}</span></Grid></Grid>

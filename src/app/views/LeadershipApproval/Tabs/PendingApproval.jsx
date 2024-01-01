@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
-import { searchByPageAction, deleteStaffAction, setItem } from "app/redux/actions/StaffActions.js";
-import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment } from "@material-ui/core";
+import React, { useState } from "react";
+import { searchByPageAction, setItem } from "app/redux/actions/StaffActions.js";
+import { Grid, IconButton, FormControl, Input, InputAdornment } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Breadcrumb } from "egret";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,7 +10,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
-import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
+import { GENDER, STAFF_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "./PedingApprovalDialog";
 

@@ -5,7 +5,7 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { LEADER, NAME_REGEX, STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
+import { LEADER,STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
 import { wrapText4 } from "utils";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getProcess } from "app/redux/selectors/ProcessSelector";

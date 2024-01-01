@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { STAFF_POSITION } from 'app/constants/staffConstant';
 import moment from 'moment';
 
-function PromotionDialog({ t, handleCloseDialog, processData,action }) {
+function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
   const staff = useSelector(staffSelector);
 
   return (
@@ -136,7 +136,7 @@ function PromotionDialog({ t, handleCloseDialog, processData,action }) {
 
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {action?? action}
+        {Action? <Action/> :""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>
