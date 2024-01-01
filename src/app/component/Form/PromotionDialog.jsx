@@ -7,11 +7,12 @@ import { Box, Dialog, DialogActions, Grid } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import Button from '@material-ui/core/Button';
 import '../../../styles/components/_form.scss';
-import moment from 'moment';
 import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
+import { STAFF_POSITION } from 'app/constants/staffConstant';
+import moment from 'moment';
 
-function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
+function PromotionDialog({ t, handleCloseDialog, processData,action }) {
   const staff = useSelector(staffSelector);
 
   return (
@@ -35,7 +36,7 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
               </Typography>
             </div>
             <Typography className="flex-center">
-              <b> Số {staff?.id}/ QĐ - TL</b>
+              <b> Số {staff?.id}/ QĐ - BN</b>
             </Typography>
           </Grid>
           <Grid item xs={8}>
@@ -51,7 +52,7 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
             </div>
             <div className="flex-center">
               <Typography className="text-overflow line-height-25" fontStyle="italic">
-                Hà Nội, Ngày {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[0]} tháng {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[1]} năm {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[2]}
+                Hà Nội, Ngày {moment(new Date(processData?.promotionDay)).format("DD/MM/YYYY").split("/")[0]} tháng {moment(new Date(processData?.promotionDay)).format("DD/MM/YYYY").split("/")[1]} năm {moment(new Date(processData?.promotionDay)).format("DD/MM/YYYY").split("/")[2]}
               </Typography>
             </div>
           </Grid>
@@ -60,65 +61,79 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
           QUYẾT ĐỊNH
         </Typography>
         <Typography className="flex-center pb-12" fontStyle="italic">
-          V/v tăng lương cho người lao động
+          V/v thăng chức
         </Typography>
-        <Typography>- Căn cứ vào Điều lệ, nội quy, quy chế của Công ty OCEANTECH</Typography>
-        <Typography>
-          - Căn cứ vào hợp đồng số <b>{staff?.code}</b> được ký giữa Công ty OCEANTECH và Ông/Bà{' '}
-          <b>{staff?.name}</b> ngày {moment(new Date(staff?.submitDay)).format("DD/MM/YYYY").split("/")[0]} tháng {moment(new Date(staff?.submitDay)).format("DD/MM/YYYY").split("/")[1]} năm{' '}
-          {moment(new Date(staff?.submitDay)).format("DD/MM/YYYY").split("/")[2]}
-        </Typography>
-        <Typography className="pb-12">
-          - Căn cứ vào sự đóng góp thực tế của Ông/Bà: <b>{staff?.name}</b> đổi với sự phát triển của Công ty
-          OCEANTECH
-        </Typography>
-        <div className="flex-center">
-          <Typography className="text-overflow" fontWeight="bold">
-            GIÁM ĐỐC CÔNG TY OCEANTECH
+        <div className="fex-center">
+          <Typography fontWeight="bold" className="text-overflow">
+            HỘI ĐỒNG THÀNH VIÊN CÔNG TY OCEANTECH
           </Typography>
         </div>
-        <Typography aphy className="flex-center line-height-25" fontWeight="bold">
+        <Typography>- Căn cứ Luật Doanh nghiệp 2020 và các văn bản hướng dẫn thi hành;</Typography>
+        <Typography>- Căn cứ Điều lệ Công ty OCEANTECH</Typography>
+        <Typography>- Căn cứ yêu cầu hoạt động sản xuất kinh doanh;</Typography>
+        <Typography>
+          - Xét năng lực, phẩm chất và trình độ của Ông/Bà <b>{staff?.name}</b>
+        </Typography>
+        <Typography className="flex-center line-height-25" fontWeight="bold">
           QUYẾT ĐỊNH
         </Typography>
         <Typography>
-          <b>- Điều 1:</b> Tăng lương cho Ông/Bà: <b>{staff?.name}</b> đang làm việc tại{' '}
-          Công ty kể từ ngày {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[0]} tháng{' '}
-          {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[1]} năm {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[2]}, cụ thể như sau:
+          <b>Điều 1:</b> Bổ nhiệm chức danh <b>{STAFF_POSITION.find((item)=>item?.id === processData?.newPosition)?.name}</b> đối với:
         </Typography>
         <Typography>
-          Mức lương hiện tại: <b>{dataSalaryIncrease?.oldSalary?.toLocaleString('en-US')} VND</b>
+          - Ông/Bà: <b>{staff?.name}</b>. Giới tính: {staff?.gender === 0 ? 'Nữ' : 'Nam'}
         </Typography>
         <Typography>
-          Mức lương sau điều chỉnh: <b>{dataSalaryIncrease?.newSalary?.toLocaleString('en-US')} VND</b>
+          - Sinh ngày: {moment(new Date(staff?.dateOfBirth)).format("DD/MM/YYYY")}. Dân tộc: {staff?.religion}. Tôn giáo: {staff?.ethnic}
         </Typography>
         <Typography>
-          <b>- Điều 2: </b>Các Ông/Bà Phòng nhân sự, Phòng tài chính kế toán và Ông/Bà:{' '}
-          <b>{staff?.leaderName}</b> căn cứ thi hành quyết định này.
+          - Số chứng minh nhân dân/Thẻ căn cước công dân: {staff?.citizenIdentificationNumber}. Nơi cấp:{' '}
+          {staff?.placeOfIssueCard} Ngày cấp: {moment(new Date(staff?.dateOfIssuanceCard)).format("DD/MM/YYYY")}
         </Typography>
+        <Typography>- Nơi đăng ký hộ khẩu thường trú: {staff?.address}</Typography>
+        <Typography>- Nơi ở hiện tại: {staff?.address}</Typography>
+        <Typography>
+          <b>Điều 2: </b>Quyền và nghĩa vụ
+        </Typography>
+        <Typography>- Thực hiện quyền và nghĩa vụ của cấp bậc được bổ nhiệm theo quy định của công ty</Typography>
+        <Typography>
+          <b>Điều 3: </b>Hiệu lực thi hành
+        </Typography>
+        <Typography>
+          - Ông/Bà có tên tại Điều 1 và các cơ quan, tổ chức, cá nhân liên quan chịu trách nhiệm thi hành quyết định
+          này.
+        </Typography>
+        <Typography>Quyết định có hiệu lực kể từ ngày ký.</Typography>
         <Box className="flex-between mt-32">
-          <Box className='px-32'>
+          <Box>
             <Typography fontWeight="bold" fontStyle="italic">
               Nơi Nhận:
             </Typography>
-            <Typography>Như điều 2</Typography>
+            <Typography>Ông/Bà: {<b>{staff?.leaderName}</b>} </Typography>
+            <Typography>Cơ quan, tổ chức, cá nhân liên quan</Typography>
             <Typography>Lưu HS,VP</Typography>
           </Box>
-          <Box className='px-32'>
+          <Box>
             <Typography fontWeight="bold" className="flex-center">
-              GIÁM ĐỐC
+              TM. HỘI ĐỒNG THÀNH VIÊN
+            </Typography>
+            <Typography fontWeight="bold" className="flex-center">
+              Chủ tịch Hội đồng thành viên
             </Typography>
             <Typography fontStyle="italic" className="flex-center">
               (Ký tên, đóng dấu)
             </Typography>
-            {dataSalaryIncrease?.salaryIncreaseStatus === 3 && (
+            {processData?.processStatus === '3' && (
               <div className="mt-32">
-                <span className="sign-text ">{staff?.leaderName}</span>
-              </div>
+              <span className="sign-text ">{staff?.leaderName}</span>
+            </div>
             )}
           </Box>
         </Box>
       </Box>
     </Box>
+
+
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
         {action?? action}

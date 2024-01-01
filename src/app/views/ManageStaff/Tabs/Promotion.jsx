@@ -11,6 +11,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getProcess } from "app/redux/selectors/ProcessSelector";
 import { createProcess, deleteProcess, updateProcess } from "app/redux/actions/ProcessAction";
 import NotifyDialog from "app/component/CustomNotifyDialog";
+import PromotionDialog from "app/component/Form/PromotionDialog";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify } = props;
@@ -34,7 +35,7 @@ const Action = (props) => {
         <IconButton
           size="small"
           onClick={() => {
-            // handleShowDocumentDialog(item, false);
+            handleShowDocumentDialog(item);
           }}
         >
           <VisibilityIcon fontSize="small"></VisibilityIcon>
@@ -80,6 +81,7 @@ const Promotion = (props) => {
   });
   const form = useRef(null);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
   const [promotion, setPromotion] = useState({
     promotionDay: new Date(),
     newPosition: 1,
@@ -129,7 +131,9 @@ const Promotion = (props) => {
     setShowConfirmationDialog(false);
     setIsSendLeader(false);
     setIsEditing(false);
+    setShouldOpenDocumentDialog(false);
     form.current.resetValidations();
+
   };
   const onChange = (event, field) => {
     setPromotion({ ...promotion, [field]: event.target.value });
@@ -153,6 +157,10 @@ const Promotion = (props) => {
       tittle: item?.tittle,
     });
   };
+  const handleShowDocumentDialog  = (PromotionData) =>{
+    setPromotion(PromotionData);
+    setShouldOpenDocumentDialog(true);
+  }
   let columns = [
     {
       title: t("general.action"),
@@ -163,7 +171,8 @@ const Promotion = (props) => {
         <Action item={rowData}
         handleShowDeleteConfirm={handleShowDeleteConfirm}
         handleUpdate={handleUpdate}
-        handleShowNotify={handleShowNotify}/>
+        handleShowNotify={handleShowNotify}
+        handleShowDocumentDialog={handleShowDocumentDialog}/>
       ),
     },
     {
@@ -379,6 +388,7 @@ const Promotion = (props) => {
         />
       )}
       {showNotify?.shouldShowNotifyDialog&&  <NotifyDialog t = {t} handleCloseDialog ={handleClose} item={showNotify} />}
+      {shouldOpenDocumentDialog && <PromotionDialog handleCloseDialog={handleClose} processData={promotion} t={t}/>}
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomTable
           data={promotionsByPage}

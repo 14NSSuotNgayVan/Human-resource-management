@@ -271,7 +271,7 @@ const SalaryIncrement = (props) => {
                 }
                 type="text"
                 name="oldSalary"
-                value={salary?.oldSalary}
+                value={salary?.oldSalary||""}
                 inputProps={{
                   readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
                 }}
