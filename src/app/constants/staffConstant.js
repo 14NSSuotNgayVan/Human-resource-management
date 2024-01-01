@@ -98,7 +98,8 @@ export const STAFF_STATUS = {
     ADDITIONAL:"4,8",
     REJECT:"5,9",
     MANAGE:"3,6,8,9",
-    EDIT_PROCESS:"1,4,5"
+    EDIT_PROCESS:"1,4,5",
+    PENDING:"2"
 
 }
 export const RELATIONSHIP = [

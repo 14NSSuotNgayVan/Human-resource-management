@@ -48,7 +48,7 @@ const ApprovalDialog = ({ t, handleCloseDialog, item }) => {
               type="date"
               name="appointmentDate"
               value={appointmentDate}
-              validators={["required", "isAfterDay"]}
+              validators={["required"]}
               errorMessages={[t("staff.notify.errorMessages_required")]}
               InputLabelProps={{
                 shrink: true,

@@ -11,7 +11,7 @@ import moment from 'moment';
 import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
 
-function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
+function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action }) {
   const staff = useSelector(staffSelector);
 
   return (
@@ -121,7 +121,7 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
     </Box>
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {action?? action}
+        {Action? <Action/> :""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>
@@ -130,4 +130,4 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
   );
 }
 
-export default PromotionDialog;
+export default SalaryIncreaseDialog;

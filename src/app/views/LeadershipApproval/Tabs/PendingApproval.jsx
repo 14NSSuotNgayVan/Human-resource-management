@@ -38,7 +38,7 @@ function PendingApproval(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS.VIEW;
+    searchObject.listStatus = STAFF_STATUS.PENDING;
     dispatch(searchByPageAction(searchObject));
   };
 
