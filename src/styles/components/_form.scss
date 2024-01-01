@@ -49,7 +49,11 @@
       padding: 10px 10px 20px 40px;
     }
   }
-  
+  .text-justify{
+    p{
+      text-align: justify;
+    }
+  }
   .line-height-25 {
     line-height: 2.5 !important;
   }
@@ -61,6 +65,7 @@
   .sign-text {
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
   }
   
   .text-overflow {
@@ -68,4 +73,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+  .heading-underline{
+    text-decoration: underline;
+    text-underline-position: under;
+    text-transform:none;
+    padding-bottom: 4px;
+    margin-bottom: 32px;
+}
