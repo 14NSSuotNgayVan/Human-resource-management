@@ -24,13 +24,16 @@ import CustomCertificate from "app/views/StaffDocument/CustomCertificate";
 import { getAllExperiences } from "app/redux/actions/ExperienceAction";
 import { updateStaffAction } from "app/redux/actions/StaffActions";
 import SendLeaderDialog from "app/views/StaffDocument/SendLeaderDialog";
+import ManageStaffDialog from "app/views/ManageStaff/ManageStaffDialog";
+
 const PendingApprovalDialog = (props) => {
-  const { t, handleCloseDialog,isPendingRegister,isRegister,handleCloseAllDialog} = props;
+  const { t, handleCloseDialog,isPendingRegister,isRegister,handleCloseAllDialog,isPendingEndProfile} = props;
   const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
   const [shouldOpenSendLeaderDialog, setShouldOpenSendLeaderDialog] = useState(false);
+  const [shouldOpenHistoryDialog, setShouldOpenHistoryDialog] = useState(false);
   const staff = useSelector(staffSelector);
   const [formData,setFormData] =useState({});
   const shouldUpdateStaff = useSelector(shouldUpdateSelector);
@@ -67,6 +70,9 @@ const PendingApprovalDialog = (props) => {
   }, []);
   const handleCloseSendLeaderDialog = useCallback(() => {
     setShouldOpenSendLeaderDialog(false);
+  }, []);
+  const handleCloseHistoryDialog = useCallback(() => {
+    setShouldOpenHistoryDialog(false);
   }, []);
   const handleUpdateStaff =()=>{
     dispatch(updateStaffAction(formData));
@@ -124,8 +130,21 @@ const PendingApprovalDialog = (props) => {
       {shouldOpenSendLeaderDialog && (
         <SendLeaderDialog t={t} handleCloseDialog={handleCloseSendLeaderDialog} handleCloseParentDialog={handleCloseAllDialog} item={staff} />
       )}
+      {
+        shouldOpenHistoryDialog && 
+        <ManageStaffDialog handleClose={handleCloseHistoryDialog} t={t} isPendingEndProfile={true}/>
+      }
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         
+        {isPendingEndProfile && <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            setShouldOpenHistoryDialog(true);
+          }}
+        >
+          {t("general.history")}
+        </Button>}
         {isRegister && <Button
           variant="contained"
           color="primary"

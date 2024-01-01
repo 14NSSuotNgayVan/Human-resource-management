@@ -5,7 +5,7 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { LEADER,STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
+import { LEADER, STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
 import { wrapText4 } from "utils";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getProcess } from "app/redux/selectors/ProcessSelector";
@@ -65,7 +65,7 @@ const Action = (props) => {
   );
 };
 const Promotion = (props) => {
-  const { t, item } = props;
+  const { t, item, isPendingEndProfile } = props;
   const dispatch = useDispatch();
   const promotionList = useSelector(getProcess);
   const [promotionsByPage, setPromotionsByPage] = useState([]);
@@ -103,7 +103,9 @@ const Promotion = (props) => {
     const salaries = [...promotionList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
-    const pageData = salaries.slice(startOfPage, endOfPage);
+    const pageData = isPendingEndProfile
+      ? salaries.filter((item) => item?.processStatus === 3 || item?.processStatus === 4).slice(startOfPage, endOfPage)
+      : salaries.slice(startOfPage, endOfPage);
     setPromotionsByPage(pageData);
     setTotalElement(salaries.length);
   };
@@ -126,14 +128,13 @@ const Promotion = (props) => {
       shouldShowNotifyDialog: false,
       message: "",
       tittle: "",
-    })
+    });
     setPromotion(null);
     setShowConfirmationDialog(false);
     setIsSendLeader(false);
     setIsEditing(false);
     setShouldOpenDocumentDialog(false);
-    form.current.resetValidations();
-
+    isPendingEndProfile && form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setPromotion({ ...promotion, [field]: event.target.value });
@@ -157,10 +158,10 @@ const Promotion = (props) => {
       tittle: item?.tittle,
     });
   };
-  const handleShowDocumentDialog  = (PromotionData) =>{
+  const handleShowDocumentDialog = (PromotionData) => {
     setPromotion(PromotionData);
     setShouldOpenDocumentDialog(true);
-  }
+  };
   let columns = [
     {
       title: t("general.action"),
@@ -168,11 +169,13 @@ const Promotion = (props) => {
       align: "center",
       minWidth: "80px",
       render: (rowData) => (
-        <Action item={rowData}
-        handleShowDeleteConfirm={handleShowDeleteConfirm}
-        handleUpdate={handleUpdate}
-        handleShowNotify={handleShowNotify}
-        handleShowDocumentDialog={handleShowDocumentDialog}/>
+        <Action
+          item={rowData}
+          handleShowDeleteConfirm={handleShowDeleteConfirm}
+          handleUpdate={handleUpdate}
+          handleShowNotify={handleShowNotify}
+          handleShowDocumentDialog={handleShowDocumentDialog}
+        />
       ),
     },
     {
@@ -194,7 +197,7 @@ const Promotion = (props) => {
       align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.currentPosition).name}</span>,
+      render: (props) => <span>{STAFF_POSITION.find((item) => item?.id === props?.currentPosition).name}</span>,
     },
     {
       title: t("staff.promotion.newPosition"),
@@ -202,7 +205,7 @@ const Promotion = (props) => {
       align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.newPosition).name}</span>,
+      render: (props) => <span>{STAFF_POSITION.find((item) => item?.id === props?.newPosition).name}</span>,
     },
     {
       title: t("staff.promotion.note"),
@@ -217,165 +220,165 @@ const Promotion = (props) => {
       field: "submitProfileStatus",
       align: "left",
       minWidth: "150px",
-      render: (props) => (
-        <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.processStatus]}`)}</span>
-      ),
+      render: (props) => <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.processStatus]}`)}</span>,
     },
   ];
   return (
     <Grid container>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <ValidatorForm onSubmit={handleSubmit} ref={form}>
-          <Grid container spacing={2} className="p-12">
-            <Grid item lg={3} md={3} sm={6} xs={6}>
-              <TextValidator
-                className="w-100 mb-16"
-                disabled={!(isEditing || isActiveEdit)}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.promotion.promotionDay")}
-                  </span>
-                }
-                onChange={(e) => onChange(e, "promotionDay")}
-                type="date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                name="promotionDay"
-                value={
-                  promotion?.promotionDay
-                    ? moment(promotion?.promotionDay).format("YYYY-MM-DD")
-                    : moment().format("YYYY-MM-DD")
-                }
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <FormControl fullWidth={true} className="" size="small">
-                <SelectValidator
-                  size="small"
-                disabled={!(isEditing || isActiveEdit)}
+      {!isPendingEndProfile && (
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <ValidatorForm onSubmit={handleSubmit} ref={form}>
+            <Grid container spacing={2} className="p-12">
+              <Grid item lg={3} md={3} sm={6} xs={6}>
+                <TextValidator
+                  className="w-100 mb-16"
+                  disabled={!(isEditing || isActiveEdit)}
                   label={
                     <span className="inputLabel">
                       <span style={{ color: "red" }}> * </span>
-                      {t("staff.promotion.currentPosition")}
+                      {t("staff.promotion.promotionDay")}
                     </span>
                   }
-                  value={item?.currentPosition ?? 1}
-                  inputProps={{
-                    readOnly: true,
+                  onChange={(e) => onChange(e, "promotionDay")}
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
                   }}
-                  onChange={(e) => onChange(e, "currentPosition")}
+                  name="promotionDay"
+                  value={
+                    promotion?.promotionDay
+                      ? moment(promotion?.promotionDay).format("YYYY-MM-DD")
+                      : moment().format("YYYY-MM-DD")
+                  }
                   validators={["required"]}
                   errorMessages={[t("staff.notify.errorMessages_required")]}
-                  className="w-100 mb-16"
-                >
-                  {STAFF_POSITION?.map((item) => {
-                    return (
-                      <MenuItem key={item?.id} value={item?.id}>
-                        {item?.name}
-                      </MenuItem>
-                    );
-                  })}
-                </SelectValidator>
-              </FormControl>
-            </Grid>
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <FormControl fullWidth={true} className="" size="small">
+                  <SelectValidator
+                    size="small"
+                    disabled={!(isEditing || isActiveEdit)}
+                    label={
+                      <span className="inputLabel">
+                        <span style={{ color: "red" }}> * </span>
+                        {t("staff.promotion.currentPosition")}
+                      </span>
+                    }
+                    value={item?.currentPosition ?? 1}
+                    inputProps={{
+                      readOnly: true,
+                    }}
+                    onChange={(e) => onChange(e, "currentPosition")}
+                    validators={["required"]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
+                    className="w-100 mb-16"
+                  >
+                    {STAFF_POSITION?.map((item) => {
+                      return (
+                        <MenuItem key={item?.id} value={item?.id}>
+                          {item?.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </SelectValidator>
+                </FormControl>
+              </Grid>
 
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <FormControl fullWidth={true} className="" size="small">
-                <SelectValidator
-                  size="small"
-                disabled={!(isEditing || isActiveEdit)}
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <FormControl fullWidth={true} className="" size="small">
+                  <SelectValidator
+                    size="small"
+                    disabled={!(isEditing || isActiveEdit)}
+                    label={
+                      <span className="inputLabel">
+                        <span style={{ color: "red" }}> * </span>
+                        {t("staff.promotion.newPosition")}
+                      </span>
+                    }
+                    value={promotion?.newPosition ?? ""}
+                    onChange={(e) => onChange(e, "newPosition")}
+                    validators={["required"]}
+                    errorMessages={[t("staff.notify.errorMessages_required")]}
+                    className="w-100 mb-16"
+                  >
+                    {STAFF_POSITION?.map((item) => {
+                      return (
+                        <MenuItem key={item?.id} value={item?.id}>
+                          {item?.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </SelectValidator>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <TextValidator
+                  className={"w-100 mb-16"}
+                  disabled={!(isEditing || isActiveEdit)}
                   label={
                     <span className="inputLabel">
                       <span style={{ color: "red" }}> * </span>
-                      {t("staff.promotion.newPosition")}
+                      {t("staff.promotion.note")}
                     </span>
                   }
-                  value={promotion?.newPosition ?? ""}
-                  onChange={(e) => onChange(e, "newPosition")}
-                  validators={["required"]}
-                  errorMessages={[t("staff.notify.errorMessages_required")]}
-                  className="w-100 mb-16"
-                >
-                  {STAFF_POSITION?.map((item) => {
-                    return (
-                      <MenuItem key={item?.id} value={item?.id}>
-                        {item?.name}
-                      </MenuItem>
-                    );
-                  })}
-                </SelectValidator>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                disabled={!(isEditing || isActiveEdit)}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.promotion.note")}
-                  </span>
-                }
-                type="text"
-                name="note"
-                onChange={(e) => onChange(e, "note")}
-                value={promotion?.note || ""}
-                validators={["required", "maxStringLength:255"]}
-                errorMessages={[
-                  t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
-                ]}
-                size="small"
-              />
-            </Grid>
-            <Grid item lg={3} md={3} sm={6} xs={6}>
-              <FormControl fullWidth={true} className="" size="small">
-                <SelectValidator
+                  type="text"
+                  name="note"
+                  onChange={(e) => onChange(e, "note")}
+                  value={promotion?.note || ""}
+                  validators={["required", "maxStringLength:255"]}
+                  errorMessages={[
+                    t("staff.notify.errorMessages_required"),
+                    `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
+                  ]}
                   size="small"
-                disabled={!isActiveEdit}
-                  label={
-                    <span className="inputLabel">
-                      <span style={{ color: "red" }}> * </span>
-                      {t("sendLeader.leaderName")}
-                    </span>
-                  }
-                  value={promotion?.leaderId ?? ""}
-                  inputProps={{
-                    readOnly: promotion?.leaderId && promotion?.processStatus === 4,
-                  }}
-                  onChange={(e) => onChange(e, "leaderId")}
-                  className="w-100 mb-16"
-                >
-                  {LEADER?.map((item) => {
-                    return (
-                      <MenuItem key={item?.id} value={item?.id}>
-                        {item?.leaderName}
-                      </MenuItem>
-                    );
-                  })}
-                </SelectValidator>
-              </FormControl>
+                />
+              </Grid>
+              <Grid item lg={3} md={3} sm={6} xs={6}>
+                <FormControl fullWidth={true} className="" size="small">
+                  <SelectValidator
+                    size="small"
+                    disabled={!isActiveEdit}
+                    label={
+                      <span className="inputLabel">
+                        <span style={{ color: "red" }}> * </span>
+                        {t("sendLeader.leaderName")}
+                      </span>
+                    }
+                    value={promotion?.leaderId ?? ""}
+                    inputProps={{
+                      readOnly: promotion?.leaderId && promotion?.processStatus === 4,
+                    }}
+                    onChange={(e) => onChange(e, "leaderId")}
+                    className="w-100 mb-16"
+                  >
+                    {LEADER?.map((item) => {
+                      return (
+                        <MenuItem key={item?.id} value={item?.id}>
+                          {item?.leaderName}
+                        </MenuItem>
+                      );
+                    })}
+                  </SelectValidator>
+                </FormControl>
+              </Grid>
+              <Grid item justify="flex-end" className="mb-16">
+                {(isActiveEdit || isEditing) && (
+                  <>
+                    <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
+                      {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
+                    </Button>
+                    <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
+                      {t("general.cancel")}
+                    </Button>
+                  </>
+                )}
+              </Grid>
             </Grid>
-            <Grid item justify="flex-end" className="mb-16">
-            {(isActiveEdit || isEditing) && (
-                <>
-              <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
-              {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
-              </Button>
-              <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
-                {t("general.cancel")}
-              </Button>
-              </>
-              )}
-            </Grid>
-          </Grid>
-        </ValidatorForm>
-      </Grid>
+          </ValidatorForm>
+        </Grid>
+      )}
       {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}
@@ -387,8 +390,8 @@ const Promotion = (props) => {
           No={t("general.No")}
         />
       )}
-      {showNotify?.shouldShowNotifyDialog&&  <NotifyDialog t = {t} handleCloseDialog ={handleClose} item={showNotify} />}
-      {shouldOpenDocumentDialog && <PromotionDialog handleCloseDialog={handleClose} processData={promotion} t={t}/>}
+      {showNotify?.shouldShowNotifyDialog && <NotifyDialog t={t} handleCloseDialog={handleClose} item={showNotify} />}
+      {shouldOpenDocumentDialog && <PromotionDialog handleCloseDialog={handleClose} processData={promotion} t={t} />}
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomTable
           data={promotionsByPage}

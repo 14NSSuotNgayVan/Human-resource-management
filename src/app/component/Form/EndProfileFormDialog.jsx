@@ -73,7 +73,7 @@ function EndProfileFormDialog({ t, handleCloseDialog,Action }) {
     </Box>
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {<Action/>}
+        {Action?<Action/>:""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>

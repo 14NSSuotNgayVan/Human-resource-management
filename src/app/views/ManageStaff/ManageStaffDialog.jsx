@@ -32,11 +32,11 @@ toast.configure({
   draggable: false,
   limit: 3,
 });
-const AddStaffDialog = (props) => {
-  const { handleClose, t, handleShowDocumentDialog } = props;
+const ManageStaffDialog = (props) => {
+  const { handleClose, t, handleShowDocumentDialog, isPendingEndProfile } = props;
   const staff = useSelector(staffSelector);
-  const shouldUpdateSalary  = useSelector(getShouldUpdateSalary);
-  const shouldUpdateProcess  = useSelector(getShouldUpdateProcess);
+  const shouldUpdateSalary = useSelector(getShouldUpdateSalary);
+  const shouldUpdateProcess = useSelector(getShouldUpdateProcess);
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
   const [showEndProfileDialog, setShowEndProfileDialog] = useState(false);
   const dispatch = useDispatch();
@@ -47,19 +47,20 @@ const AddStaffDialog = (props) => {
   const handleCloseEndProfileDialog = () => {
     setShowEndProfileDialog(false);
   };
-  useEffect(()=>{
-    if(staff?.id){
-      if(shouldUpdateSalary) dispatch(getAllSalaries(staff?.id));
-      if(shouldUpdateProcess) dispatch(getAllProcess(staff?.id));
+  useEffect(() => {
+    if (staff?.id) {
+      if (shouldUpdateSalary) dispatch(getAllSalaries(staff?.id));
+      if (shouldUpdateProcess) dispatch(getAllProcess(staff?.id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[shouldUpdateSalary,shouldUpdateProcess]);
-  useEffect(()=>{
-    if(staff?.id){
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldUpdateSalary, shouldUpdateProcess]);
+  useEffect(() => {
+    if (staff?.id) {
       dispatch(getAllSalaries(staff?.id));
       dispatch(getAllProcess(staff?.id));
     }
-  },[]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Dialog
       open={true}
@@ -72,7 +73,7 @@ const AddStaffDialog = (props) => {
       fullWidth={true}
     >
       <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
-        <span className="headerStyle">{t("manageStaff.manageHappen")}</span>
+        <span className="headerStyle">{t(`manageStaff.${isPendingEndProfile ? "history" : "manageHappen"}`)}</span>
         <IconButton className="buttonClose" onClick={() => handleClose()}>
           <Icon color="error" title={t("close")}>
             close
@@ -184,8 +185,14 @@ const AddStaffDialog = (props) => {
             </Tabs>
           </Grid>
           <Grid item xs={12} lg={12} md={12} sm={12}>
-            {tab === MANAGE_STAFF_TABS.SALARY_INCREMENT.value && <SalaryIncrement item={staff} t={t} />}
-            {tab === MANAGE_STAFF_TABS.PROMOTION.value && <Promotion item={staff} t={t} />}
+            <div className="p-12">
+              {tab === MANAGE_STAFF_TABS.SALARY_INCREMENT.value && (
+                <SalaryIncrement item={staff} t={t} isPendingEndProfile={isPendingEndProfile} />
+              )}
+              {tab === MANAGE_STAFF_TABS.PROMOTION.value && (
+                <Promotion item={staff} t={t} isPendingEndProfile={isPendingEndProfile} />
+              )}
+            </div>
           </Grid>
         </Grid>
         {showEndProfileDialog && (
@@ -198,18 +205,22 @@ const AddStaffDialog = (props) => {
         )}
       </DialogContent>
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            handleShowDocumentDialog(staff, true);
-          }}
-        >
-          {t("manageStaff.showDocuments")}
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          {t("manageStaff.endProfile")}
-        </Button>
+        {!isPendingEndProfile && (
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleShowDocumentDialog(staff, true);
+              }}
+            >
+              {t("manageStaff.showDocuments")}
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+              {t("manageStaff.endProfile")}
+            </Button>
+          </>
+        )}
         <Button variant="contained" className="color-error" onClick={handleClose}>
           {t("general.cancel")}
         </Button>
@@ -217,4 +228,4 @@ const AddStaffDialog = (props) => {
     </Dialog>
   );
 };
-export default memo(AddStaffDialog);
+export default memo(ManageStaffDialog);

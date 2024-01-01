@@ -7,20 +7,13 @@ import { useDispatch } from "react-redux";
 
 const RejectionDialog = (props) => {
   const dispatch = useDispatch();
-  const { t, handleCloseDialog, item,isManage,tittle,handleSubmitForm } = props;
+  const { t, handleCloseDialog, item,tittle,handleSubmitForm } = props;
   const [formData, setFormData] = useState({...item});
   const handleSubmit = () => {
     if(handleSubmitForm){
       handleSubmitForm(formData?.rejectionDate,formData[tittle]);
     }else
-    if(isManage){
-      dispatch(
-        updateStaffAction({
-          ...formData,
-          submitProfileStatus: "9",
-        })
-      );
-    }else{
+    {
       dispatch(
         updateStaffAction({
           ...formData,
@@ -28,7 +21,6 @@ const RejectionDialog = (props) => {
         })
       );
     }
-
   };
   const handleChange = (event) => {
     event.persist();
@@ -60,8 +52,8 @@ const RejectionDialog = (props) => {
                 }
                 onChange={handleChange}
                 type="date"
-                name={ isManage ? "refuseEndProfileDay":"rejectionDate"}
-                value={ (isManage ? formData?.refuseEndProfileDay : formData?.rejectionDate) ?? moment().format("YYYY-MM-DD")}
+                name={"rejectionDate"}
+                value={ formData?.rejectionDate ?? moment().format("YYYY-MM-DD")}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
                 InputLabelProps={{
@@ -81,8 +73,8 @@ const RejectionDialog = (props) => {
                   </span>
                 }
                 type="text"
-                name= { tittle || (isManage ? "reasonForRefuseEndProfile" : "reasonForRejection")}
-                value={ formData[tittle] ||  (isManage ? formData?.reasonForRefuseEndProfile : formData?.reasonForRejection) || ""}
+                name= { tittle ||  "reasonForRejection"}
+                value={ formData[tittle] ||   formData?.reasonForRejection || ""}
                 onChange={handleChange}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { getStaffByIdAction, setItem } from "app/redux/actions/StaffActions.js";
-import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment } from "@material-ui/core";
+import { getStaffByIdAction, searchByPageAction, setItem, updateStaffAction } from "app/redux/actions/StaffActions.js";
+import { Grid, IconButton, FormControl, Input, InputAdornment, Icon, Button } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link } from "react-router-dom";
@@ -8,16 +8,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { staffListSelector, totalElementsSelector, shouldUpdateSelector, staffSelector } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
+import { GENDER, STAFF_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "./PedingApprovalDialog";
-import { searchObjectsByKeyword, wrapText4 } from "utils";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
-import { getProcess, getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
-import { getAllProcessByLeader, updateProcess } from "app/redux/actions/ProcessAction";
-import { STAFF_POSITION } from "app/constants/staffConstant";
-import PromotionDialog from "app/component/Form/PromotionDialog";
+import EndProfileFormDialog from "app/component/Form/EndProfileFormDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -25,78 +23,72 @@ toast.configure({
   limit: 3,
 });
 
-function PendingPromotion({ t }) {
+function PendingEndProfile(props) {
   const dispatch = useDispatch();
-  const promotionList = useSelector(getProcess);
-  const shouldUpdate = useSelector(getShouldUpdateProcess);
-  const [promotionByPage, setPromotionByPage] = useState([]);
-  const [keyword, setKeyword] = useState("");
-  const [totalElement, setTotalElement] = useState(0);
-  const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
+  const staff = useSelector(staffSelector);
+  const staffList = useSelector(staffListSelector);
+  const totalElements = useSelector(totalElementsSelector);
+  const shouldUpdate = useSelector(shouldUpdateSelector);
+  const { t } = props;
+  const [pagePagination, setPagePagination] = useState({
+    page: 0,
+    rowsPerPage: 10,
+  });
   const [showEditorDialog, setShowEditorDialog] = useState(false);
   const [showAdditionalDialog, setShowAdditionalDialog] = useState(false);
   const [showRejectionDialog, setShowRejectionDialog] = useState(false);
   const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
-  const [promotion, setPromotion] = useState({
-    promotionDay: new Date(),
-    note: "",
-    newPosition: 0,
-    leaderId: 0,
-  });
+  const [keyword, setKeyword] = useState("");
 
-  const updatePageData = () => {
-    const promotions = [...promotionList];
-    const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
-    const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
-    const pageData = searchObjectsByKeyword(keyword, promotions).slice(startOfPage, endOfPage);
-    setPromotionByPage(pageData);
-    setTotalElement(promotions.length);
+  const updatePageData = async () => {
+    var searchObject = {};
+    searchObject.keyword = keyword;
+    searchObject.pageIndex = pagePagination.page + 1;
+    searchObject.pageSize = pagePagination.rowsPerPage;
+    searchObject.listStatus = STAFF_STATUS.END_PROFILE;
+    dispatch(searchByPageAction(searchObject));
   };
 
-  useEffect(() => {
-    dispatch(getAllProcessByLeader());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   useEffect(() => {
     updatePageData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagePagination, promotionList,keyword]);
+  }, [pagePagination.rowsPerPage, pagePagination.page, keyword]);
+
   useEffect(() => {
     if (shouldUpdate) {
-      dispatch(getAllProcessByLeader());
       updatePageData();
       setShowEditorDialog(false);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldUpdate]);
+
+  const handleSubmit = () => {
+    dispatch(
+      updateStaffAction({
+        ...staff,
+        terminationAppointmentDate:moment().format("YYYY-MM-DD"),
+        submitProfileStatus: "7"
+      })
+    );
+    handleCloseDialog();
+}
   const handleShowEditorDialog = (item) => {
-    dispatch(getStaffByIdAction(item?.employeeId));
-    setPromotion({ ...item });
+    dispatch(getStaffByIdAction(item?.id));
     setShowEditorDialog(true);
+  };
+  const handleShowDocumentDialog = (item) => {
+    dispatch(getStaffByIdAction(item?.id));
+    setShouldOpenDocumentDialog(true);
   };
   const handleCloseDialog = () => {
     dispatch(setItem({}));
-    setPromotion({});
     setShowEditorDialog(false);
     setShouldOpenDocumentDialog(false);
     setShowAdditionalDialog(false);
     setShowRejectionDialog(false);
   };
-  const handleShowDocumentDialog = (item) => {
-    dispatch(getStaffByIdAction(item?.employeeId));
-    setShouldOpenDocumentDialog(true);
-  };
-  const handleSubmit = () => {
-    dispatch(
-        updateProcess({
-        ...promotion,
-        acceptanceDate: moment().format("YYYY-MM-DD"),
-        processStatus: 3,
-      })
-    );
-    handleCloseDialog();
-  };
-
+  
   const handleShowAdditionalDialog = () => {
     setShowAdditionalDialog(true);
   };
@@ -105,10 +97,10 @@ function PendingPromotion({ t }) {
   };
   const handleSubmitAdditional = (content) => {
     dispatch(
-        updateProcess({
-        ...promotion,
-        additionalRequest: content,
-        processStatus: 4,
+      updateStaffAction({
+        ...staff,
+        additionalRequestTermination: content,
+        submitProfileStatus: "8"
       })
     );
     handleCloseDialog();
@@ -122,11 +114,11 @@ function PendingPromotion({ t }) {
   };
   const handleSubmitRejection = (rejectionDate, content) => {
     dispatch(
-        updateProcess({
-        ...promotion,
-        rejectionDate: rejectionDate,
-        reasonForRefusal: content,
-        processStatus: 5,
+      updateStaffAction({
+        ...staff,
+        refuseEndProfileDay: rejectionDate,
+        reasonForRefuseEndProfile:content,
+        submitProfileStatus: "9"
       })
     );
     handleCloseDialog();
@@ -193,39 +185,50 @@ function PendingPromotion({ t }) {
       title: t("STT"),
       align: "center",
       minWidth: "60px",
-      render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
+      render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
     },
     {
-      title: t("staff.promotion.promotionDay"),
-      field: "promotionDay",
+      title: t("staff.code"),
+      field: "code",
+      align: "center",
+      minWidth: "150px",
+    },
+    { title: t("staff.name"), field: "name", align: "left", minWidth: "170px" },
+    {
+      title: t("staff.dateOfBirth"),
+      field: "dateOfBirth",
       align: "center",
       minWidth: "120px",
-      render: (props) => <span>{moment(new Date(props?.promotionDay)).format("DD/MM/YYYY")}</span>,
+      render: (props) => <span>{moment(new Date(props?.dateOfBirth)).format("DD/MM/YYYY")}</span>,
     },
     {
-      title: t("staff.promotion.currentPosition"),
-      field: "currentPosition",
+      title: t("staff.gender_display"),
+      field: "gender",
       align: "center",
-      minWidth: "150px",
-      maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.currentPosition).name}</span>,
+      minWidth: "80px",
+      render: (props) => <span>{t(`staff.gender.${GENDER[props.gender]?.name}`)}</span>,
     },
     {
-      title: t("staff.promotion.newPosition"),
-      field: "newPosition",
-      align: "center",
-      minWidth: "150px",
-      maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.newPosition).name}</span>,
-    },
-    {
-      title: t("staff.promotion.note"),
-      field: "note",
+      title: t("staff.team"),
+      field: "team",
       align: "left",
-      minWidth: "170px",
-      maxWidth: "200px",
-      render: (props) => wrapText4(props?.note, 10),
-    }
+      minWidth: "100px",
+      render: (props) => <span>{TEAM[props.team]?.name}</span>,
+    },
+
+    {
+      title: t("staff.address"),
+      field: "address",
+      align: "left",
+      minWidth: "150px",
+      maxWidth: "150px",
+    },
+    {
+      title: t("staff.phone"),
+      field: "phone",
+      align: "center",
+      minWidth: "150px",
+    },
   ];
   return (
     <Grid container spacing={2} justify="flex-end">
@@ -250,11 +253,10 @@ function PendingPromotion({ t }) {
         </FormControl>
       </Grid>
       <Grid item xs={12}>
-        {shouldOpenDocumentDialog && <PendingApprovalDialog t={t} handleCloseDialog={handleCloseDialog} />}
+        {shouldOpenDocumentDialog && <PendingApprovalDialog t={t} handleCloseDialog={handleCloseDialog} isPendingEndProfile={true}/>}
         {showEditorDialog && (
-          <PromotionDialog
+          <EndProfileFormDialog
             handleCloseDialog={handleCloseDialog}
-            processData={promotion}
             t={t}
             Action={Action}
           />
@@ -271,13 +273,13 @@ function PendingPromotion({ t }) {
             t={t}
             handleCloseDialog={handleCloseRejectionDialog}
             handleSubmitForm={handleSubmitRejection}
-            tittle={"reasonForRefusal"}
+            tittle={"reasonForRefuseEndProfile"}
           />
         )}
         <CustomTable
-          data={promotionByPage}
+          data={staffList}
           columns={columns}
-          totalElements={totalElement}
+          totalElements={totalElements}
           pagePagination={pagePagination}
           setPagination={setPagePagination}
         />
@@ -285,4 +287,4 @@ function PendingPromotion({ t }) {
     </Grid>
   );
 }
-export default PendingPromotion;
+export default PendingEndProfile;
