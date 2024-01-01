@@ -4,10 +4,13 @@ import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { useDispatch } from "react-redux";
 
-const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage }) => {
+const AdditionalDialog = ({ t, handleCloseDialog, item,isManage,handleSubmitForm }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const handleSubmit = () => {
+    if(handleSubmitForm){
+      handleSubmitForm(content);
+    }else
     if(isManage){
       dispatch(
         updateStaffAction({
@@ -25,6 +28,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
         })
       );
     }
+
     
   };
   const onChange = (event) => {
@@ -34,7 +38,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
     <>
       <Dialog open={true} maxWidth={"sm"} fullWidth={true}>
         <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
-          <span className="headerStyle">{iShowAdditional ? t("leaderShipApproval.AdditionalContent") : t("leaderShipApproval.Additional")}</span>
+          <span className="headerStyle">{t("leaderShipApproval.Additional")}</span>
           <IconButton className="buttonClose" onClick={handleCloseDialog}>
             <Icon color="error" title={t("close")}>
               close
@@ -43,7 +47,6 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
           <DialogContent dividers spacing={2} className="overflow-none">
-            {!iShowAdditional && (
               <TextValidator
                 className={"w-100 mb-16"}
                 label={
@@ -53,7 +56,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
                   </span>
                 }
                 type="text"
-                name={ isManage ? "additionalRequestTermination" : "additionalRequest"}
+                name={isManage ? "additionalRequestTermination" : "additionalRequest"}
                 onChange={(e) => onChange(e)}
                 value={content}
                 validators={["required"]}
@@ -61,15 +64,11 @@ const AdditionalDialog = ({ t, handleCloseDialog, item, iShowAdditional,isManage
                 
                 size="small"
               />
-            )}
-            {iShowAdditional && <p>{isManage? item?.additionalRequestTermination : item?.additionalRequest}</p>}
           </DialogContent>
           <DialogActions spacing={4} className="flex flex-center flex-middle">
-            {!iShowAdditional && (
               <Button variant="contained" color="primary" type="submit">
                 {t("general.save")}
               </Button>
-            )}
             <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
               {t("general.cancel")}
             </Button>

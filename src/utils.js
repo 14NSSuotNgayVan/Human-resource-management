@@ -56,7 +56,6 @@ export function wrapText4(inputString, lineWidth = 200) {
   let resultString = '';
   let currentLine = '';
   let EnterCount = 0;
-  console.log(lineWidth)
   for (const char of inputString) {
       if (char === ' ' && currentLine.length > lineWidth && EnterCount <3) {
         resultString += '\n'; // Chèn dấu xuống dòng nếu độ rộng đã vượt quá
@@ -66,8 +65,25 @@ export function wrapText4(inputString, lineWidth = 200) {
         currentLine += char;
         resultString += char;
       }
-    }console.log(resultString)
+    }
   return resultString;
+}
+export function searchObjectsByKeyword(keyword, objectsArray) {
+  const lowerCaseKeyword = keyword.toLowerCase();
+
+  const filteredArray = objectsArray.filter(obj => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key) && typeof obj[key] === 'string') {
+        const lowerCaseValue = obj[key].toLowerCase();
+        if (lowerCaseValue.includes(lowerCaseKeyword)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  });
+
+  return filteredArray;
 }
 export function getOldestSalary(objectsArray) {
   objectsArray.sort((a, b) => new Date(a.acceptanceDate) - new Date(b.acceptanceDate));

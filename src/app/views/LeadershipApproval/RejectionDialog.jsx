@@ -7,9 +7,12 @@ import { useDispatch } from "react-redux";
 
 const RejectionDialog = (props) => {
   const dispatch = useDispatch();
-  const { t, handleCloseDialog, item, isShowRejectReason,isManage } = props;
+  const { t, handleCloseDialog, item,isManage,tittle,handleSubmitForm } = props;
   const [formData, setFormData] = useState({...item});
   const handleSubmit = () => {
+    if(handleSubmitForm){
+      handleSubmitForm(formData?.rejectionDate,formData[tittle]);
+    }else
     if(isManage){
       dispatch(
         updateStaffAction({
@@ -38,7 +41,7 @@ const RejectionDialog = (props) => {
   return (
     <Dialog open={true} maxWidth={"sm"} fullWidth={true}>
       <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
-        <span className="headerStyle">{isShowRejectReason? t("leaderShipApproval.reasonForRejection") : t("leaderShipApproval.rejection")}</span>
+        <span className="headerStyle">{t("leaderShipApproval.rejection")}</span>
         <IconButton className="buttonClose" onClick={handleCloseDialog}>
           <Icon color="error" title={t("close")}>
             close
@@ -47,8 +50,6 @@ const RejectionDialog = (props) => {
       </DialogTitle>
       <ValidatorForm onSubmit={handleSubmit} className="p-8">
         <DialogContent dividers spacing={2}>
-          {!isShowRejectReason && (
-            <>
               <TextValidator
                 className="w-100 mb-16"
                 label={
@@ -59,7 +60,7 @@ const RejectionDialog = (props) => {
                 }
                 onChange={handleChange}
                 type="date"
-                name={isManage ? "refuseEndProfileDay":"rejectionDate"}
+                name={ isManage ? "refuseEndProfileDay":"rejectionDate"}
                 value={ (isManage ? formData?.refuseEndProfileDay : formData?.rejectionDate) ?? moment().format("YYYY-MM-DD")}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
@@ -80,24 +81,19 @@ const RejectionDialog = (props) => {
                   </span>
                 }
                 type="text"
-                name= {isManage? "reasonForRefuseEndProfile" : "reasonForRejection"}
-                value={(isManage ? formData?.reasonForRefuseEndProfile : formData?.reasonForRejection) || ""}
+                name= { tittle || (isManage ? "reasonForRefuseEndProfile" : "reasonForRejection")}
+                value={ formData[tittle] ||  (isManage ? formData?.reasonForRefuseEndProfile : formData?.reasonForRejection) || ""}
                 onChange={handleChange}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
                 
                 size="small"
               />
-            </>
-          )}
-          {isShowRejectReason&&<p>{isManage ? formData?.reasonForRefuseEndProfile : formData?.reasonForRejection}</p>}
         </DialogContent>
         <DialogActions spacing={4} className="flex flex-center flex-middle">
-          {!isShowRejectReason && (
             <Button variant="contained" color="primary" type="submit">
               {t("general.reject")}
             </Button>
-          )}
           <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
             {t("general.cancel")}
           </Button>

@@ -18,6 +18,7 @@ import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDial
 import AppButton from "../material-kit/buttons/AppButton";
 import AdditionalDialog from "../LeadershipApproval/AdditionalDialog";
 import RejectionDialog from "../LeadershipApproval/RejectionDialog";
+import NotifyDialog from "app/component/CustomNotifyDialog";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -276,20 +277,24 @@ function Staff(props) {
             />
             )}
             {iShowAdditional && shouldOpenAdditionalDialog && (
-            <AdditionalDialog
-            handleCloseDialog ={handleDialogClose}
-            t ={t}
-            item={currentItem}
-            iShowAdditional={true}
+            <NotifyDialog
+            t={t}
+            handleDialogClose={handleDialogClose}
+            item={{
+              tittle:"Nội dung yêu cầu bổ sung",
+              message:currentItem?.additionalRequest
+            }}
             />
             )}
             {!iShowAdditional && shouldOpenAdditionalDialog && (
-            <RejectionDialog
-            handleCloseDialog ={handleDialogClose}
-            t ={t}
-            item={currentItem}
-            isShowRejectReason={true}
-            />
+              <NotifyDialog
+              t={t}
+              handleDialogClose={handleDialogClose}
+              item={{
+                tittle:"Nội dung từ chối",
+                message:currentItem?.reasonForRejection
+              }}
+              />
             )}
             
           </div>

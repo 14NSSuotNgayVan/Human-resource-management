@@ -13,7 +13,7 @@ import { deleteExperience, getAllExperiences, setExperience } from "app/redux/ac
 import { ConfirmationDialog } from "egret";
 
 const CustomCV = (props) => {
-  const { t, formData, setFormData } = props;
+  const { t, formData, setFormData,isRegister } = props;
   const [isEditSkill, setIsEditSkill] = useState(false);
   const [isEditActivity, setIsEditActivity] = useState(false);
   const [showExperienceDialog, setShowExperienceDialog] = useState(false);
@@ -129,7 +129,7 @@ const CustomCV = (props) => {
           <div className="cv-skills">
             <h4 className="skills-tittle">
               kỹ năng
-              <IconButton
+              {isRegister && <IconButton
                 size="small"
                 onClick={() => {
                   handleShowFormSkill();
@@ -138,7 +138,7 @@ const CustomCV = (props) => {
                 <Icon fontSize="small" color="primary">
                   edit
                 </Icon>
-              </IconButton>
+              </IconButton>}
             </h4>
             <div>
               {isEditSkill && (
@@ -218,7 +218,7 @@ const CustomCV = (props) => {
           <div className="cv-activity">
             <h4 className="activity-tittle">
               Hoạt động
-              <IconButton
+              {isRegister &&<IconButton
                 size="small"
                 onClick={() => {
                   handleShowFormActivity();
@@ -227,7 +227,7 @@ const CustomCV = (props) => {
                 <Icon fontSize="small" color="primary">
                   edit
                 </Icon>
-              </IconButton>
+              </IconButton>}
             </h4>
             <div className="activity-content">
               <div className="activity-formData">
@@ -306,7 +306,7 @@ const CustomCV = (props) => {
           <div className="cv-experiences border-left">
             <h3 className="experiences-heading">
               kinh nghiệm làm việc
-              <Fab
+              {isRegister&& <Fab
                 color="primary"
                 aria-label="Add"
                 className="icon-button-md"
@@ -315,7 +315,7 @@ const CustomCV = (props) => {
                 }}
               >
                 <Icon>add</Icon>
-              </Fab>
+              </Fab>}
             </h3>
             {experiencesList != null &&
               experiencesList.map((experience) => (
@@ -330,7 +330,7 @@ const CustomCV = (props) => {
                         <span className="experience-dot">&#x2022;</span>
                         <span className="experience-company">{experience?.companyName}</span>
                       </div>
-                      <div>
+                      {isRegister&&<div>
                         <IconButton
                           size="small"
                           onClick={() => {
@@ -348,7 +348,7 @@ const CustomCV = (props) => {
                             delete
                           </Icon>
                         </IconButton>
-                      </div>
+                      </div>}
                     </h4>
                     <h5 className="experience-job">{experience?.companyAddress}</h5>
                     <div className="experience-list">

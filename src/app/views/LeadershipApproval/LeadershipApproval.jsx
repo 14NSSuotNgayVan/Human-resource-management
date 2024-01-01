@@ -21,6 +21,7 @@ import {
 import CustomTable from "app/component/CustomTable";
 import LeadershipApprovalDialog from "./Tabs/PedingApprovalDialog";
 import PendingApproval from "./Tabs/PendingApproval";
+import PendingSalaryIncrement from "./Tabs/PendingSalaryIncrement";
 
 toast.configure({
   autoClose: 2000,
@@ -62,15 +63,12 @@ function LeadershipApproval({ t }) {
           value={LEADERSHIP_APPROVAL_TABS.PROMOTION.value}
         />
         <Tab
-          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS.PROPOSAL.name}`)}
-          value={LEADERSHIP_APPROVAL_TABS.PROPOSAL.value}
-        />
-        <Tab
           label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS.FINISH.name}`)}
           value={LEADERSHIP_APPROVAL_TABS.FINISH.value}
         />
       </Tabs>
       {tab === LEADERSHIP_APPROVAL_TABS.PENDING.value && <PendingApproval t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS.SALARY_INCREMENT.value && <PendingSalaryIncrement t={t} />}
     </div>
   );
 }

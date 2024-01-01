@@ -134,7 +134,7 @@ const Resume = (props) => {
                 <div className="resume-footer">
                     <div className="footer-container">
                         <div className="resume-date">
-                            <span className="reassurance-place">{item?.address}</span>,
+                            <span className="reassurance-place">Hà Nội</span>, 
                             <span className="reassurance-day"><span className="date-tittle">ngày</span><span className="date-content underline-dashed">{moment(new Date(item?.submitDay)).format("DD/MM/YYYY").split("/")[0]}</span></span>
                             <span className="reassurance-month"><span className="date-tittle">tháng</span><span className="date-content underline-dashed">{moment(new Date(item?.submitDay)).format("DD/MM/YYYY").split("/")[1]}</span></span>
                             <span className="reassurance-year"><span className="date-tittle">năm</span><span className="date-content underline-dashed">{moment(new Date(item?.submitDay)).format("DD/MM/YYYY").split("/")[2]}</span></span>
