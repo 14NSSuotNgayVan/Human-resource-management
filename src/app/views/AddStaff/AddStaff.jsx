@@ -276,7 +276,7 @@ function Staff(props) {
             {iShowAdditional && shouldOpenAdditionalDialog && (
             <NotifyDialog
             t={t}
-            handleDialogClose={handleDialogClose}
+            handleCloseDialog={handleDialogClose}
             item={{
               tittle:"Nội dung yêu cầu bổ sung",
               message:currentItem?.additionalRequest
@@ -286,7 +286,7 @@ function Staff(props) {
             {!iShowAdditional && shouldOpenAdditionalDialog && (
               <NotifyDialog
               t={t}
-              handleDialogClose={handleDialogClose}
+              handleCloseDialog={handleDialogClose}
               item={{
                 tittle:"Nội dung từ chối",
                 message:currentItem?.reasonForRejection

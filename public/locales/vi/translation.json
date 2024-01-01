@@ -104,7 +104,8 @@
     "allProduct": "Tất cả sản phẩm"
     ,"sendLeader":"Trình lãnh đạo",
     "accept":"Chấp nhận",
-    "editDocument":"Chỉnh sửa"
+    "editDocument":"Chỉnh sửa",
+    "history":"Lịch sử cập nhật"
   },
   "toast": {
     "error": "Có lỗi xảy ra, vui lòng thử lại."
@@ -146,7 +147,8 @@
     "manageHappen":"Cập nhật diễn biến",
     "salary_increment":"Tăng lương",
     "proposal":"Đề xuất",
-    "promotion":"Thăng chức"
+    "promotion":"Thăng chức",
+    "history":"Lịch sử cập nhật"
   },
   "staff": {
     "title": "nhân viên",

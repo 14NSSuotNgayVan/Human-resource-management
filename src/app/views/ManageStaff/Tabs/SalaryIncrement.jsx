@@ -65,7 +65,7 @@ const Action = (props) => {
   );
 };
 const SalaryIncrement = (props) => {
-  const { t, item } = props;
+  const { t, item,isPendingEndProfile } = props;
   const dispatch = useDispatch();
   const salaryList = useSelector(getSalaries);
   const [salariesByPage, setSalariesByPage] = useState([]);
@@ -111,7 +111,7 @@ const SalaryIncrement = (props) => {
     const salaries = [...salaryList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
-    const pageData = salaries.slice(startOfPage, endOfPage);
+    const pageData = isPendingEndProfile ? salaries.filter(item=>item?.salaryIncreaseStatus===3||item?.salaryIncreaseStatus===4).slice(startOfPage, endOfPage) :salaries.slice(startOfPage, endOfPage);
     setSalariesByPage(pageData);
     setTotalElement(salaries.length);
   };
@@ -139,8 +139,8 @@ const SalaryIncrement = (props) => {
     setShowConfirmationDialog(false);
     setIsSendLeader(false);
     setIsEditing(false);
-    form.current.resetValidations();
     setShouldOpenDocumentDialog(false);
+    isPendingEndProfile && form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setSalary({ ...salary, [field]: event.target.value });
@@ -234,6 +234,7 @@ const SalaryIncrement = (props) => {
   ];
   return (
     <Grid container>
+      {!isPendingEndProfile&&
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <ValidatorForm onSubmit={handleSubmit} ref={form}>
           <Grid container spacing={2} className="p-12">
@@ -387,7 +388,7 @@ const SalaryIncrement = (props) => {
             </Grid>
           </Grid>
         </ValidatorForm>
-      </Grid>
+      </Grid>}
       {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}

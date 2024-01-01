@@ -10,6 +10,7 @@ import {
 import PendingApproval from "./Tabs/PendingApproval";
 import PendingSalaryIncrement from "./Tabs/PendingSalaryIncrement";
 import PendingPromotion from "./Tabs/PendingPromotion";
+import PendingEndProfile from "./Tabs/PendingEndProfile";
 
 toast.configure({
   autoClose: 2000,
@@ -59,6 +60,7 @@ function LeadershipApproval({ t }) {
       {tab === LEADERSHIP_APPROVAL_TABS.PENDING.value && <PendingApproval t={t} />}
       {tab === LEADERSHIP_APPROVAL_TABS.SALARY_INCREMENT.value && <PendingSalaryIncrement t={t} />}
       {tab === LEADERSHIP_APPROVAL_TABS.PROMOTION.value && <PendingPromotion t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS.FINISH.value && <PendingEndProfile t={t} />}
       </div>
     </div>
   );

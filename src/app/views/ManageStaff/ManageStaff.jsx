@@ -14,9 +14,8 @@ import moment from "moment";
 import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
-import AdditionalDialog from "../LeadershipApproval/AdditionalDialog";
-import RejectionDialog from "../LeadershipApproval/RejectionDialog";
 import ManageStaffDialog from "./ManageStaffDialog";
+import NotifyDialog from "app/component/CustomNotifyDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -38,7 +37,7 @@ function ManageStaff(props) {
   const [showEditorDialog, setShowEditorDialog] = useState(false);
   const [shouldOpenConfirmationDialog, setShouldOpenConfirmationDialog] = useState(false);
   const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
-  const [shouldOpenAdditionalDialog, setShouldOpenNotifyDialog] = useState(false);
+  const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [iShowAdditional,setIsShowAddition] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -79,14 +78,14 @@ function ManageStaff(props) {
   const handleShowNotify = (staff,ShowAddition) => {
     setIsShowAddition(ShowAddition);
     setCurrentItem(staff);
-    setShouldOpenNotifyDialog(true);
+    setShouldOpenAdditionalDialog(true);
   };
   
   const handleDialogClose = useCallback(() => {
     setShowEditorDialog(false);
     setShouldOpenConfirmationDialog(false);
     setShouldOpenDocumentDialog(false);
-    setShouldOpenNotifyDialog(false);
+    setShouldOpenAdditionalDialog(false);
   },[]);
   const handleCloseDocumentDialog = useCallback(() => {
     setShouldOpenDocumentDialog(false);
@@ -211,7 +210,7 @@ function ManageStaff(props) {
     <div className="m-sm-24">
       <div className="mb-sm-24 sm-hide">
         <Breadcrumb
-          routeSegments={[{ name: t("Dashboard.addStaff"), path: "staff_manager/AddStaff" }]}
+          routeSegments={[{ name: t("Dashboard.manageStaff"), path: "staff_manager/ManageStaff" }]}
         />
       </div>
       <Grid container spacing={2} justify="space-between">
@@ -276,21 +275,23 @@ function ManageStaff(props) {
             />
             )}
             {iShowAdditional && shouldOpenAdditionalDialog && (
-            <AdditionalDialog
-            handleCloseDialog ={handleDialogClose}
-            t ={t}
-            item={currentItem}
-            iShowAdditional={true}
-            isManage ={true}
+            <NotifyDialog
+            t={t}
+            handleCloseDialog={handleDialogClose}
+            item={{
+              tittle:"Nội dung yêu cầu bổ sung kết thúc",
+              message:currentItem?.additionalRequestTermination
+            }}
             />
             )}
             {!iShowAdditional && shouldOpenAdditionalDialog && (
-            <RejectionDialog
-            handleCloseDialog ={handleDialogClose}
-            t ={t}
-            item={currentItem}
-            isShowRejectReason={true}
-            isManage ={true}
+            <NotifyDialog
+            t={t}
+            handleCloseDialog={handleDialogClose}
+            item={{
+              tittle:"Nội dung từ chối kết thúc",
+              message:currentItem?.reasonForRefuseEndProfile
+            }}
             />
             )}
           </div>

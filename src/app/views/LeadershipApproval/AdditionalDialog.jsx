@@ -4,22 +4,14 @@ import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { useDispatch } from "react-redux";
 
-const AdditionalDialog = ({ t, handleCloseDialog, item,isManage,handleSubmitForm }) => {
+const AdditionalDialog = ({ t, handleCloseDialog, item,handleSubmitForm }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const handleSubmit = () => {
     if(handleSubmitForm){
       handleSubmitForm(content);
     }else
-    if(isManage){
-      dispatch(
-        updateStaffAction({
-          ...item,
-          additionalRequestTermination: content,
-          submitProfileStatus: "8",
-        })
-      );
-    }else{
+    {
       dispatch(
         updateStaffAction({
           ...item,
@@ -56,7 +48,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item,isManage,handleSubmitForm
                   </span>
                 }
                 type="text"
-                name={isManage ? "additionalRequestTermination" : "additionalRequest"}
+                name={"additionalRequest"}
                 onChange={(e) => onChange(e)}
                 value={content}
                 validators={["required"]}
