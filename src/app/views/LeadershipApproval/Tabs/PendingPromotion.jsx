@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { setItem, getStaffByIdAction } from "app/redux/actions/StaffActions.js";
+import { getStaffByIdAction, setItem } from "app/redux/actions/StaffActions.js";
 import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import SearchIcon from "@material-ui/icons/Search";
@@ -12,11 +12,12 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "./PedingApprovalDialog";
 import { searchObjectsByKeyword, wrapText4 } from "utils";
-import { getSalaries, getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
-import SalaryIncreaseDialog from "app/component/Form/SalaryIncreaseDialog";
-import { getAllSalariesByLeader, updateSalary } from "app/redux/actions/SalaryAction";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
+import { getProcess, getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
+import { getAllProcessByLeader, updateProcess } from "app/redux/actions/ProcessAction";
+import { STAFF_POSITION } from "app/constants/staffConstant";
+import PromotionDialog from "app/component/Form/PromotionDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -24,11 +25,11 @@ toast.configure({
   limit: 3,
 });
 
-function PendingSalaryIncrement({ t }) {
+function PendingPromotion({ t }) {
   const dispatch = useDispatch();
-  const salaryList = useSelector(getSalaries);
-  const shouldUpdate = useSelector(getShouldUpdateSalary);
-  const [salariesByPage, setSalariesByPage] = useState([]);
+  const promotionList = useSelector(getProcess);
+  const shouldUpdate = useSelector(getShouldUpdateProcess);
+  const [promotionByPage, setPromotionByPage] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
@@ -37,34 +38,33 @@ function PendingSalaryIncrement({ t }) {
   const [showRejectionDialog, setShowRejectionDialog] = useState(false);
 
   const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
-  const [salary, setSalary] = useState({
-    startDate: new Date(),
-    reason: "",
+  const [promotion, setPromotion] = useState({
+    promotionDay: new Date(),
     note: "",
-    oldSalary: 0,
-    newSalary: 0,
+    newPosition: 0,
+    leaderId: 0,
   });
 
   const updatePageData = () => {
-    const salaries = [...salaryList];
+    const promotions = [...promotionList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
-    const pageData = searchObjectsByKeyword(keyword, salaries).slice(startOfPage, endOfPage);
-    setSalariesByPage(pageData);
-    setTotalElement(salaries.length);
+    const pageData = searchObjectsByKeyword(keyword, promotions).slice(startOfPage, endOfPage);
+    setPromotionByPage(pageData);
+    setTotalElement(promotions.length);
   };
 
   useEffect(() => {
-    dispatch(getAllSalariesByLeader());
+    dispatch(getAllProcessByLeader());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     updatePageData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagePagination, salaryList,keyword]);
+  }, [pagePagination, promotionList,keyword]);
   useEffect(() => {
     if (shouldUpdate) {
-      dispatch(getAllSalariesByLeader());
+      dispatch(getAllProcessByLeader());
       updatePageData();
       setShowEditorDialog(false);
     }
@@ -72,12 +72,12 @@ function PendingSalaryIncrement({ t }) {
   }, [shouldUpdate]);
   const handleShowEditorDialog = (item) => {
     dispatch(getStaffByIdAction(item?.employeeId));
-    setSalary({ ...item });
+    setPromotion({ ...item });
     setShowEditorDialog(true);
   };
   const handleCloseDialog = () => {
     dispatch(setItem({}));
-    setSalary({});
+    setPromotion({});
     setShowEditorDialog(false);
     setShouldOpenDocumentDialog(false);
     setShowAdditionalDialog(false);
@@ -89,10 +89,10 @@ function PendingSalaryIncrement({ t }) {
   };
   const handleSubmit = () => {
     dispatch(
-      updateSalary({
-        ...salary,
+        updateProcess({
+        ...promotion,
         acceptanceDate: moment().format("YYYY-MM-DD"),
-        salaryIncreaseStatus: 3,
+        processStatus: 3,
       })
     );
     handleCloseDialog();
@@ -106,10 +106,10 @@ function PendingSalaryIncrement({ t }) {
   };
   const handleSubmitAdditional = (content) => {
     dispatch(
-      updateSalary({
-        ...salary,
+        updateProcess({
+        ...promotion,
         additionalRequest: content,
-        salaryIncreaseStatus: 4,
+        processStatus: 4,
       })
     );
     handleCloseDialog();
@@ -123,11 +123,11 @@ function PendingSalaryIncrement({ t }) {
   };
   const handleSubmitRejection = (rejectionDate, content) => {
     dispatch(
-      updateSalary({
-        ...salary,
+        updateProcess({
+        ...promotion,
         rejectionDate: rejectionDate,
         reasonForRefusal: content,
-        salaryIncreaseStatus: 5,
+        processStatus: 5,
       })
     );
     handleCloseDialog();
@@ -197,36 +197,36 @@ function PendingSalaryIncrement({ t }) {
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
     {
-      title: t("staff.salary_increment.startDate"),
-      field: "startDate",
+      title: t("staff.promotion.promotionDay"),
+      field: "promotionDay",
       align: "center",
       minWidth: "120px",
-      render: (props) => <span>{moment(new Date(props?.startDate)).format("DD/MM/YYYY")}</span>,
+      render: (props) => <span>{moment(new Date(props?.promotionDay)).format("DD/MM/YYYY")}</span>,
     },
     {
-      title: t("staff.salary_increment.oldSalary"),
-      field: "oldSalary",
-      align: "right",
+      title: t("staff.promotion.currentPosition"),
+      field: "currentPosition",
+      align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => `${props?.oldSalary.toLocaleString("en-US")} VND`,
+      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.currentPosition).name}</span>,
     },
     {
-      title: t("staff.salary_increment.newSalary"),
-      field: "newSalary",
-      align: "right",
+      title: t("staff.promotion.newPosition"),
+      field: "newPosition",
+      align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => `${props?.newSalary.toLocaleString("en-US")} VND`,
+      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.newPosition).name}</span>,
     },
     {
-      title: t("staff.salary_increment.reason"),
-      field: "reason",
+      title: t("staff.promotion.note"),
+      field: "note",
       align: "left",
       minWidth: "170px",
       maxWidth: "200px",
-      render: (props) => wrapText4(props?.reason, 200),
-    },
+      render: (props) => wrapText4(props?.note, 10),
+    }
   ];
   return (
     <Grid container spacing={2} justify="flex-end">
@@ -253,9 +253,9 @@ function PendingSalaryIncrement({ t }) {
       <Grid item xs={12}>
         {shouldOpenDocumentDialog && <PendingApprovalDialog t={t} handleCloseDialog={handleCloseDialog} />}
         {showEditorDialog && (
-          <SalaryIncreaseDialog
+          <PromotionDialog
             handleCloseDialog={handleCloseDialog}
-            dataSalaryIncrease={salary}
+            processData={promotion}
             t={t}
             Action={Action}
           />
@@ -276,7 +276,7 @@ function PendingSalaryIncrement({ t }) {
           />
         )}
         <CustomTable
-          data={salariesByPage}
+          data={promotionByPage}
           columns={columns}
           totalElements={totalElement}
           pagePagination={pagePagination}
@@ -286,4 +286,4 @@ function PendingSalaryIncrement({ t }) {
     </Grid>
   );
 }
-export default PendingSalaryIncrement;
+export default PendingPromotion;

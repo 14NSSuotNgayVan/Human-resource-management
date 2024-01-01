@@ -52,11 +52,13 @@ export function wrapText(inputString, lineWidth) {
   }
   return resultString;
 }
-export function wrapText4(inputString, lineWidth = 200) {
+export function wrapText4(inputString, lineWidth = 15) {
   let resultString = '';
   let currentLine = '';
   let EnterCount = 0;
-  for (const char of inputString) {
+  if(inputString){
+
+    for (const char of inputString) {
       if (char === ' ' && currentLine.length > lineWidth && EnterCount <3) {
         resultString += '\n'; // Chèn dấu xuống dòng nếu độ rộng đã vượt quá
         currentLine = '';
@@ -66,6 +68,8 @@ export function wrapText4(inputString, lineWidth = 200) {
         resultString += char;
       }
     }
+  }
+  console.log(resultString)
   return resultString;
 }
 export function searchObjectsByKeyword(keyword, objectsArray) {

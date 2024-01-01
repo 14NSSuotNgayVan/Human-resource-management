@@ -15,9 +15,6 @@ import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants
 import CustomTable from "app/component/CustomTable";
 import AddStaffDialog from "./AddStaffDialog";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
-import AppButton from "../material-kit/buttons/AppButton";
-import AdditionalDialog from "../LeadershipApproval/AdditionalDialog";
-import RejectionDialog from "../LeadershipApproval/RejectionDialog";
 import NotifyDialog from "app/component/CustomNotifyDialog";
 toast.configure({
   autoClose: 2000,

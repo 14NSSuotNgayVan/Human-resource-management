@@ -1,27 +1,15 @@
-import React, { useCallback, useState } from "react";
-import { searchByPageAction, deleteStaffAction, setItem } from "app/redux/actions/StaffActions.js";
-import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment, Tab, Tabs } from "@material-ui/core";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import React, {useState } from "react";
+import {Tab, Tabs } from "@material-ui/core";
 import { Breadcrumb } from "egret";
-import SearchIcon from "@material-ui/icons/Search";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "app/redux/selectors/StaffSelector.js";
-import moment from "moment";
 import {
-  GENDER,
   LEADERSHIP_APPROVAL_TABS,
-  STAFF_STATUS,
-  SUBMIT_PROFILE_STATUS,
-  TEAM,
+
 } from "app/constants/staffConstant.js";
-import CustomTable from "app/component/CustomTable";
-import LeadershipApprovalDialog from "./Tabs/PedingApprovalDialog";
 import PendingApproval from "./Tabs/PendingApproval";
 import PendingSalaryIncrement from "./Tabs/PendingSalaryIncrement";
+import PendingPromotion from "./Tabs/PendingPromotion";
 
 toast.configure({
   autoClose: 2000,
@@ -67,8 +55,11 @@ function LeadershipApproval({ t }) {
           value={LEADERSHIP_APPROVAL_TABS.FINISH.value}
         />
       </Tabs>
+      <div className="p-16">
       {tab === LEADERSHIP_APPROVAL_TABS.PENDING.value && <PendingApproval t={t} />}
       {tab === LEADERSHIP_APPROVAL_TABS.SALARY_INCREMENT.value && <PendingSalaryIncrement t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS.PROMOTION.value && <PendingPromotion t={t} />}
+      </div>
     </div>
   );
 }

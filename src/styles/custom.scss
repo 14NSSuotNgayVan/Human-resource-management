@@ -22,6 +22,10 @@
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
+.text-overflow-none{
+  overflow: unset!important;
+  text-overflow: unset !important;
+}
 .rejected {
   border-radius: 8px;
   padding: 0.3rem 0.5rem;

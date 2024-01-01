@@ -1,7 +1,7 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Paper } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton} from "@material-ui/core";
 import { updateStaffAction } from "app/redux/actions/StaffActions";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { useDispatch } from "react-redux";
 
