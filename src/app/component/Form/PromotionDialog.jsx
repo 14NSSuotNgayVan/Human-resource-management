@@ -46,7 +46,7 @@ function PromotionDialog({ t, handleCloseDialog, processData,action }) {
               </Typography>
             </div>
             <div className="flex-center">
-              <Typography fontWeight="bold" className="text-overflow">
+              <Typography fontWeight="bold" className="text-overflow heading-underline">
                 Độc lập - Tự do - Hạnh phúc
               </Typography>
             </div>
@@ -124,7 +124,7 @@ function PromotionDialog({ t, handleCloseDialog, processData,action }) {
               (Ký tên, đóng dấu)
             </Typography>
             {processData?.processStatus === '3' && (
-              <div className="mt-32">
+              <div className="mt-32 flex-center">
               <span className="sign-text ">{staff?.leaderName}</span>
             </div>
             )}

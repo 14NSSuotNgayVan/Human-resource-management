@@ -45,7 +45,7 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
               </Typography>
             </div>
             <div className="flex-center">
-              <Typography fontWeight="bold" className="text-overflow">
+              <Typography fontWeight="bold" className="text-overflow heading-underline">
                 Độc lập - Tự do - Hạnh phúc
               </Typography>
             </div>
@@ -77,7 +77,7 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
             GIÁM ĐỐC CÔNG TY OCEANTECH
           </Typography>
         </div>
-        <Typography aphy className="flex-center line-height-25" fontWeight="bold">
+        <Typography  className="flex-center line-height-25" fontWeight="bold">
           QUYẾT ĐỊNH
         </Typography>
         <Typography>
@@ -111,7 +111,7 @@ function PromotionDialog({ t, handleCloseDialog, dataSalaryIncrease,action }) {
               (Ký tên, đóng dấu)
             </Typography>
             {dataSalaryIncrease?.salaryIncreaseStatus === 3 && (
-              <div className="mt-32">
+              <div className="mt-32 flex-center">
                 <span className="sign-text ">{staff?.leaderName}</span>
               </div>
             )}
