@@ -44,7 +44,7 @@ function EndProfileFormDialog({ t, handleCloseDialog,Action }) {
           Hiện tại đang là {STAFF_POSITION.find((item)=>item?.id === (staff?.currentPosition ?? 1) )?.name} tại công ty OCEANTECH<b></b>
         </Typography>
         <Typography className="pb-12">
-          Tôi làm đơn này, đề nghị Ban Gián đốc cho tôi xin nghỉ việc vì lý do: {staff?.reasonForEnding}
+          Tôi làm đơn này, đề nghị Ban Gián đốc cho tôi xin nghỉ việc từ ngày {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[2]} vì lý do: {staff?.reasonForEnding}
         </Typography>
         <Typography className="pb-12">
           Trong thời gian chờ đợi sự chấp thuận của Ban Giám đốc Công ty, tôi sẽ tiếp tục làm việc nghiêm túc và tiến
@@ -56,7 +56,7 @@ function EndProfileFormDialog({ t, handleCloseDialog,Action }) {
           <Grid item xs={6}></Grid>
           <Grid item xs={6}>
             <Typography className="flex-center">
-              Hà Nội, Ngày {moment(new Date(staff?.endDay)).format("DD/MM/YYYY")[0]} tháng {moment(new Date(staff?.endDay)).format("DD/MM/YYYY")[1]} năm {moment(new Date(staff?.endDay)).format("DD/MM/YYYY")[2]}
+              Hà Nội, Ngày {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[2]}
             </Typography>
             <Typography fontWeight="bold" className="flex-center">
               Người làm đơn

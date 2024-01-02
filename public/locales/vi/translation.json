@@ -151,6 +151,11 @@
     "promotion":"Thăng chức",
     "history":"Lịch sử cập nhật"
   },
+  "endStaff":{
+    "numberSaved":"Mã nộp lưu",
+    "decisionDay":"Ngày nộp lưu",
+    "saveProfile":"Nộp lưu hồ sơ"
+  },
   "staff": {
     "title": "nhân viên",
     "name": "Tên nhân viên",
