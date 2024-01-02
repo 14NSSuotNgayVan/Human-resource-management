@@ -59,7 +59,7 @@ class SignIn extends Component {
             <Grid container>
               <Grid item lg={5} md={5} sm={5} xs={12}>
                 <div className="p-32 flex flex-center flex-middle h-100">
-                  <img src="/assets/images/avatar.jpg" alt="" />                  
+                  <img src="/assets/images/WebinarDefault.jpg" alt="" />                  
                 </div>
               </Grid>
               <Grid item lg={7} md={7} sm={7} xs={12}>
@@ -74,7 +74,7 @@ class SignIn extends Component {
                       name="email"
                       value={email.trim()}
                       validators={["required"]}
-                      errorMessages={[t("general.errorMessages_required")]}
+                      errorMessages={[t("staff.notify.errorMessages_required")]}
                     />
                     <TextValidator
                       className="mb-16 w-100"
@@ -85,7 +85,7 @@ class SignIn extends Component {
                       type="password"
                       value={password.trim()}
                       validators={["required"]}
-                      errorMessages={[t("general.errorMessages_required")]}
+                      errorMessages={[t("staff.notify.errorMessages_required")]}
                     />
                     <div className="flex flex-center mb-8">
                       <div className={classes.wrapper} style={{width: "100%"}}>
@@ -106,6 +106,20 @@ class SignIn extends Component {
                         )}
                       </div>
                       
+                      {/* <span className="ml-16 mr-16">{t("or")}</span>
+                      <div className={classes.wrapper}>
+                        <Button
+                          className="capitalize"
+                          variant="contained"
+                          onClick={() =>
+                            this.props.history.push(
+                              "/session/signupregisterhealthorg"
+                            )
+                          }
+                        >
+                          {t("sign_up.title")}
+                        </Button>
+                      </div> */}
                     </div>
                     <div className="flex flex-center">
                         <Button

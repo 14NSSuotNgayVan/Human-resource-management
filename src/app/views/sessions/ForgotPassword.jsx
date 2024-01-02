@@ -60,7 +60,7 @@ class ForgotPassword extends Component {
                       <Button variant="contained" color="primary" type="submit">
                         {t("login.reset_password")}
                       </Button>
-                      <span className="ml-16 mr-16">{t("or")}</span>
+                      <span className="ml-16 mr-16">{t("general.or")}</span>
                       <Button
                         className="capitalize"
                         variant="contained"

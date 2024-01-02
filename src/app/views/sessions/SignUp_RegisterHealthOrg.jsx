@@ -260,7 +260,7 @@ class SignUp extends Component {
                           name="name"
                           value={name}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                         />
                       </Grid>
                       <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -280,7 +280,7 @@ class SignUp extends Component {
                           value={email}
                           validators={["required", "isEmail"]}
                           errorMessages={[
-                            t("general.errorMessages_required"),
+                            t("staff.notify.errorMessages_required"),
                             t("general.errorMessages_email_valid")
                           ]}
                         />
@@ -302,7 +302,7 @@ class SignUp extends Component {
                           name="taxCodeOfTheUnit"
                           value={taxCodeOfTheUnit}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                         />
                       </Grid>
 
@@ -322,7 +322,7 @@ class SignUp extends Component {
                           name="unitCodeOfProgramPEQAS"
                           value={unitCodeOfProgramPEQAS}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                         />
                       </Grid>
                       <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -341,7 +341,7 @@ class SignUp extends Component {
                           name="contactName"
                           value={contactName}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                         />
                       </Grid>
                       <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -360,7 +360,7 @@ class SignUp extends Component {
                           name="officerPosion"
                           value={officerPosion}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                         />
                       </Grid>
                       <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -380,7 +380,7 @@ class SignUp extends Component {
                           value={contactPhone}
                           validators={["required", "matchRegexp:^[0-9]*$", "isLengthNumber"]}
                           errorMessages={[
-                            t("general.errorMessages_required"),
+                            t("staff.notify.errorMessages_required"),
                             t("general.errorMessages_phone_number_invalid"),
                             t("general.errorMessages_phone_number_invalid")
                           ]}
@@ -413,7 +413,7 @@ class SignUp extends Component {
                           name="address"
                           value={address}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                         />
                       </Grid>
 
@@ -432,7 +432,7 @@ class SignUp extends Component {
                           type={passwordIsMasked ? "password" : "text"}
                           value={password}
                           validators={["required"]}
-                          errorMessages={[t("general.errorMessages_required")]}
+                          errorMessages={[t("staff.notify.errorMessages_required")]}
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">
@@ -474,7 +474,7 @@ class SignUp extends Component {
                           value={re_password}
                           validators={["required", "isPasswordMatch"]}
                           errorMessages={[
-                            t("general.errorMessages_required"),
+                            t("staff.notify.errorMessages_required"),
                             t("general.isPasswordMatch")
                           ]}
                           InputProps={{

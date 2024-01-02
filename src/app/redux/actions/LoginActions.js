@@ -8,16 +8,14 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_LOADING = "LOGIN_LOADING";
 export const RESET_PASSWORD = "RESET_PASSWORD";
 
-export  function loginWithEmailAndPassword({ email, password }) {
+export function loginWithEmailAndPassword({ email, password }) {
   return dispatch => {
     dispatch({
       type: LOGIN_LOADING
     });
 
     jwtAuthService
-      //.loginWithEmailAndPassword(email, password)
-      //.loginWithToken()
-      .loginWithUserNameAndPassword(email.trim(),password.trim())
+      .loginWithUserNameAndPassword(email.trim(), password.trim())
       .then(user => {
         dispatch(setUserData(user));
         //Lưu lại thông tin liên quan đến token tại đây
@@ -31,7 +29,7 @@ export  function loginWithEmailAndPassword({ email, password }) {
         });
       })
       .catch(error => {
-        alert('Tài khoản hoặc mật khẩu không đúng. Mời bạn đăng nhập lại');//Cần xem cách đưa ra thông báo thông qua đa ngôn ngữ
+        alert('Tài khoản hoặc mật khẩu không đúng. Mời bạn đăng nhập lại');
         return dispatch({
           type: LOGIN_ERROR,
           payload: error

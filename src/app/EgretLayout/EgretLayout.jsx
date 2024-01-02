@@ -8,10 +8,7 @@ import AppContext from "app/appContext";
 import localStorageService from "../services/localStorageService";
 import ConstantList from "../appConfig";
 import history from "history.js";
-import {
-  setLayoutSettings,
-  setDefaultSettings
-} from "app/redux/actions/LayoutActions";
+import { setLayoutSettings, setDefaultSettings } from "app/redux/actions/LayoutActions";
 import { isEqual, merge } from "lodash";
 import { isMdScreen, getQueryParam } from "utils";
 
@@ -47,9 +44,7 @@ class EgretLayout extends Component {
   setLayoutFromQuery = () => {
     try {
       let settingsFromQuery = getQueryParam("settings");
-      settingsFromQuery = settingsFromQuery
-        ? JSON.parse(settingsFromQuery)
-        : {};
+      settingsFromQuery = settingsFromQuery ? JSON.parse(settingsFromQuery) : {};
       let { settings, setLayoutSettings, setDefaultSettings } = this.props;
       let updatedSettings = merge({}, settings, settingsFromQuery);
 
@@ -65,9 +60,7 @@ class EgretLayout extends Component {
 
     if (settings.layout1Settings.leftSidebar.show) {
       let mode = isMdScreen() ? "close" : "full";
-      setLayoutSettings(
-        merge({}, settings, { layout1Settings: { leftSidebar: { mode } } })
-      );
+      setLayoutSettings(merge({}, settings, { layout1Settings: { leftSidebar: { mode } } }));
     }
   };
 
@@ -90,15 +83,17 @@ class EgretLayout extends Component {
   }
 
   render() {
-    let expire_time= localStorageService.getItem("token_expire_time");
-    if(expire_time!=null){     
-    let dateObj = new Date(expire_time);
-      if(dateObj!=null){
-        if(dateObj<Date.now()){
+    let expire_time = localStorageService.getItem("token_expire_time");
+    if (expire_time) {
+      console.log(expire_time);
+      let dateObj = new Date(expire_time);
+      if (dateObj) {
+        if (dateObj < Date.now()) {
           localStorageService.removeItem("token_expire_time");
           history.push(ConstantList.LOGIN_PAGE);
-        }      
-      }
+          alert("Phiên đăng nhập hết hạn");
+        }
+      } 
     }
 
     const { settings } = this.props;
@@ -107,18 +102,13 @@ class EgretLayout extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   setLayoutSettings: PropTypes.func.isRequired,
   setDefaultSettings: PropTypes.func.isRequired,
   settings: state.layout.settings,
-  defaultSettings: state.layout.defaultSettings
+  defaultSettings: state.layout.defaultSettings,
 });
 
 EgretLayout.contextType = AppContext;
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { setLayoutSettings, setDefaultSettings }
-  )(EgretLayout)
-);
+export default withRouter(connect(mapStateToProps, { setLayoutSettings, setDefaultSettings })(EgretLayout));

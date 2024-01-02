@@ -119,7 +119,7 @@ const StaffInformation = (props) => {
           </Grid>
         </Grid>
         <Grid container spacing={2} xs={12} sm={12} md={8} lg={8} className="p-8">
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -138,7 +138,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -209,7 +209,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -228,7 +228,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
                 
@@ -259,7 +259,7 @@ const StaffInformation = (props) => {
               </SelectValidator>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -307,7 +307,7 @@ const StaffInformation = (props) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -326,7 +326,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -345,7 +345,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
