@@ -8,7 +8,7 @@ const ViewComponent = withTranslation()(Leadership);
 
 const LeadershipApprovedRoutes = [
   {
-    path:  ConstantList.ROOT_PATH+"staff_manager/LeadershipApproved",
+    path:  ConstantList.ROOT_PATH+"leader/LeadershipApproved",
     exact: true,
     component: ViewComponent
   }

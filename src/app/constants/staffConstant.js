@@ -100,7 +100,9 @@ export const STAFF_STATUS = {
     MANAGE:"3,6,8,9",
     EDIT_PROCESS:"1,4,5",
     PENDING:"2",
-    END_PROFILE:"6"
+    END_PROFILE_PROCESS:"6",
+    VIEW_END_PROFILE:"7,0",
+    EDIT_END_PROFILE:"7"
 
 }
 export const RELATIONSHIP = [

@@ -90,8 +90,8 @@ const Promotion = (props) => {
   useEffect(() => {
     setIsActiveEdit(
       promotionList.length === 0 ||
-        promotionList.every((item) => item.processStatus === 3) ||
-        promotionList.every((item) => item.processStatus === 1)
+        promotionList.every((item) => item.processStatus === "3") ||
+        promotionList.every((item) => item.processStatus === "1")
     );
   }, [promotionList]);
   useEffect(() => {
@@ -104,7 +104,9 @@ const Promotion = (props) => {
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
     const pageData = isPendingEndProfile
-      ? salaries.filter((item) => item?.processStatus === 3 || item?.processStatus === 4).slice(startOfPage, endOfPage)
+      ? salaries
+          .filter((item) => item?.processStatus === "3" || item?.processStatus === "4")
+          .slice(startOfPage, endOfPage)
       : salaries.slice(startOfPage, endOfPage);
     setPromotionsByPage(pageData);
     setTotalElement(salaries.length);
@@ -116,12 +118,12 @@ const Promotion = (props) => {
   const handleSubmit = () => {
     if (isEditing) {
       promotion?.leaderId
-        ? dispatch(updateProcess({ ...promotion, processStatus: 2 }))
+        ? dispatch(updateProcess({ ...promotion, processStatus: "2" }))
         : dispatch(updateProcess(promotion));
     } else
       promotion?.leaderId
-        ? dispatch(createProcess(item?.id, { ...promotion, processStatus: 2 }))
-        : dispatch(createProcess(item?.id, { ...promotion, processStatus: 1 }));
+        ? dispatch(createProcess(item?.id, { ...promotion, processStatus: "2" }))
+        : dispatch(createProcess(item?.id, { ...promotion, processStatus: "1" }));
   };
   const handleClose = () => {
     setShowNotify({
@@ -129,12 +131,16 @@ const Promotion = (props) => {
       message: "",
       tittle: "",
     });
-    setPromotion(null);
+    setPromotion({
+      promotionDay: new Date(),
+      newPosition: 1,
+      note: "",
+    });
     setShowConfirmationDialog(false);
     setIsSendLeader(false);
     setIsEditing(false);
     setShouldOpenDocumentDialog(false);
-    isPendingEndProfile && form.current.resetValidations();
+    !isPendingEndProfile && form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setPromotion({ ...promotion, [field]: event.target.value });
@@ -348,7 +354,7 @@ const Promotion = (props) => {
                     }
                     value={promotion?.leaderId ?? ""}
                     inputProps={{
-                      readOnly: promotion?.leaderId && promotion?.processStatus === 4,
+                      readOnly: promotion?.leaderId && promotion?.processStatus === "4",
                     }}
                     onChange={(e) => onChange(e, "leaderId")}
                     className="w-100 mb-16"

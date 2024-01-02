@@ -15,6 +15,11 @@ export const navigations = [
         isVisible: true,
         path: ConstantList.ROOT_PATH + "staff_manager/ManageStaff",
       },
+      {
+        name: "Dashboard.endStaff",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "staff_manager/EndStaff",
+      },
     ]
   },
   {
@@ -25,12 +30,12 @@ export const navigations = [
       {
         name: "Dashboard.LeadershipApproval",
         isVisible: true,
-        path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproval",
+        path: ConstantList.ROOT_PATH + "leader/LeadershipApproval",
       },
       {
         name: "Dashboard.LeadershipApproved",
         isVisible: true,
-        path: ConstantList.ROOT_PATH + "staff_manager/LeadershipApproved",
+        path: ConstantList.ROOT_PATH + "leader/LeadershipApproved",
       }
     ]
   },
