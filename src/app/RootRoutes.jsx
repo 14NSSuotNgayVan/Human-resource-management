@@ -2,8 +2,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import sessionRoutes from "./views/sessions/SessionRoutes";
 import ConstantList from "./appConfig";
-// import MenuRoutes from "./views/Menus/MenuRoutes";
-import pageLayoutRoutes from "./views/page-layouts/PageLayoutRoutees";  
 import StaffRoutes from "./views/AddStaff/AddStaffRoutes"
 import LeadershipApprovalRoutes from "./views/LeadershipApproval/LeadershipApprovalRoutes";
 import LeadershipApprovedRoutes from "./views/LeadershipApproved/LeadershipApprovedRoutes";
@@ -28,7 +26,6 @@ const errorRoute = [
 const routes = [
   ...redirectRoute,
   ...sessionRoutes,
-  ...pageLayoutRoutes,  
   ...StaffRoutes,
   ...LeadershipApprovalRoutes,
   ...LeadershipApprovedRoutes,

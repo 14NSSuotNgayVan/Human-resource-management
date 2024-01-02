@@ -58,9 +58,6 @@ const Family = (props) => {
       ValidatorForm.removeValidationRule("isValidCitizenIdentificationNumber");
     };
   }, []);
-  useEffect(() => {
-    form.current.resetValidations();
-  }, [isEditing]);
   const handleSubmit = () => {
     if (familyMember?.id) {
       dispatch(updateFamilyMember(familyMember));
@@ -71,6 +68,7 @@ const Family = (props) => {
     setFamilyMember(null);
     setShowConfirmationDialog(false);
     setIsEditing(false);
+    form.current.resetValidations();
   };
 
   const handleChange = (event, field) => {
@@ -103,9 +101,15 @@ const Family = (props) => {
       title: t("STT"),
       align: "center",
       minWidth: "60px",
-      render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
+      render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
-    { title: t("staff.family.name"), field: "name", align: "left", minWidth: "170px" },
+    {
+      title: t("staff.family.name"),
+      field: "name",
+      align: "left",
+      minWidth: "170px",
+      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
+    },
     {
       title: t("staff.family.dateOfBirth"),
       field: "dateOfBirth",
@@ -134,6 +138,7 @@ const Family = (props) => {
       align: "left",
       minWidth: "150px",
       maxWidth: "150px",
+      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
     },
     {
       title: t("staff.family.phoneNumber"),
@@ -163,16 +168,18 @@ const Family = (props) => {
                 onChange={(e) => {
                   handleChange(e, "name");
                 }}
-                validators={["required", `matchRegexp:${NAME_REGEX}`]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
-                
+                validators={["required", `matchRegexp:${NAME_REGEX}`, "maxStringLength:50"]}
+                errorMessages={[
+                  t("staff.notify.errorMessages_required"),
+                  t("staff.notify.invalidName"),
+                  `${t("staff.notify.invalidStringContent")}(50 kí tự)`,
+                ]}
                 size="small"
               />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <FormControl fullWidth={true}  className="" size="small">
+              <FormControl fullWidth={true} className="" size="small">
                 <SelectValidator
-                  
                   size="small"
                   label={
                     <span className="inputLabel">
@@ -219,21 +226,20 @@ const Family = (props) => {
                 type="date"
                 name="dateOfBirth"
                 inputProps={{
-                  max:moment().format("YYYY-MM-DD"),
+                  max: moment().format("YYYY-MM-DD"),
                 }}
                 value={familyMember?.dateOfBirth ? moment(familyMember?.dateOfBirth).format("YYYY-MM-DD") : ""}
                 validators={["required"]}
                 errorMessages={[t("staff.notify.errorMessages_required")]}
                 InputLabelProps={{
                   shrink: true,
-                }}    
+                }}
                 size="small"
               />
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <FormControl fullWidth={true}  className="" size="small">
+              <FormControl fullWidth={true} className="" size="small">
                 <SelectValidator
-                  
                   size="small"
                   label={
                     <span className="inputLabel">
@@ -270,28 +276,6 @@ const Family = (props) => {
                 label={
                   <span className="inputLabel">
                     <span style={{ color: "red" }}> * </span>
-                    {t("staff.family.address")}
-                  </span>
-                }
-                disabled={!isEditing}
-                type="text"
-                name="address"
-                value={familyMember?.address || ""}
-                onChange={(e) => {
-                  handleChange(e, "address");
-                }}
-                validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
-                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
-                
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={4}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
                     {t("staff.family.citizenIdentificationNumber")}
                   </span>
                 }
@@ -307,7 +291,6 @@ const Family = (props) => {
                   t("staff.notify.errorMessages_required"),
                   t("staff.notify.inValidCitizenIdentificationNumber"),
                 ]}
-                
                 size="small"
               />
             </Grid>
@@ -333,7 +316,6 @@ const Family = (props) => {
                   t("general.errorMessages_number_required"),
                   t("general.invalidPhoneFormat"),
                 ]}
-                
                 size="small"
               />
             </Grid>
@@ -353,37 +335,50 @@ const Family = (props) => {
                 type="email"
                 name="email"
                 value={familyMember?.email || ""}
-                validators={["required", "isEmail"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("general.errorMessages_email_valid")]}
-                
+                validators={["required", "isEmail", "maxStringLength:50"]}
+                errorMessages={[
+                  t("staff.notify.errorMessages_required"),
+                  t("general.errorMessages_email_valid"),
+                  `${t("staff.notify.invalidStringContent")}(50 kí tự)`,
+                ]}
                 size="small"
               />
             </Grid>
-          </Grid>
-          <Grid container justify="flex-end" className="mb-16">
-            {!isEditing && (
-              <Button
-                className="align-bottom mr-8 mb-4"
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  setFamilyMember({});
-                  setIsEditing(true);
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+              <TextValidator
+                className={"w-100 mb-16"}
+                label={
+                  <span className="inputLabel">
+                    <span style={{ color: "red" }}> * </span>
+                    {t("staff.family.address")}
+                  </span>
+                }
+                disabled={!isEditing}
+                type="text"
+                name="address"
+                value={familyMember?.address || ""}
+                onChange={(e) => {
+                  handleChange(e, "address");
                 }}
-              >
-                {t("general.add")}
-              </Button>
-            )}
-            {isEditing && (
-              <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
-                {t("general.save")}
-              </Button>
-            )}
-            {isEditing && (
-              <Button className="align-bottom mr-8 mb-4 color-error" variant="contained"  onClick={handleClose}>
-                {t("general.cancel")}
-              </Button>
-            )}
+                validators={["required", `matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:175"]}
+                errorMessages={[
+                  t("staff.notify.errorMessages_required"),
+                  t("staff.notify.inValidAddress"),
+                  `${t("staff.notify.invalidStringContent")}(175 kí tự)`,
+                ]}
+                size="small"
+              />
+            </Grid>
+            <Grid item lg={2} md={2} sm={12} xs={12}>
+              <Grid container justify="flex-end" className="mb-16">
+                <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
+                  {t("general.save")}
+                </Button>
+                <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
+                  {t("general.cancel")}
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </ValidatorForm>
       </Grid>

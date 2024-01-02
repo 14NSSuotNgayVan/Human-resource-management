@@ -119,7 +119,7 @@ const StaffInformation = (props) => {
           </Grid>
         </Grid>
         <Grid container spacing={2} xs={12} sm={12} md={8} lg={8} className="p-8">
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -132,13 +132,13 @@ const StaffInformation = (props) => {
               name="name"
               value={staff?.name || ""}
               onChange={(e) => onChange(e, "name")}
-              validators={["required", `matchRegexp:${NAME_REGEX}`]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
+              validators={["required", `matchRegexp:${NAME_REGEX}`, "maxStringLength:50"]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(50 kí tự)`]}
               
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -157,7 +157,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
             <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
                 
@@ -188,7 +188,7 @@ const StaffInformation = (props) => {
               </SelectValidator>
             </FormControl>
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
             <TextValidator
               className="w-100 mb-16"
               label={
@@ -209,26 +209,8 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <TextValidator
-              className={"w-100 mb-16"}
-              label={
-                <span className="inputLabel">
-                  <span style={{ color: "red" }}> * </span>
-                  {t("staff.address")}
-                </span>
-              }
-              type="text"
-              name="address"
-              onChange={(e) => onChange(e, "address")}
-              value={staff?.address || ""}
-              validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
-              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
-              
-              size="small"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
                 
@@ -259,7 +241,7 @@ const StaffInformation = (props) => {
               </SelectValidator>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -281,7 +263,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
             <TextValidator
               className="w-100 mb-16"
               label={
@@ -307,7 +289,7 @@ const StaffInformation = (props) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -320,13 +302,13 @@ const StaffInformation = (props) => {
               name="placeOfIssueCard"
               value={staff?.placeOfIssueCard || ""}
               onChange={(e) => onChange(e, "placeOfIssueCard")}
-              validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
-              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
+              validators={["required",`matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:175"]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress"),`${t("staff.notify.invalidStringContent")}(175 kí tự)`]}
               
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -339,13 +321,12 @@ const StaffInformation = (props) => {
               name="ethnic"
               value={staff?.ethnic || ""}
               onChange={(e) => onChange(e, "ethnic")}
-              validators={["required",`matchRegexp:${NAME_REGEX}`]}
-              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidEthnic")]}
-              
+              validators={["required",`matchRegexp:${NAME_REGEX}`,"maxStringLength:15"]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidEthnic"),`${t("staff.notify.invalidStringContent")}(15 kí tự)`]}
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -358,14 +339,14 @@ const StaffInformation = (props) => {
               name="religion"
               value={staff?.religion || ""}
               onChange={(e) => onChange(e, "religion")}
-              validators={["required",`matchRegexp:${NAME_REGEX}`]}
+              validators={["required",`matchRegexp:${NAME_REGEX}`,"maxStringLength:15"]}
               errorMessages={[t("staff.notify.errorMessages_required"),
-              t("staff.notify.invalidReligion"),]}
+              t("staff.notify.invalidReligion"),`${t("staff.notify.invalidStringContent")}(15 kí tự)`,]}
               
               size="small"
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
             <TextValidator
               className="w-100 mb-16"
               label={
@@ -388,7 +369,7 @@ const StaffInformation = (props) => {
               size="small"
             />
           </Grid>
-          <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
             <TextValidator
               className="w-100 mb-16"
               label={
@@ -401,8 +382,27 @@ const StaffInformation = (props) => {
               type="email"
               name="email"
               value={staff?.email || ""}
-              validators={["required", "isEmail"]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.errorMessages_email_valid")]}
+              validators={["required", "isEmail","maxStringLength:50"]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.errorMessages_email_valid"),`${t("staff.notify.invalidStringContent")}(50 kí tự)`]}
+              
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={8} lg={8}>
+            <TextValidator
+              className={"w-100 mb-16"}
+              label={
+                <span className="inputLabel">
+                  <span style={{ color: "red" }}> * </span>
+                  {t("staff.address")}
+                </span>
+              }
+              type="text"
+              name="address"
+              onChange={(e) => onChange(e, "address")}
+              value={staff?.address || ""}
+              validators={["required",`matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:175"]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress"),`${t("staff.notify.invalidStringContent")}(175 kí tự)`]}
               
               size="small"
             />

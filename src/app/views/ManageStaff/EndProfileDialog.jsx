@@ -188,8 +188,8 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
                   name="reasonForEnding"
                   onChange={(e) => onChange(e, "reasonForEnding")}
                   value={formData?.reasonForEnding || ""}
-                  validators={["required", "maxStringLength:255"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"), `${t("staff.notify.invalidStringContent")}(255 kí tự)`,]}
+                  validators={["required", "maxStringLength:1000"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"), `${t("staff.notify.invalidStringContent")}(1000 kí tự)`,]}
                 />
               </Grid>
             </Grid>

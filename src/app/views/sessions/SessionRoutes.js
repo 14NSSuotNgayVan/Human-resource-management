@@ -37,11 +37,6 @@ const settings = {
 };
 
 const sessionRoutes = [
-  // {
-  //   path: ConstantList.ROOT_PATH+"session/signupregisterhealthorg",
-  //   component: ViewComponentSignUp,
-  //   settings
-  // },
   {
     path: ConstantList.ROOT_PATH+"session/signin",
     component: ViewComponentSignIn,
