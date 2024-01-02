@@ -86,9 +86,15 @@
   letter-spacing: 0.45px;
 }
 .details-address{
+  display: flex;
   margin-bottom: 8px;
   letter-spacing: -0.55px;
   
+}
+.details-address span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 .cv-details img{
   display: inline-block;
@@ -250,6 +256,8 @@
   font-size: 1.15rem;
   letter-spacing: -0.8px;
   margin-bottom: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .experience-list{
   padding: 0 8px;
