@@ -2,14 +2,8 @@
   "Dashboard": {
     "dashboard": "Trang chủ",
     "addStaff": "Thêm mới nhân viên",
-    "LeadershipApproval":"Lãnh đạo chờ duyệt",
-    "LeadershipApproved":"Lãnh đạo đã duyệt",
-    "endStaff":"Kết thúc nhân viên",
     "profile": "Thông tin tài khoản",
-    "logout": "Đăng xuất",
-    "manage":"Quản lý",
-    "manageStaff":"Quản lý nhân viên",
-    "leader":"Lãnh đạo"
+    "logout": "Đăng xuất"
   },
   "login": {
     "title": "Đăng nhập",
@@ -18,33 +12,6 @@
     "forgot_password": "Quên mật khẩu",
     "reset_password": "Đổi mật khẩu",
     "Logon_session_expires": "Phiên đăng nhập hết hạn"
-  },
-  "user": {
-    "title": "Tài khoản",
-    "userList": "Danh sách tài khoản người dùng",
-    "displayName": "Họ và tên",
-    "firstName": "Họ đệm",
-    "lastName": "Tên",
-    "gender": "Giới tính",
-    "username": "Tên đăng nhập",
-    "changePass": "Đổi Mật Khẩu",
-    "saveChange": "Lưu Thay Đổi",
-    "active": "Kích hoạt",
-    "role": "Vai trò",
-    "department": "Thuộc phòng ban",
-    "please_select_permission": "Vui lòng chọn ít nhất 1 quyền",
-    "email": "Email",
-    "isMainDepartment": "Phòng ban chính",
-    "search": "Tìm kiếm theo tên hoặc phòng ban",
-    "current_password": "Mật khẩu hiện tại",
-    "pass": "Mật khẩu",
-    "re_pass": "Nhập lại mật khẩu",
-    "confirm_password": "Xác nhận mật khẩu",
-    "filter": "Tìm kiếm theo tên đăng nhập, email và họ tên người dùng",
-    "person_info": "Thông tin người dùng",
-    "saveUpdate": "Thêm mới/Cập nhật người sử dụng",
-    "meetingId": "Mã Zoom",
-    "meetingPassw": "Mật khẩu Zoom"
   },
   "general": {
     "No": "Không",
@@ -130,10 +97,6 @@
     "confirmCalculator": "Bạn có chắc chắn muốn lưu?",
     "add_file": "Thêm tài liệu",
     "allProduct": "Tất cả sản phẩm"
-    ,"sendLeader":"Trình lãnh đạo",
-    "accept":"Chấp nhận",
-    "editDocument":"Chỉnh sửa",
-    "history":"Lịch sử cập nhật"
   },
   "toast": {
     "error": "Có lỗi xảy ra, vui lòng thử lại."
@@ -216,8 +179,6 @@
       "endProfile_display":"Kết thúc hồ sơ"
     },
     "team": "Nhóm",
-    "documents": "Hồ sơ",
-    "resume":"Sơ yếu lí lịch",
     "citizenIdentificationNumber": "Số CMND/ CCCD",
     "dateOfIssuanceCard":"Ngày cấp",
     "placeOfIssueCard":"Nơi cấp",
@@ -287,11 +248,9 @@
     "action": {
       "addStaff": "Thêm mới nhân viên",
       "deleteStaff": "Xóa nhân viên",
-      "updateStaff": "Cập nhật thông tin nhân viên",
-      "staffDocument":"Hồ sơ nhân viên"
+      "updateStaff": "Cập nhật thông tin nhân viên"
     },
     "notify": {
-      "inValidAddress":"Địa chỉ không chứa kí tự đặc biệt ngoại trừ '/'",
       "enterInformation": "Vui lòng điền thông tin nhân viên",
       "addError": "Thêm không thành công!",
       "addSuccess": "Thêm nhân viên thành công !",
@@ -301,17 +260,12 @@
       "use_all": "Nhân viên đều đã sử dụng",
       "deleted_unused": "Đã xoá nhân viên chưa sử dụng",
       "dupli_code": "Mã đã được sử dụng",
-      "invalidName":"Tên không chứa số và kí tự đặc biệt",
-      "invalidReligion":"Tên tôn giáo không được chứa số hoặc kí tự đặc biệt",
-      "invalidEthnic":"Tên dân tộc không được chứa số hoặc kí tự đặc biệt",
-      "invalidField":"Tên lĩnh vực không được chứa số hoặc kí tự đặc biệt",
       "isNotImage": "Chỉ chấp nhận ảnh",
       "inSingleFile": "Chỉ chọn 1 ảnh",
       "inValidFileSize": "Kích thước ảnh không vượt quá 10MB",
       "inValidImageSize": "Kích thước ảnh vượt quá 500px x 500px",
       "inValidBirthday": "Chưa đủ 18 tuổi",
       "inValidDateOfIssuanceCard":"Ngày cấp phải trước ngày hiện tại",
-      "invalidPreviousToday":"Ngày nhập vào phải trước ngày hiện tại",
       "inValidCitizenIdentificationNumber": "Vui lòng nhập đúng độ dài CCCD: 12 số, CMND: 9 số",
       "invalidDateFormat": "Định dạng ngày tháng không hợp lệ",
       "errorMessages_number_required": "Định dạng số không hợp lệ",
@@ -322,10 +276,7 @@
       "minLength_required": "Chưa đủ độ dài tối thiểu",
       "maxLength_required": "Độ dài tối đa là 10",
       "maxAgeValue_required": "Tuổi không phù hợp",
-      "minAgeValue_required": "Tuổi phải lớn hơn 18",
-      "invalidStringContent":"Vượt quá độ dài cho phép",
-      "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại",
-      "invalidPositive":"Phải là số dương"
+      "minAgeValue_required": "Tuổi phải lớn hơn 18"
     }
   }
 }

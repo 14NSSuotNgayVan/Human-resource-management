@@ -105,21 +105,6 @@ class SignIn extends Component {
                           />
                         )}
                       </div>
-                      
-                      {/* <span className="ml-16 mr-16">{t("or")}</span>
-                      <div className={classes.wrapper}>
-                        <Button
-                          className="capitalize"
-                          variant="contained"
-                          onClick={() =>
-                            this.props.history.push(
-                              "/session/signupregisterhealthorg"
-                            )
-                          }
-                        >
-                          {t("sign_up.title")}
-                        </Button>
-                      </div> */}
                     </div>
                     <div className="flex flex-center">
                         <Button

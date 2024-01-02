@@ -1,5 +1,9 @@
 import { PhotoCamera } from "@material-ui/icons";
+<<<<<<< HEAD
 import { ADDRESS_REGEX, GENDER, NAME_REGEX, TEAM } from "app/constants/staffConstant";
+=======
+import { GENDER, TEAM } from "app/constants/staffConstant";
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
 import { addStaffAction, setStaffImage, updateStaffAction } from "app/redux/actions/StaffActions";
 import { fileSelector, imageSelector } from "app/redux/selectors/StaffSelector";
 import moment from "moment";
@@ -14,7 +18,12 @@ toast.configure({
   limit: 3,
 });
 const StaffInformation = (props) => {
+<<<<<<< HEAD
   const { t, formRef, handleCloseDialog } = props;
+=======
+  console.log("rerender -staffInfo");
+  const { t, formRef } = props;
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
   const [staff, setStaff] = useState(props?.item);
   const staffImageUrl = useSelector(imageSelector);
   const file = useSelector(fileSelector);
@@ -23,13 +32,24 @@ const StaffInformation = (props) => {
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
         return false;
+<<<<<<< HEAD
       }
+=======
+      } 
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
     }
     return true;
   };
   const isImage = (file) => {
+<<<<<<< HEAD
     if (file) {
       const imageTypes = ["image/jpeg", "image/png", "image/gif"];
+=======
+    if(file){
+      console.log(file)
+      const imageTypes = ["image/jpeg", "image/png", "image/gif"];
+      console.log(imageTypes.indexOf(file.type))
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
       if (imageTypes.indexOf(file.type) === -1) {
         return false;
       }
@@ -62,6 +82,7 @@ const StaffInformation = (props) => {
     }
   };
   const handleSubmit = () => {
+<<<<<<< HEAD
     const lodash = require("lodash");
     if (lodash.isEqual(staff, props?.item) && props?.item?.image === staffImageUrl) {
       handleCloseDialog();
@@ -69,6 +90,12 @@ const StaffInformation = (props) => {
       if (staff?.id) dispatch(updateStaffAction(staff, file));
       else dispatch(addStaffAction(staff, file));
     }
+=======
+    if(staff?.id)
+      dispatch(updateStaffAction(staff));  
+    else
+      dispatch(addStaffAction(staff, file));
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
   };
   useEffect(() => {
     ValidatorForm.addValidationRule("isValidCitizenIdentificationNumber", (value) => {
@@ -81,6 +108,7 @@ const StaffInformation = (props) => {
 
       return age >= 18;
     });
+<<<<<<< HEAD
     return () => {
       ValidatorForm.removeValidationRule("isValidCitizenIdentificationNumber");
       ValidatorForm.removeValidationRule("isValidBirthday");
@@ -88,12 +116,32 @@ const StaffInformation = (props) => {
   }, []);
   return (
     <ValidatorForm onSubmit={handleSubmit} ref={formRef} className="p-8">
+=======
+    ValidatorForm.addValidationRule("isValidDateOfIssuanceCard", (value) => {
+      const date = new Date(value);
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 1)
+      return date < currentDate;
+    });
+    return ()=>{
+      ValidatorForm.removeValidationRule("isValidCitizenIdentificationNumber");
+      ValidatorForm.removeValidationRule("isValidBirthday");
+      ValidatorForm.removeValidationRule("isValidDateOfIssuanceCard");
+    }
+  }, []);
+  return (
+    <ValidatorForm onSubmit={handleSubmit} ref={formRef} className="p-12">
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
       <Grid container spacing={1}>
         <Grid
           container
           alignItems="center"
           direction="column"
+<<<<<<< HEAD
           className="flex-center p-8"
+=======
+          className="flex-center p-12"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
           xs={12}
           sm={12}
           md={4}
@@ -118,8 +166,13 @@ const StaffInformation = (props) => {
             </label>
           </Grid>
         </Grid>
+<<<<<<< HEAD
         <Grid container spacing={2} xs={12} sm={12} md={8} lg={8} className="p-8">
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+        <Grid container spacing={1} xs={12} sm={12} md={8} lg={8} className="p-12">
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -132,6 +185,7 @@ const StaffInformation = (props) => {
               name="name"
               value={staff?.name || ""}
               onChange={(e) => onChange(e, "name")}
+<<<<<<< HEAD
               validators={["required", `matchRegexp:${NAME_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName")]}
               
@@ -139,6 +193,15 @@ const StaffInformation = (props) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -153,14 +216,24 @@ const StaffInformation = (props) => {
               value={staff?.code || ""}
               validators={["required", `matchRegexp:^NV${new Date().getFullYear().toString().slice(-2)}\\d{3}$`]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidCodeFormat")]}
+<<<<<<< HEAD
               
+=======
+              variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
               size="small"
             />
           </Grid>
           <Grid item lg={6} md={6} sm={12} xs={12}>
+<<<<<<< HEAD
             <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
                 
+=======
+            <FormControl fullWidth={true} variant="outlined" className="" size="small">
+              <SelectValidator
+                variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
                 size="small"
                 label={
                   <span className="inputLabel">
@@ -200,6 +273,7 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "dateOfBirth")}
               type="date"
               name="dateOfBirth"
+<<<<<<< HEAD
               value={staff?.dateOfBirth ? moment(staff?.dateOfBirth).format("YYYY-MM-DD") : ""}
               validators={["required", "isValidBirthday"]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidBirthday")]}
@@ -210,6 +284,16 @@ const StaffInformation = (props) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+              value={staff ? moment(staff?.dateOfBirth).format("YYYY-MM-DD") : ""}
+              validators={["required", "isValidBirthday"]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.inValidBirthday")]}
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -222,6 +306,7 @@ const StaffInformation = (props) => {
               name="address"
               onChange={(e) => onChange(e, "address")}
               value={staff?.address || ""}
+<<<<<<< HEAD
               validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
               
@@ -232,6 +317,18 @@ const StaffInformation = (props) => {
             <FormControl fullWidth={true}  className="" size="small">
               <SelectValidator
                 
+=======
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <FormControl fullWidth={true} variant="outlined" className="" size="small">
+              <SelectValidator
+                variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
                 size="small"
                 label={
                   <span className="inputLabel">
@@ -259,7 +356,11 @@ const StaffInformation = (props) => {
               </SelectValidator>
             </FormControl>
           </Grid>
+<<<<<<< HEAD
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -277,7 +378,11 @@ const StaffInformation = (props) => {
                 t("staff.notify.errorMessages_required"),
                 t("staff.notify.inValidCitizenIdentificationNumber"),
               ]}
+<<<<<<< HEAD
               
+=======
+              variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
               size="small"
             />
           </Grid>
@@ -293,6 +398,7 @@ const StaffInformation = (props) => {
               onChange={(e) => onChange(e, "dateOfIssuanceCard")}
               type="date"
               name="dateOfIssuanceCard"
+<<<<<<< HEAD
               inputProps={{
                 max:moment().format("YYYY-MM-DD"),
                 min:staff?.dateOfBirth
@@ -303,11 +409,21 @@ const StaffInformation = (props) => {
               InputLabelProps={{
                 shrink: true,
               }}  
+=======
+              value={staff ? moment(staff?.dateOfIssuanceCard).format("YYYY-MM-DD") : ""}
+              validators={["required","isValidDateOfIssuanceCard"]}
+              errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidDateOfIssuanceCard")]}
+              variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
               size="small"
             />
           </Grid>
 
+<<<<<<< HEAD
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -320,6 +436,7 @@ const StaffInformation = (props) => {
               name="placeOfIssueCard"
               value={staff?.placeOfIssueCard || ""}
               onChange={(e) => onChange(e, "placeOfIssueCard")}
+<<<<<<< HEAD
               validators={["required",`matchRegexp:${ADDRESS_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress")]}
               
@@ -327,6 +444,15 @@ const StaffInformation = (props) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -339,6 +465,7 @@ const StaffInformation = (props) => {
               name="ethnic"
               value={staff?.ethnic || ""}
               onChange={(e) => onChange(e, "ethnic")}
+<<<<<<< HEAD
               validators={["required",`matchRegexp:${NAME_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidEthnic")]}
               
@@ -346,6 +473,15 @@ const StaffInformation = (props) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4}>
+=======
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
             <TextValidator
               className={"w-100 mb-16"}
               label={
@@ -358,10 +494,16 @@ const StaffInformation = (props) => {
               name="religion"
               value={staff?.religion || ""}
               onChange={(e) => onChange(e, "religion")}
+<<<<<<< HEAD
               validators={["required",`matchRegexp:${NAME_REGEX}`]}
               errorMessages={[t("staff.notify.errorMessages_required"),
               t("staff.notify.invalidReligion"),]}
               
+=======
+              validators={["required"]}
+              errorMessages={[t("staff.notify.errorMessages_required")]}
+              variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
               size="small"
             />
           </Grid>
@@ -384,7 +526,11 @@ const StaffInformation = (props) => {
                 t("staff.notify.errorMessages_number_required"),
                 t("staff.notify.invalidPhoneFormat"),
               ]}
+<<<<<<< HEAD
               
+=======
+              variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
               size="small"
             />
           </Grid>
@@ -403,7 +549,11 @@ const StaffInformation = (props) => {
               value={staff?.email || ""}
               validators={["required", "isEmail"]}
               errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.errorMessages_email_valid")]}
+<<<<<<< HEAD
               
+=======
+              variant="outlined"
+>>>>>>> 6fbc6280a76ea9a038b939cd4df346c24f7d88a5
               size="small"
             />
           </Grid>
