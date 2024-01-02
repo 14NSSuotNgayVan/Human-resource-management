@@ -17,10 +17,16 @@
 .MuiIconButton-root {
   cursor: pointer;
 }
-.MuiTableCell-body {
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+.custom-table-cell, .table-cell span{
+  display: block!important;
+  display: -webkit-box!important;
+  max-height: 1rem*1.3*4;
+  line-height: 1.3;
+  -webkit-line-clamp: 4;  /* số dòng hiển thị */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top:10px;
 }
 .text-overflow-none{
   overflow: unset!important;

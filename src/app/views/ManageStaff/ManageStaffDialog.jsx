@@ -10,6 +10,7 @@ import { getAllSalaries } from "app/redux/actions/SalaryAction";
 import { getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
 import { getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
 import { getAllProcess } from "app/redux/actions/ProcessAction";
+import moment from "moment";
 const {
   Dialog,
   Paper,
@@ -59,7 +60,7 @@ const ManageStaffDialog = (props) => {
       dispatch(getAllSalaries(staff?.id));
       dispatch(getAllProcess(staff?.id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Dialog
@@ -106,8 +107,8 @@ const ManageStaffDialog = (props) => {
                     InputProps={{
                       readOnly: true,
                     }}
-                    label="Mã nhân viên"
-                    value={staff?.code}
+                    label="Giới tính"
+                    value={t(`staff.gender.${GENDER.find((item) => item.id === staff?.gender).name}`)}
                     variant="standard"
                     className="my-8"
                   />
@@ -120,8 +121,8 @@ const ManageStaffDialog = (props) => {
                     InputProps={{
                       readOnly: true,
                     }}
-                    label="Giới tính"
-                    value={t(`staff.gender.${GENDER.find((item) => item.id === staff?.gender).name}`)}
+                    label="Mã nhân viên"
+                    value={staff?.code}
                     variant="standard"
                     className="my-8"
                   />
@@ -140,12 +141,16 @@ const ManageStaffDialog = (props) => {
               <Grid item xs={3}>
                 <Box className="flex-grow-1 flex-column">
                   <TextField
+                    type="date"
                     id="standard-basic"
                     InputProps={{
                       readOnly: true,
                     }}
-                    label="Mã nhân viên"
-                    value={staff?.code}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    label="Ngày sinh"
+                    value={moment(staff?.dateOfBirth).format("YYYY-MM-DD")}
                     variant="standard"
                     className="my-8"
                   />

@@ -223,8 +223,7 @@ function PendingPromotion({ t }) {
       field: "note",
       align: "left",
       minWidth: "170px",
-      maxWidth: "200px",
-      render: (props) => wrapText4(props?.note, 10),
+      render: (props) => <p className="custom-table-cell">{props?.note}</p>,
     }
   ];
   return (

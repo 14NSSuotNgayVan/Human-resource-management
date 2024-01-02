@@ -218,8 +218,7 @@ const Promotion = (props) => {
       field: "note",
       align: "left",
       minWidth: "170px",
-      maxWidth: "200px",
-      render: (props) => wrapText4(props?.note, 10),
+      render: (props) => <p className="custom-table-cell">{props?.note}</p>,
     },
     {
       title: t("staff.submit_profile_status_display"),
@@ -333,10 +332,10 @@ const Promotion = (props) => {
                   name="note"
                   onChange={(e) => onChange(e, "note")}
                   value={promotion?.note || ""}
-                  validators={["required", "maxStringLength:255"]}
+                  validators={["required", "maxStringLength:1000"]}
                   errorMessages={[
                     t("staff.notify.errorMessages_required"),
-                    `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
+                    `${t("staff.notify.invalidStringContent")}(1000 kí tự)`,
                   ]}
                   size="small"
                 />

@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, IconButton } from "@material-ui/core";
+import { Button, Grid, Icon, IconButton } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getCertificatesByEmployeeId, getShouldUpdateCertificate } from "app/redux/selectors/CertificateSelector";
+import { getCertificatesByEmployeeId } from "app/redux/selectors/CertificateSelector";
 import {
   createCertificates,
   deleteCertificate,
-  getAllCertificates,
   updateCertificate,
 } from "app/redux/actions/CertificateActions";
 import { ConfirmationDialog } from "egret";
 import { NAME_REGEX } from "app/constants/staffConstant";
+import { wrapText4 } from "utils";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm } = props;
@@ -55,9 +55,6 @@ const Certificates = (props) => {
     updatePageData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagePagination]);
-  useEffect(() => {
-    form.current.resetValidations();
-  }, [isEditing]);
   const handleSubmit = () => {
     if (certificate?.id) {
       dispatch(updateCertificate(certificate));
@@ -68,6 +65,7 @@ const Certificates = (props) => {
     setCertificate(null);
     setShowConfirmationDialog(false);
     setIsEditing(false);
+    form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setCertificate({ ...certificate, [field]: event.target.value });
@@ -105,7 +103,7 @@ const Certificates = (props) => {
       title: t("staff.certificate.certificateName"),
       field: "certificateName",
       align: "left",
-      minWidth: "150px",
+      minWidth: "150px",render: (props) => <p className ="custom-table-cell">{props?.certificateName}</p>,
     },
     {
       title: t("staff.certificate.issueDate"),
@@ -119,9 +117,9 @@ const Certificates = (props) => {
       field: "field",
       align: "left",
       minWidth: "150px",
-      maxWidth: "250px",
+      render: (props) => <p className ="custom-table-cell">{props?.field}</p>,
     },
-    { title: t("staff.certificate.content"), field: "content", align: "left", minWidth: "170px" },
+    { title: t("staff.certificate.content"), field: "content", align: "left", minWidth: "170px",render: (props) => <p className ="custom-table-cell">{props?.field}</p> },
 
   ];
   return (
@@ -129,7 +127,7 @@ const Certificates = (props) => {
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <ValidatorForm onSubmit={handleSubmit} ref={form}>
           <Grid container spacing={2} className="p-12">
-            <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={4} lg={4}>
               <TextValidator
                 className={"w-100 mb-16"}
                 label={
@@ -143,13 +141,12 @@ const Certificates = (props) => {
                 name="certificateName"
                 value={certificate?.certificateName || ""}
                 onChange={(e) => onChange(e, "certificateName")}
-                validators={["required",`matchRegexp:${NAME_REGEX}`]}
-                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidName")]}
-                
+                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:225"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`]}
                 size="small"
               />
             </Grid>
-            <Grid item lg={6} md={6} sm={12} xs={12}>
+            <Grid item md={4} lg={4} sm={12} xs={12}>
               <TextValidator
                 className="w-100 mb-16"
                 label={
@@ -175,7 +172,7 @@ const Certificates = (props) => {
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={4} lg={4}>
               <TextValidator
                 className={"w-100 mb-16"}
                 label={
@@ -189,13 +186,12 @@ const Certificates = (props) => {
                 name="field"
                 onChange={(e) => onChange(e, "field")}
                 value={certificate?.field || ""}
-                validators={["required",`matchRegexp:${NAME_REGEX}`]}
-                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidField")]}
-                
+                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:225"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidField"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`]}
                 size="small"
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Grid item xs={12} sm={12} md={8} lg={8}>
               <TextValidator
                 className={"w-100 mb-16"}
                 label={
@@ -211,35 +207,19 @@ const Certificates = (props) => {
                 value={certificate?.content || ""}
                 validators={["required","maxStringLength:255"]}
                 errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`,]}
-                
                 size="small"
               />
             </Grid>
-          </Grid>
+            <Grid item xs={12} sm={12} md={4} lg={4}>
           <Grid container justify="flex-end" className="mb-16">
-            {!isEditing && (
-              <Button
-                className="align-bottom mr-8 mb-4"
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  setIsEditing(true);
-                  setCertificate({});
-                }}
-              >
-                {t("general.add")}
-              </Button>
-            )}
-            {isEditing && (
               <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
                 {t("general.save")}
               </Button>
-            )}
-            {isEditing && (
               <Button className="align-bottom mr-8 mb-4 color-error" variant="contained"  onClick={handleClose}>
                 {t("general.cancel")}
               </Button>
-            )}
+          </Grid>
+          </Grid>
           </Grid>
         </ValidatorForm>
       </Grid>

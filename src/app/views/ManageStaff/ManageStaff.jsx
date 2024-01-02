@@ -188,7 +188,7 @@ function ManageStaff(props) {
       field: "address",
       align: "left",
       minWidth: "150px",
-      maxWidth: "150px",
+      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
     },
     {
       title: t("staff.phone"),
@@ -215,14 +215,6 @@ function ManageStaff(props) {
       </div>
       <Grid container spacing={2} justify="space-between">
         <Grid item md={4} xs={12}>
-          <Button
-            className="align-bottom mr-8 mb-4"
-            variant="contained"
-            color="primary"
-            onClick={() => handleAddItem(null)}
-          >
-          {t("general.add")}
-          </Button>
         </Grid>
         <Grid item md={4} sm={12} xs={12}>
           <FormControl fullWidth style={{ marginTop: "6px" }}>

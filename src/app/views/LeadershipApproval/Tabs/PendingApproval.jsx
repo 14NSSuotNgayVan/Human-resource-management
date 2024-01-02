@@ -123,6 +123,7 @@ function PendingApproval(props) {
       align: "left",
       minWidth: "150px",
       maxWidth: "150px",
+      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
     },
     {
       title: t("staff.phone"),

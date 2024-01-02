@@ -51,9 +51,8 @@ const AdditionalDialog = ({ t, handleCloseDialog, item,handleSubmitForm }) => {
                 name={"additionalRequest"}
                 onChange={(e) => onChange(e)}
                 value={content}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
-                
+                validators={["required","maxStringLength:1000"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(1000 kí tự)`]}
                 size="small"
               />
           </DialogContent>

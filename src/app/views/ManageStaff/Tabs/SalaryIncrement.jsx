@@ -226,8 +226,7 @@ const SalaryIncrement = (props) => {
       field: "reason",
       align: "left",
       minWidth: "170px",
-      maxWidth: "200px",
-      render: (props) => wrapText4(props?.reason, 200),
+      render: (props) => <p className="custom-table-cell">{props?.reason}</p>,
     },
     {
       title: t("staff.submit_profile_status_display"),
@@ -345,10 +344,10 @@ const SalaryIncrement = (props) => {
                 name="note"
                 onChange={(e) => onChange(e, "note")}
                 value={salary?.note || ""}
-                validators={["required", "maxStringLength:255"]}
+                validators={["required", "maxStringLength:1000"]}
                 errorMessages={[
                   t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
+                  `${t("staff.notify.invalidStringContent")}(1000 kí tự)`,
                 ]}
                 size="small"
               />

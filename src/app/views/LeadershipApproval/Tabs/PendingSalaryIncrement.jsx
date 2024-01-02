@@ -224,8 +224,7 @@ function PendingSalaryIncrement({ t }) {
       field: "reason",
       align: "left",
       minWidth: "170px",
-      maxWidth: "200px",
-      render: (props) => wrapText4(props?.reason, 200),
+      render: (props) => <p className="custom-table-cell">{props?.reason}</p>,
     },
   ];
   return (

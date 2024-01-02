@@ -76,8 +76,8 @@ const RejectionDialog = (props) => {
                 name= { tittle ||  "reasonForRejection"}
                 value={ formData[tittle] ||   formData?.reasonForRejection || ""}
                 onChange={handleChange}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
+                validators={["required","maxStringLength:1000"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(1000 kí tự)`]}
                 
                 size="small"
               />
