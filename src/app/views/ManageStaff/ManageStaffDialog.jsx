@@ -211,7 +211,7 @@ const ManageStaffDialog = (props) => {
               variant="contained"
               color="primary"
               onClick={() => {
-                handleShowDocumentDialog(staff, true);
+                handleShowDocumentDialog(staff, false);
               }}
             >
               {t("manageStaff.showDocuments")}

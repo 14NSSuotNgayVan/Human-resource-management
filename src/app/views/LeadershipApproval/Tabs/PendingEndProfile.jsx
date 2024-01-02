@@ -45,7 +45,7 @@ function PendingEndProfile(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS.END_PROFILE;
+    searchObject.listStatus = STAFF_STATUS.END_PROFILE_PROCESS;
     dispatch(searchByPageAction(searchObject));
   };
 

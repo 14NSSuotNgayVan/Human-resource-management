@@ -87,7 +87,7 @@ const SalaryIncrement = (props) => {
     startDate: new Date(),
     reason: "",
     note: "",
-    oldSalary: 0,
+    oldSalary: getOldestSalary(salaryList),
     newSalary: 0,
   });
   useEffect(() => {
@@ -97,10 +97,11 @@ const SalaryIncrement = (props) => {
         salaryList.every((item) => item.salaryIncreaseStatus === 1)
     );
     setIsPending(salaryList.some((item) => item.salaryIncreaseStatus === 2));
-    setSalary({
+    !isEditing &&setSalary({
       ...salary,
       oldSalary: getOldestSalary(salaryList),
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [salaryList]);
   useEffect(() => {
     if (salary?.leaderId) setIsSendLeader(true);
@@ -135,12 +136,18 @@ const SalaryIncrement = (props) => {
       message: "",
       tittle: "",
     })
-    setSalary(null);
+    setSalary({
+      startDate: new Date(),
+      reason: "",
+      note: "",
+      oldSalary: getOldestSalary(salaryList),
+      newSalary: 0,
+    });
     setShowConfirmationDialog(false);
     setIsSendLeader(false);
     setIsEditing(false);
     setShouldOpenDocumentDialog(false);
-    isPendingEndProfile && form.current.resetValidations();
+    !isPendingEndProfile && form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setSalary({ ...salary, [field]: event.target.value });
@@ -272,7 +279,7 @@ const SalaryIncrement = (props) => {
                 }
                 type="text"
                 name="oldSalary"
-                value={salary?.oldSalary||""}
+                value={getOldestSalary(salaryList)|| salary?.oldSalary||""}
                 inputProps={{
                   readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
                 }}

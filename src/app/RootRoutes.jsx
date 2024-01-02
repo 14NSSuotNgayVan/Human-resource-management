@@ -8,6 +8,7 @@ import StaffRoutes from "./views/AddStaff/AddStaffRoutes"
 import LeadershipApprovalRoutes from "./views/LeadershipApproval/LeadershipApprovalRoutes";
 import LeadershipApprovedRoutes from "./views/LeadershipApproved/LeadershipApprovedRoutes";
 import ManageStaffRoutes from "./views/ManageStaff/ManageStaffRoutes";
+import EndStaffRoutes from "./views/EndStaff/EndStaffRoutes";
 
 const redirectRoute = [
   {
@@ -31,7 +32,9 @@ const routes = [
   ...LeadershipApprovalRoutes,
   ...LeadershipApprovedRoutes,
   ...ManageStaffRoutes,
+  ...EndStaffRoutes,
   ...errorRoute,
+
 ];
 
 export default routes;
