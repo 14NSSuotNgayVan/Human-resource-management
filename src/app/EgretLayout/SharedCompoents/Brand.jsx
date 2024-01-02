@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ConstantList from "../../appConfig";
 import { Link } from "react-router-dom";
-import { Helmet } from 'react-helmet';
 class Brand extends Component {
   state = {};
   render() {

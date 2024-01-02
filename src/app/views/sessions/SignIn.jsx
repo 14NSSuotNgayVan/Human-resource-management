@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   Card,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Button,
   withStyles,
@@ -46,7 +44,7 @@ class SignIn extends Component {
     this.props.loginWithEmailAndPassword({ ...this.state });
   };
   render() {
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     let { email, password } = this.state;
     let { classes } = this.props;
     return (
@@ -70,7 +68,7 @@ class SignIn extends Component {
                     <TextValidator
                       className="mb-24 w-100"
                       variant="outlined"
-                      label={t("username")}
+                      label={t("login.username")}
                       onChange={this.handleChange}
                       type="text"
                       name="email"
@@ -80,7 +78,7 @@ class SignIn extends Component {
                     />
                     <TextValidator
                       className="mb-16 w-100"
-                      label={t("password")}
+                      label={t("login.password")}
                       variant="outlined"
                       onChange={this.handleChange}
                       name="password"
@@ -98,7 +96,7 @@ class SignIn extends Component {
                           type="submit"
                           style={{width: "100%"}}
                         >
-                          {t("sign_in.title")}
+                          {t("login.title")}
                         </Button>
                         {this.props.login.loading && (
                           <CircularProgress
@@ -108,20 +106,6 @@ class SignIn extends Component {
                         )}
                       </div>
                       
-                      {/* <span className="ml-16 mr-16">{t("or")}</span>
-                      <div className={classes.wrapper}>
-                        <Button
-                          className="capitalize"
-                          variant="contained"
-                          onClick={() =>
-                            this.props.history.push(
-                              "/session/signupregisterhealthorg"
-                            )
-                          }
-                        >
-                          {t("sign_up.title")}
-                        </Button>
-                      </div> */}
                     </div>
                     <div className="flex flex-center">
                         <Button
@@ -130,10 +114,9 @@ class SignIn extends Component {
                             this.props.history.push("/session/forgot-password")
                           }
                         >
-                        {t("forgot_password")}
+                        {t("login.forgot_password")}
                         </Button>
                       </div>
-                    {/* <p class="bold" style={{textAlign: "center", marginBottom: 0}}>Hotline: 034.888.6670</p> */}
                   </ValidatorForm>
                 </div>
               </Grid>

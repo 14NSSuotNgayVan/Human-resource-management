@@ -19,7 +19,13 @@ const SaveProfileDialog = (props) => {
     });
   }, [staff,fixedNumberSave]);
   const handleSubmit = () => {
-
+    dispatch(
+      updateStaffAction({
+        ...formData,
+        submitProfileStatus: "0",
+      })
+    );
+    handleCloseDialog();
   };
   const handleChange = (event) => {
     event.persist();

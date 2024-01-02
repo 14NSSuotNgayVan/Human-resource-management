@@ -1,15 +1,15 @@
 import { EgretLoadable } from "egret";
 import ConstantList from "../../appConfig";
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 
 const LeftSidebarLayout = EgretLoadable({
   loader: () => import("./LeftSidebarCard")
 });
 
-const UserProfile = EgretLoadable({
-  loader: () => import("./UserProfile")
+const Home = EgretLoadable({
+  loader: () => import("../Home/Home")
 });
-const ViewComponent = withTranslation()(UserProfile);
+const ViewComponent = withTranslation()(Home);
 
 const pageLayoutRoutes = [
   {
@@ -17,7 +17,7 @@ const pageLayoutRoutes = [
     component: LeftSidebarLayout
   },
   {
-    path:  ConstantList.ROOT_PATH+"page-layouts/user-profile",
+    path:  ConstantList.ROOT_PATH+"home/Home",
     component: ViewComponent
   }
 ];

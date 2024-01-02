@@ -1,6 +1,6 @@
 import NotFound from "./NotFound";
 import { EgretLoadable } from "egret";
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 //import ForgotPassword from "./ForgotPassword";
 import ConstantList from "../../appConfig";
 
@@ -8,11 +8,6 @@ const SignIn = EgretLoadable({
   loader: () => import("./SignIn")
 });
 const ViewComponentSignIn = withTranslation()(SignIn);
-
-const SignUp = EgretLoadable({
-  loader: () => import("./SignUp_RegisterHealthOrg")
-});
-const ViewComponentSignUp = withTranslation()(SignUp);
 
 const ForgotPassword = EgretLoadable({
   loader: () => import("./ForgotPassword")

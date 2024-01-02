@@ -4,55 +4,31 @@ import { PropTypes } from "prop-types";
 import { setUserData } from "../redux/actions/UserActions";
 import jwtAuthService from "../services/jwtAuthService";
 import localStorageService from "../services/localStorageService";
-import firebaseAuthService from "../services/firebase/firebaseAuthService";
 import history from "history.js";
 import ConstantList from "../appConfig";
 class Auth extends Component {
   state = {};
-  
+
   constructor(props) {
     super(props);
     let user = localStorageService.getItem("auth_user");
     let token = localStorageService.getItem("jwt_token");
-    let expire_time= localStorageService.getItem("token_expire_time");
+    let expire_time = localStorageService.getItem("token_expire_time");
     let dateObj = new Date(expire_time);
-    if(token){
+    if (token) {
       jwtAuthService.setSession(token);
     }
     var isExpired = false;
-    if(dateObj){
-      if(dateObj<Date.now()){
-        isExpired=true;
-      }
-    }else history.push(ConstantList.LOGIN_PAGE);
-    if(user!=null && (isExpired===false)){      
+    if (dateObj && dateObj < Date.now()) {
+      isExpired = true;
+    }
+    if (user && !isExpired) {
       this.props.setUserData(user);
-    }else {
+    } else {
       localStorageService.removeItem("token_expire_time");
       history.push(ConstantList.LOGIN_PAGE);
-      alert("Phiên đăng nhập hết hạn");
     }
-
   }
-
-  checkJwtAuth = () => {
-    jwtAuthService.loginWithToken().then(user => {
-      this.props.setUserData(user);
-    });
-  };
-
-  checkFirebaseAuth = () => {
-    firebaseAuthService.checkAuthStatus(user => {
-      if (user) {
-        console.log(user.uid);
-        console.log(user.email);
-        console.log(user.emailVerified);
-        console.log(user.getItem);
-      } else {
-        console.log("not logged in");
-      }
-    });
-  };
 
   render() {
     const { children } = this.props;
@@ -60,12 +36,9 @@ class Auth extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   setUserData: PropTypes.func.isRequired,
-  login: state.login
+  login: state.login,
 });
 
-export default connect(
-  mapStateToProps,
-  { setUserData }
-)(Auth);
+export default connect(mapStateToProps, { setUserData })(Auth);
