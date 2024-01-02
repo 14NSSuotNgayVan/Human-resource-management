@@ -78,13 +78,15 @@ const Resume = (props) => {
                   <span className="detail-tittle">8. Căn cước công dân:</span>
                   <span className="detail-content underline-dashed">{item?.citizenIdentificationNumber}</span>
                 </Grid>
-                <Grid item md={3} lg={3} sm={3} className="flex">
+                <Grid item md={6} lg={6} sm={6} className="flex">
                   <span className="detail-tittle">9. Ngày cấp:</span>
                   <span className="detail-content underline-dashed">
                     {moment(new Date(item?.dateOfIssuanceCard)).format("DD/MM/YYYY")}
                   </span>
                 </Grid>
-                <Grid item md={3} lg={3} sm={3} className="flex">
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item md={12} lg={12} sm={12} className="flex">
                   <span className="detail-tittle">10. Nơi cấp :</span>
                   <span className="detail-content underline-dashed">{item?.placeOfIssueCard}</span>
                 </Grid>

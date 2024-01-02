@@ -56,6 +56,8 @@
     display: inline-block;
     padding-left: 12px;
     flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .underline-dashed{
     position: relative;
