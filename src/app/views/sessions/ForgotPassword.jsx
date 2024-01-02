@@ -4,21 +4,15 @@ import {
   Card,
   Grid,
   Button,
-  withStyles,
-  CircularProgress
 } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import { useTranslation } from 'react-i18next';
 import { withRouter } from "react-router-dom";
 
 import { resetPassword } from "../../redux/actions/LoginActions";
 
 class ForgotPassword extends Component {
-  constructor(props){
-    super(props);
-  };
   state = {
     email: ""
   };
@@ -32,7 +26,7 @@ class ForgotPassword extends Component {
     this.props.resetPassword({ ...this.state });
   };
   render() {
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     let { email } = this.state;
 
     return (
@@ -58,13 +52,13 @@ class ForgotPassword extends Component {
                       value={email}
                       validators={["required", "isEmail"]}
                       errorMessages={[
-                        t("general.errorMessages_required"),
-                        t("general.errorMessages_email_valid")
+                        t("staff.notify.errorMessages_required"),
+                        t("staff.notify.errorMessages_email_valid")
                       ]}
                     />
                     <div className="flex flex-middle">
                       <Button variant="contained" color="primary" type="submit">
-                        {t("resetPassword")}
+                        {t("login.reset_password")}
                       </Button>
                       <span className="ml-16 mr-16">{t("or")}</span>
                       <Button
@@ -73,7 +67,7 @@ class ForgotPassword extends Component {
                         onClick={() =>
                           this.props.history.push(ConstantList.ROOT_PATH+"session/signin")
                         }>
-                          {t("sign_in.title")}
+                          {t("login.title")}
                       </Button>
                     </div>
                   </ValidatorForm>

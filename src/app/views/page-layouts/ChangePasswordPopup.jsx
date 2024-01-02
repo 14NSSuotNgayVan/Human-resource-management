@@ -1,24 +1,13 @@
-import { Fab, Icon, Card, Grid, Divider, Button, DialogActions, Dialog, TextField } from "@material-ui/core";
-import { createMuiTheme } from "@material-ui/core/styles";
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import MaterialTable, { MTableToolbar, Chip, MTableBody, MTableHeader } from 'material-table';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import DateFnsUtils from "@date-io/date-fns";
+import { Button, DialogActions, Dialog, Grid } from "@material-ui/core";
+import React from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Draggable from 'react-draggable';
 import Paper from '@material-ui/core/Paper';
-import { Breadcrumb, SimpleCard, EgretProgressBar } from "egret";
 import axios from "axios";
 import ConstantList from "../../appConfig";
-import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import JwtAuthService from "../../services/jwtAuthService";
 import { toast } from 'react-toastify';
@@ -39,10 +28,6 @@ function PaperComponent(props) {
   );
 }
 class ChangePasswordPopup extends React.Component {
-
-  // handleChange = (prop) => (event) => {
-  //   this.setState()
-  // };
   state = {
     oldPassword: '',
     password: '',
@@ -84,19 +69,17 @@ class ChangePasswordPopup extends React.Component {
     });
   };
   render() {
-    const { t, i18n, handleClose, handleSelect, selectedItem, open, user } = this.props;
+    const { t,handleClose,open, user } = this.props;
     return (
       <Dialog onClose={handleClose} open={open} PaperProps={{
         style: {
           width: 500,
           maxHeight: 800,
           alignContent: 'center'
-          //backgroundColor: 'Blue',
-          //color:'black'
         },
       }} PaperComponent={PaperComponent} maxWidth={'md'} fullWidth={true} >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          <span className="styleColor">{t("user.changePass")}</span>
+          <span className="headerStyle">{t("user.changePass")}</span>
         </DialogTitle>
         <ValidatorForm ref="form">
           <DialogContent>
@@ -108,7 +91,6 @@ class ChangePasswordPopup extends React.Component {
                     id="password-current"
                     className="w-100"
                     size="small"
-                    variant="outlined"
                     name="oldPassword"
                     type="password"
                     value={this.state.oldPassword}
@@ -125,7 +107,6 @@ class ChangePasswordPopup extends React.Component {
                     label={<span className="font"><span style={{ color: "red" }}> * </span>{t('user.pass')}</span>}
                     id="password-current"
                     size = "small"
-                    variant = "outlined"
                     className="w-100"
                     name="password"
                     type="password"
@@ -142,7 +123,6 @@ class ChangePasswordPopup extends React.Component {
                   <TextValidator
                     label={<span className="font"><span style={{ color: "red" }}> * </span>{t('user.confirm_password')}</span>}
                     size = "small"
-                    variant = "outlined"
                     id="confirm-password"
                     className="w-100"
                     name="confirmPassword"

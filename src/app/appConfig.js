@@ -11,7 +11,7 @@ module.exports = Object.freeze({
     API_ENDPOINT:"https://em-v2.oceantech.com.vn/em/",
     AUTH_MODE:"Spring",//"Spring" or "Keycloak"
     LOGIN_PAGE:APPLICATION_PATH+"session/signin",//Nếu là Spring
-    HOME_PAGE:APPLICATION_PATH+"staff_manager/AddStaff",//Nếu là Spring
+    HOME_PAGE:APPLICATION_PATH+"home/Home",//Nếu là Spring
     CHECK_HEALTH_ORG:CHECK_HEALTH_ORG,
     CHECK_ERROR_RESULT: CHECK_ERROR_RESULT
     // HOME_PAGE:APPLICATION_PATH+"dashboard/learning-management"//Nếu là Keycloak

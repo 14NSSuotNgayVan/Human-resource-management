@@ -23,9 +23,9 @@ export  function loginWithEmailAndPassword({ email, password }) {
         //Lưu lại thông tin liên quan đến token tại đây
 
         //Nhảy đến trang HomePage dự kiến
-        history.push({
-          pathname: ConstantList.ROOT_PATH+"staff_manager/AddStaff"
-        });
+        
+        history.push(ConstantList.HOME_PAGE)
+
         return dispatch({
           type: LOGIN_SUCCESS
         });

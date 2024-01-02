@@ -61,7 +61,7 @@ class EgretVerticalNavExpansionPanel extends Component {
     let { collapsed } = this.state;
     let { classes, children } = this.props;
     let { name, icon, badge } = this.props.item;
-    const { t, i18n } = this.props;
+    const { t} = this.props; 
     return (
       <div>
         <TouchRipple

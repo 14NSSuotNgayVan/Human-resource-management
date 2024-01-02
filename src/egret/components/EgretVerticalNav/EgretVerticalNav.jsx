@@ -4,74 +4,64 @@ import { Icon } from "@material-ui/core";
 import TouchRipple from "@material-ui/core/ButtonBase";
 import EgretVerticalNavExpansionPanel from "./EgretVerticalNavExpansionPanel";
 import { withStyles } from "@material-ui/styles";
-import { useTranslation, withTranslation, Trans } from "react-i18next";
+import {withTranslation} from "react-i18next";
 import ConstantList from "../../../app/appConfig.js";
-const ViewEgretVerticalNavExpansionPanel = withTranslation()(
-  EgretVerticalNavExpansionPanel
-);
-const styles = theme => ({
+import localStorageService from "app/services/localStorageService";
+const ViewEgretVerticalNavExpansionPanel = withTranslation()(EgretVerticalNavExpansionPanel);
+const styles = (theme) => ({
   expandIcon: {
     transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-    transform: "rotate(90deg)"
+    transform: "rotate(90deg)",
   },
   collapseIcon: {
     transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
-    transform: "rotate(0deg)"
-  }
+    transform: "rotate(0deg)",
+  },
 });
 
 class EgretVerticalNav extends Component {
   state = {
-    collapsed: true
+    collapsed: true,
+    role: localStorageService.getItem("user_role"),
   };
 
-  renderLevels = data => {
-    const { t, i18n, classes } = this.props;
+  renderLevels = (data) => {
+    const { t } = this.props;
     return data.map((item, index) => {
-      if (
-        item.path && item.path.length > 0 &&
-        !item.path.startsWith(ConstantList.ROOT_PATH)
-      ) {
-        item.path = ConstantList.ROOT_PATH + item.path;
-      }
-      let visible = item.isVisible;
-      if (item.children && item.children.length > 0) {
-        return (
-          <ViewEgretVerticalNavExpansionPanel item={item} key={index}>
-            {this.renderLevels(item.children)}
-          </ViewEgretVerticalNavExpansionPanel>
-        );
-      } else if (visible) {
-        if (item.path == null) {
-          item.path = "";
+      if (item?.role?.some((role) => this.state.role.includes(role))) {
+        if (item.path && item.path.length > 0 && !item.path.startsWith(ConstantList.ROOT_PATH)) {
+          item.path = ConstantList.ROOT_PATH + item.path;
         }
-        return (
-          <NavLink key={index} to={item.path} className="nav-item">
-            <TouchRipple key={item.name} name="child" className="w-100">
-              {(() => {
-                if (item.icon) {
-                  return (
-                    <Icon className="item-icon text-middle">{item.icon}</Icon>
-                  );
-                } else {
-                  return (
-                    <span className="item-icon icon-text">{item.iconText}</span>
-                  );
-                }
-              })()}
-              <span className="text-middle pl-20 item-text">
-                {t(item.name)}
-              </span>
-              <div className="mx-auto"></div>
-              {item.badge && (
-                <div className={`badge bg-${item.badge.color}`}>
-                  {item.badge.value}
-                </div>
-              )}
-            </TouchRipple>
-          </NavLink>
-        );
-      }
+        let visible = item.isVisible;
+        if (item.children && item.children.length > 0) {
+          return (
+            <ViewEgretVerticalNavExpansionPanel item={item} key={index}>
+              {this.renderLevels(item.children)}
+            </ViewEgretVerticalNavExpansionPanel>
+          );
+        } else if (visible) {
+          if (item.path == null) {
+            item.path = "";
+          }
+          return (
+            <NavLink key={index} to={item.path} className="nav-item">
+              <TouchRipple key={item.name} name="child" className="w-100">
+                {(() => {
+                  if (item.icon) {
+                    return <Icon className="item-icon text-middle">{item.icon}</Icon>;
+                  } else {
+                    return <span className="item-icon icon-text">{item.iconText}</span>;
+                  }
+                })()}
+                <span className="text-middle pl-20 item-text">{t(item.name)}</span>
+                <div className="mx-auto"></div>
+                {item.badge && <div className={`badge bg-${item.badge.color}`}>{item.badge.value}</div>}
+              </TouchRipple>
+            </NavLink>
+          );
+        }
+        else return null;
+      }else return '';
     });
   };
 
@@ -80,11 +70,7 @@ class EgretVerticalNav extends Component {
   };
 
   render() {
-    return (
-      <div className="navigation">
-        {this.renderLevels(this.props.navigation)}
-      </div>
-    );
+    return <div className="navigation">{this.renderLevels(this.props.navigation)}</div>;
   }
 }
 

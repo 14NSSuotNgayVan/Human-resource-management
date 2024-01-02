@@ -9,12 +9,13 @@ import LeadershipApprovalRoutes from "./views/LeadershipApproval/LeadershipAppro
 import LeadershipApprovedRoutes from "./views/LeadershipApproved/LeadershipApprovedRoutes";
 import ManageStaffRoutes from "./views/ManageStaff/ManageStaffRoutes";
 import EndStaffRoutes from "./views/EndStaff/EndStaffRoutes";
+import HomeRoutes from "./views/Home/HomeRoutes";
 
 const redirectRoute = [
   {
     path: ConstantList.ROOT_PATH,
     exact: true,
-    component: () => <Redirect to={ConstantList.HOME_PAGE} /> //Luôn trỏ về HomePage được khai báo trong appConfig
+    component: () => <Redirect to={ConstantList.ROOT_PATH +"home/Home"} /> //Luôn trỏ về HomePage được khai báo trong appConfig
   }
 ];
 
@@ -33,6 +34,7 @@ const routes = [
   ...LeadershipApprovedRoutes,
   ...ManageStaffRoutes,
   ...EndStaffRoutes,
+  ...HomeRoutes,
   ...errorRoute,
 
 ];

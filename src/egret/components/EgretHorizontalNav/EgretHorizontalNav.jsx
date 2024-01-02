@@ -1,47 +1,44 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@material-ui/core";
-import TouchRipple from "@material-ui/core/ButtonBase";
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import localStorageService from "app/services/localStorageService";
 class EgretHorizontalNav extends Component {
-  // state = {
-  //   collapsed: true
-  // };
+  state = {
+    role: localStorageService.getItem("user_role"),
+  };
 
   constructor(props) {
-		super(props);
-		this.state = {
-			opened: false,
-		};
-		this.handleClick = this.handleClick.bind(this);
-	}
-  renderLevels = levels => {
-    const { t, i18n,classes } = this.props;
+    super(props);
+    this.state = {
+      opened: false,
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  renderLevels = (levels) => {
+    const { t } = this.props;
     return levels.map((item, key) => {
-      if (item.children) {
-        return (
-          <li key={key}>
-            <a href="/">
-              {item.icon && (
-                <Icon className="item-icon text-middle">{item.icon}</Icon>
-              )}
-              {t(item.name)}
-            </a>
-            <ul>{this.renderLevels(item.children)}</ul>
-          </li>
-        );
-      } else {
-        return (
-          <li key={key} onClick={this.handleClick}>
-            <NavLink to={item.path} >
-              {item.icon && (
-                <Icon className="item-icon text-middle">{item.icon}</Icon>
-              )}
-              {t(item.name)}
-            </NavLink>
-          </li>
-        );
-      }
+      if (item?.role?.some((role) => this.state.role.includes(role))) {
+        if (item.children) {
+          return (
+            <li key={key}>
+              <a href="/">
+                {item.icon && <Icon className="item-icon text-middle">{item.icon}</Icon>}
+                {t(item.name)}
+              </a>
+              <ul>{this.renderLevels(item.children)}</ul>
+            </li>
+          );
+        } else {
+          return (
+            <li key={key} onClick={this.handleClick}>
+              <NavLink to={item.path}>
+                {item.icon && <Icon className="item-icon text-middle">{item.icon}</Icon>}
+                {t(item.name)}
+              </NavLink>
+            </li>
+          );
+        }
+      }else return '';
     });
   };
   handleClick = () => {
@@ -55,11 +52,11 @@ class EgretHorizontalNav extends Component {
       let childItem = {
         name: "More",
         icon: "more_vert",
-        children: navigation.slice(max, navigation.length)
+        children: navigation.slice(max, navigation.length),
       };
       navigation = navigation.slice(0, max);
       navigation.push(childItem);
-    }     
+    }
     return (
       <div className="horizontal-nav">
         <ul className="menu">{this.renderLevels(navigation)}</ul>
