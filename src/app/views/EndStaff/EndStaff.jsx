@@ -14,6 +14,7 @@ import moment from "moment";
 import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
+import SaveProfileDialog from "./SaveProfileDialog";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -30,7 +31,7 @@ function EndStaff(props) {
     page: 0,
     rowsPerPage: 10,
   });
-  const [showEditorDialog, setShowEditorDialog] = useState(false);
+  const [showSaveProfileDialog, setShowSaveProfileDialog] = useState(false);
   const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -60,22 +61,21 @@ function EndStaff(props) {
     dispatch(getStaffByIdAction(item?.id));
     setIsRegister(register);
     setShouldOpenDocumentDialog(true);
-    // setShowEditorDialog(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDialogClose = useCallback(() => {
-    setShowEditorDialog(false);
+    setShowSaveProfileDialog(false);
     setShouldOpenDocumentDialog(false);
   }, []);
   const handleCloseDocumentDialog = useCallback(() => {
     setShouldOpenDocumentDialog(false);
   }, []);
 
-  const handleShowEndDialog = (item) => {
+  const handleShowSaveProfileDialog = (item) => {
     dispatch(setItem(item));
-    setShowEditorDialog(true);
+    setShowSaveProfileDialog(true);
   };
 
   const Action = (props) => {
@@ -93,7 +93,7 @@ function EndStaff(props) {
           </IconButton>
         )}
         {STAFF_STATUS.EDIT_END_PROFILE.includes(item.submitProfileStatus) && (
-          <IconButton size="small" onClick={() => handleShowEndDialog(item)}>
+          <IconButton size="small" onClick={() => handleShowSaveProfileDialog(item)}>
             <Icon fontSize="small" color="primary">
               save
             </Icon>
@@ -197,7 +197,11 @@ function EndStaff(props) {
         </Grid>
         <Grid item xs={12}>
           <div>
-            {showEditorDialog && <></>}
+            {showSaveProfileDialog && (
+              <>
+                <SaveProfileDialog t={t} handleCloseDialog={handleDialogClose} />
+              </>
+            )}
             {shouldOpenDocumentDialog && (
               <PendingApprovalDialog
                 handleCloseDialog={handleCloseDocumentDialog}
