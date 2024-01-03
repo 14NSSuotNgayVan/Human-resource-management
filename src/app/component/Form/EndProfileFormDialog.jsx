@@ -12,12 +12,12 @@ import { useSelector } from 'react-redux';
 import { STAFF_POSITION } from 'app/constants/staffConstant';
 import moment from 'moment';
 
-function EndProfileFormDialog({ t, handleCloseDialog,Action }) {
+function EndProfileFormDialog({ t, handleCloseDialog,Action,item }) {
   const staff = useSelector(staffSelector);
   return (
     <Dialog open={true}  fullWidth maxWidth="md">
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        Đề xuất tăng lương
+        Đơn xin nghỉ việc
       </DialogTitle>
       <IconButton className="buttonClose" onClick={handleCloseDialog}>
             <Icon color="error" title={t("close")}>
@@ -38,25 +38,25 @@ function EndProfileFormDialog({ t, handleCloseDialog,Action }) {
         </Typography>
         <Typography className="mt-32">Kính gửi: Ban Giám đốc công ty <b>OCEANTECH</b></Typography>
         <Typography className="pb-12">
-          Tên tôi là: <b>{staff?.name}</b>
+          Tên tôi là: <b>{item ? item?.name:staff?.name}</b>
         </Typography>
         <Typography>
-          Hiện tại đang là {STAFF_POSITION.find((item)=>item?.id === (staff?.currentPosition ?? 1) )?.name} tại công ty OCEANTECH<b></b>
+          Hiện tại đang là {STAFF_POSITION.find((item)=>item?.id === (item ? item?.currentPosition:staff?.currentPosition ?? 1) )?.name} tại công ty OCEANTECH<b></b>
         </Typography>
         <Typography className="pb-12">
-          Tôi làm đơn này, đề nghị Ban Gián đốc cho tôi xin nghỉ việc từ ngày {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[2]} vì lý do: {staff?.reasonForEnding}
+          Tôi làm đơn này, đề nghị Ban Gián đốc cho tôi xin nghỉ việc từ ngày {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[2]} vì lý do: {item ? item?.reasonForEnding:staff?.reasonForEnding}
         </Typography>
         <Typography className="pb-12">
           Trong thời gian chờ đợi sự chấp thuận của Ban Giám đốc Công ty, tôi sẽ tiếp tục làm việc nghiêm túc và tiến
           hành bàn giao công việc cũng như tài sản cho người quản lý trực tiếp của tôi là ông/bà{' '}
-          <b>{staff?.leaderName}</b>
+          <b>{item ? item?.leaderName:staff?.leaderName}</b>
         </Typography>
         <Typography>Tôi xin chân thành cảm ơn!</Typography>
         <Grid container>
           <Grid item xs={6}></Grid>
           <Grid item xs={6}>
             <Typography className="flex-center">
-              Hà Nội, Ngày {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(staff?.endDay)).format("DD/MM/YYYY").split('/')[2]}
+              Hà Nội, Ngày {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[2]}
             </Typography>
             <Typography fontWeight="bold" className="flex-center">
               Người làm đơn
@@ -65,7 +65,7 @@ function EndProfileFormDialog({ t, handleCloseDialog,Action }) {
               (Ký, ghi rõ họ tên)
             </Typography>
             <div className="mt-32 flex-center">
-                <span className="sign-text ">{staff?.leaderName}</span>
+                <span className="sign-text ">{item ? item?.leaderName:staff?.leaderName}</span>
               </div>
           </Grid>
         </Grid>

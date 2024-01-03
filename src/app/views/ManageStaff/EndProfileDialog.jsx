@@ -193,7 +193,7 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
                 />
               </Grid>
             </Grid>
-            {shouldOpenDocumentDialog && <EndProfileFormDialog Action ={Action} handleCloseDialog ={handleCloseDialog} t={t} />}
+            {shouldOpenDocumentDialog && <EndProfileFormDialog item={formData} Action ={Action} handleCloseDialog ={handleCloseDialog} t={t} />}
           </DialogContent>
           <DialogActions spacing={4} className="flex flex-center flex-middle">
             <Button
