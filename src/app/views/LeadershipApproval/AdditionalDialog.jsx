@@ -24,7 +24,7 @@ const AdditionalDialog = ({ t, handleCloseDialog, item,handleSubmitForm }) => {
     
   };
   const onChange = (event) => {
-    setContent(event.target.value.trim());
+    setContent(event.target.value);
   };
   return (
     <>
