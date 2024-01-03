@@ -153,6 +153,7 @@ const Promotion = (props) => {
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
+    if (promotion?.leaderId) setIsSendLeader(true);
     setIsEditing(true);
     setPromotion({ ...item });
   };

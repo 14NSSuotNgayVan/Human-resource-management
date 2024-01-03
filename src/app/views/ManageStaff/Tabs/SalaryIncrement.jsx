@@ -168,6 +168,7 @@ const SalaryIncrement = (props) => {
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
+    if(salary?.leaderId) setIsSendLeader(true);
     setIsEditing(true);
     setSalary(item);
   };
