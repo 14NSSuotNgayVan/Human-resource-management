@@ -149,6 +149,7 @@ const SalaryIncrement = (props) => {
       note: "",
       oldSalary: getOldestSalary(salaryList),
       newSalary: 0,
+      leaderId:""
     });
     setShowConfirmationDialog(false);
     setIsSendLeader(false);

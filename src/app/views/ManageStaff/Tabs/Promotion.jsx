@@ -134,6 +134,7 @@ const Promotion = (props) => {
       promotionDay: new Date(),
       newPosition: 1,
       note: "",
+      leaderId:""
     });
     setShowConfirmationDialog(false);
     setIsSendLeader(false);
