@@ -69,7 +69,6 @@ export function wrapText4(inputString, lineWidth = 15) {
       }
     }
   }
-  console.log(resultString)
   return resultString;
 }
 export function searchObjectsByKeyword(keyword, objectsArray) {

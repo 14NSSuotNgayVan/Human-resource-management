@@ -73,7 +73,6 @@ class EgretCustomizer extends Component {
   render() {
     let { settings, classes } = this.props;
     let activeTheme = { ...settings.themes[settings.activeTheme] };
-    // console.log(activeTheme);
 
     return (
       <Fragment>

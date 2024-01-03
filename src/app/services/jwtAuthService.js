@@ -30,7 +30,6 @@ class JwtAuthService {
     let requestBody ='client_id=core_client&grant_type=password&client_secret=secret';
     requestBody =requestBody+'&username='+username +'&password='+password;
     await axios.post(ConstantList.API_ENDPOINT+'/oauth/token',requestBody,config).then(response=>{
-      console.log('authService:',response);
       var dateObj = new Date(Date.now() + response.data.expires_in*1000);
       localStorageService.setItem("token_expire_time",dateObj);
       localStorageService.setItem("user_role",response?.data.organization);
@@ -51,7 +50,6 @@ class JwtAuthService {
         resolve(this.user);
       }, 1000);
     }).then(data => {
-            //console.log(data);
       this.setUser(data);
       this.setSession(data.token);      
       return data;

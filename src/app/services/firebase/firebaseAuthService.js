@@ -52,7 +52,7 @@ class FirebaseAuthService {
       .doc(docId)
       .get()
       .then(doc => {
-        console.log(doc.data());
+        return doc.data();
       });
   };
 
@@ -62,7 +62,7 @@ class FirebaseAuthService {
       .get()
       .then(docList => {
         docList.forEach(doc => {
-          console.log(doc.data());
+          return doc.data();
         });
       });
   };

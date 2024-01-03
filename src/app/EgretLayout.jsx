@@ -53,7 +53,6 @@ class EgretLayout extends Component {
       setLayoutSettings(updatedSettings);
       setDefaultSettings(updatedSettings);
     } catch (e) {
-      // console.log("Error! Set settings from query param", e);
     }
   };
 
@@ -78,11 +77,9 @@ class EgretLayout extends Component {
       const updatedSettings = merge({}, settings, matched.route.settings);
       if (!isEqual(settings, updatedSettings)) {
         setLayoutSettings(updatedSettings);
-        // console.log('Route has settings');
       }
     } else if (!isEqual(settings, defaultSettings)) {
       setLayoutSettings(defaultSettings);
-      // console.log('reset settings', defaultSettings);
     }
   }
 
