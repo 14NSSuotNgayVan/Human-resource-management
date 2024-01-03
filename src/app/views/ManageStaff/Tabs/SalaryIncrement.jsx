@@ -6,7 +6,7 @@ import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
 import { LEADER, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
-import { getOldestSalary, wrapText4 } from "utils";
+import { getOldestSalary} from "utils";
 import { getSalaries } from "app/redux/selectors/SalarySelector";
 import { createSalaries, deleteSalary, updateSalary } from "app/redux/actions/SalaryAction";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -14,17 +14,17 @@ import NotifyDialog from "app/component/CustomNotifyDialog";
 import SalaryIncreaseDialog from "app/component/Form/SalaryIncreaseDialog";
 
 const Action = (props) => {
-  const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify } = props;
+  const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify,isPendingEndProfile } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS.REMOVE.includes(item.salaryIncreaseStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS.REMOVE.includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleShowDeleteConfirm(item.id)}>
           <Icon fontSize="small" color="error">
             delete
@@ -83,13 +83,19 @@ const SalaryIncrement = (props) => {
   const form = useRef(null);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
-  const [salary, setSalary] = useState({
-    startDate: new Date(),
-    reason: "",
-    note: "",
-    oldSalary: getOldestSalary(salaryList),
-    newSalary: 0,
-  });
+  const [salary, setSalary] = useState({});
+
+  useEffect(() => {
+    setSalary({
+      ...salary,
+      startDate: new Date(),
+      reason: "",
+      note: "",
+      oldSalary: getOldestSalary(salaryList),
+      newSalary: 0,
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     setIsActiveEdit(
       salaryList.length === 0 ||
@@ -137,6 +143,7 @@ const SalaryIncrement = (props) => {
       tittle: "",
     })
     setSalary({
+      ...salary,
       startDate: new Date(),
       reason: "",
       note: "",
@@ -150,6 +157,7 @@ const SalaryIncrement = (props) => {
     !isPendingEndProfile && form.current.resetValidations();
   };
   const onChange = (event, field) => {
+    console.log(salary)
     setSalary({ ...salary, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
@@ -188,6 +196,7 @@ const SalaryIncrement = (props) => {
           handleUpdate={handleUpdate}
           handleShowNotify={handleShowNotify}
           handleShowDocumentDialog={handleShowDocumentDialog}
+          isPendingEndProfile={isPendingEndProfile}
         />
       ),
     },
@@ -268,7 +277,7 @@ const SalaryIncrement = (props) => {
             </Grid>
             <Grid item xs={6} sm={6} md={3} lg={3}>
               <TextValidator
-                disabled={!(isEditing || isActiveEdit)}
+                disabled={!(isEditing || isActiveEdit) || getOldestSalary(salaryList)}
                 className={"w-100 mb-16"}
                 label={
                   <span className="inputLabel">
@@ -278,13 +287,16 @@ const SalaryIncrement = (props) => {
                 }
                 type="text"
                 name="oldSalary"
-                value={getOldestSalary(salaryList)|| salary?.oldSalary||""}
+                value={salary?.oldSalary||""}
                 inputProps={{
                   readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
+                  maxlength:10
                 }}
                 onChange={(e) => onChange(e, "oldSalary")}
                 validators={["required", "isPositive"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive")]}
+                errorMessages={[t("staff.notify.errorMessages_required"), 
+                t("staff.notify.invalidPositive"),
+              ]}
                 size="small"
               />
             </Grid>
@@ -301,10 +313,13 @@ const SalaryIncrement = (props) => {
                 }
                 type="text"
                 name="newSalary"
+                inputProps={{maxlength:10}}
                 onChange={(e) => onChange(e, "newSalary")}
                 value={salary?.newSalary || ""}
-                validators={["required", "isPositive"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive")]}
+                validators={["required", "isPositive",`minNumber:${salary?.oldSalary}`]}
+                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive"),
+                t("staff.notify.inValidNewSalary")
+              ]}
                 size="small"
               />
             </Grid>

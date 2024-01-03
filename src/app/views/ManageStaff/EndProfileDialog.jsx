@@ -37,18 +37,17 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
         }
       };
     const handleSubmit =()=>{
-        dispatch(updateStaffAction({
-          ...formData,
-          submitProfileStatus:"6",
-        }));
-        handleCloseParentDialog();
-    }
-    const handleShowDocumentDialog  = (salaryData) =>{
       setShouldOpenDocumentDialog(true);
+    }
+    const handleSubmitFormData=()=>{
+      dispatch(updateStaffAction({
+        ...formData,
+        submitProfileStatus:"6",
+      }));
+      handleCloseParentDialog();
     }
     const handleCloseDocumentDialog =()=>{
       setShouldOpenDocumentDialog(false);
-
     }
     const Action = ()=>{
       return(
@@ -57,7 +56,7 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
               variant="contained"
               color="primary"
               onClick={() => {
-                handleSubmit();
+                handleSubmitFormData();
               }}
             >
               {t("general.sendLeader")}
@@ -199,7 +198,7 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
             <Button
               variant="contained"
               color="primary"
-              onClick={handleShowDocumentDialog}
+              type="submit"
             >
               {t("general.save")}
             </Button>

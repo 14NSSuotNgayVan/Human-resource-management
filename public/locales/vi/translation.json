@@ -325,7 +325,8 @@
       "minAgeValue_required": "Tuổi phải lớn hơn 18",
       "invalidStringContent":"Vượt quá độ dài cho phép",
       "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại",
-      "invalidPositive":"Phải là số dương"
+      "invalidPositive":"Phải là số dương",
+      "inValidNewSalary":"Mức lương mới phải lớn hơn lương cũ"
     }
   }
 }
