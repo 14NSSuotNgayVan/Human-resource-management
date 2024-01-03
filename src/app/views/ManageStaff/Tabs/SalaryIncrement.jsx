@@ -157,7 +157,6 @@ const SalaryIncrement = (props) => {
     !isPendingEndProfile && form.current.resetValidations();
   };
   const onChange = (event, field) => {
-    console.log(salary)
     setSalary({ ...salary, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {

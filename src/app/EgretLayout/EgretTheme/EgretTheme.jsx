@@ -19,9 +19,7 @@ class EgretTheme extends Component {
   render() {
     let { children, settings } = this.props;
     let activeTheme = { ...settings.themes[settings.activeTheme] };
-    // console.log(activeTheme);
 
-    // activeTheme.direction = settings.direction;
     return (
       <MuiThemeProvider theme={activeTheme}>
         <Helmet>
