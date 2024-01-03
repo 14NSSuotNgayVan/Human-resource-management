@@ -13,17 +13,17 @@ import NotifyDialog from "app/component/CustomNotifyDialog";
 import PromotionDialog from "app/component/Form/PromotionDialog";
 
 const Action = (props) => {
-  const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify } = props;
+  const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify ,isPendingEndProfile } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS.EDIT_PROCESS.includes(item.processStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS.EDIT_PROCESS.includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS.REMOVE.includes(item.processStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS.REMOVE.includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleShowDeleteConfirm(item.id)}>
           <Icon fontSize="small" color="error">
             delete
@@ -99,16 +99,16 @@ const Promotion = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promotion?.leaderId]);
   const updatePageData = () => {
-    const salaries = [...promotionList];
+    const promotions = [...promotionList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
     const pageData = isPendingEndProfile
-      ? salaries
-          .filter((item) => item?.processStatus === "3" || item?.processStatus === "4")
+      ? promotions
+          .filter(item => item?.processStatus === "3" || item?.processStatus === "4"|| item?.processStatus === "5")
           .slice(startOfPage, endOfPage)
-      : salaries.slice(startOfPage, endOfPage);
+      : promotions.slice(startOfPage, endOfPage);
     setPromotionsByPage(pageData);
-    setTotalElement(salaries.length);
+    setTotalElement(promotions.length);
   };
   useEffect(() => {
     updatePageData();
@@ -182,6 +182,7 @@ const Promotion = (props) => {
           handleUpdate={handleUpdate}
           handleShowNotify={handleShowNotify}
           handleShowDocumentDialog={handleShowDocumentDialog}
+          isPendingEndProfile={isPendingEndProfile}
         />
       ),
     },

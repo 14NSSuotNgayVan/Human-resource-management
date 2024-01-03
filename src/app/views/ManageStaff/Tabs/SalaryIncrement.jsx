@@ -118,7 +118,7 @@ const SalaryIncrement = (props) => {
     const salaries = [...salaryList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
-    const pageData = isPendingEndProfile ? salaries.filter(item=>item?.salaryIncreaseStatus===3||item?.salaryIncreaseStatus===4).slice(startOfPage, endOfPage) :salaries.slice(startOfPage, endOfPage);
+    const pageData = isPendingEndProfile ? salaries.filter(item=>item?.salaryIncreaseStatus===3||item?.salaryIncreaseStatus===4||item?.salaryIncreaseStatus===5).slice(startOfPage, endOfPage) :salaries.slice(startOfPage, endOfPage);
     setSalariesByPage(pageData);
     setTotalElement(salaries.length);
   };
