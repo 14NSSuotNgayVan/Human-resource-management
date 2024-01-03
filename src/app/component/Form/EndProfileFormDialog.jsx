@@ -41,7 +41,7 @@ function EndProfileFormDialog({ t, handleCloseDialog,Action,item }) {
           Tên tôi là: <b>{item ? item?.name:staff?.name}</b>
         </Typography>
         <Typography>
-          Hiện tại đang là {STAFF_POSITION.find((item)=>item?.id === (item ? item?.currentPosition:staff?.currentPosition ?? 1) )?.name} tại công ty OCEANTECH<b></b>
+          Hiện tại đang là {STAFF_POSITION.find((position)=>position?.id === (item ? item?.currentPosition:staff?.currentPosition ?? 1) )?.name} tại công ty OCEANTECH<b></b>
         </Typography>
         <Typography className="pb-12">
           Tôi làm đơn này, đề nghị Ban Gián đốc cho tôi xin nghỉ việc từ ngày {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[0]} tháng {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[1]} năm {moment(new Date(item ? item?.endDay:staff?.endDay)).format("DD/MM/YYYY").split('/')[2]} vì lý do: {item ? item?.reasonForEnding:staff?.reasonForEnding}
