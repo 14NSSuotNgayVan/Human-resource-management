@@ -114,7 +114,7 @@ const Certificates = (props) => {
       minWidth: "150px",
       render: (props) => <p className ="custom-table-cell">{props?.field}</p>,
     },
-    { title: t("staff.certificate.content"), field: "content", align: "left", minWidth: "170px",render: (props) => <p className ="custom-table-cell">{props?.field}</p> },
+    { title: t("staff.certificate.content"), field: "content", align: "left", minWidth: "170px",render: (props) => <p className ="custom-table-cell">{props?.content}</p> },
 
   ];
   return (
