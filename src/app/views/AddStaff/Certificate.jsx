@@ -12,7 +12,6 @@ import {
 } from "app/redux/actions/CertificateActions";
 import { ConfirmationDialog } from "egret";
 import { NAME_REGEX } from "app/constants/staffConstant";
-import { wrapText4 } from "utils";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm } = props;
