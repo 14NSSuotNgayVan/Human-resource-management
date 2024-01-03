@@ -33,7 +33,6 @@ const Family = (props) => {
   const [familyMemberByPage, setFamilyMemberByPage] = useState([]);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
   const [totalElements, setTotalElements] = useState(0);
-  const [isEditing, setIsEditing] = useState(false);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const dispatch = useDispatch();
   const form = useRef(null);
@@ -67,7 +66,6 @@ const Family = (props) => {
   const handleClose = () => {
     setFamilyMember(null);
     setShowConfirmationDialog(false);
-    setIsEditing(false);
     form.current.resetValidations();
   };
 
@@ -75,7 +73,6 @@ const Family = (props) => {
     setFamilyMember({ ...familyMember, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
-    setIsEditing(false);
     setShowConfirmationDialog(true);
     setFamilyMember({ id: id });
   };
@@ -84,7 +81,6 @@ const Family = (props) => {
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
-    setIsEditing(true);
     setFamilyMember({ ...item });
   };
   let columns = [
@@ -161,7 +157,6 @@ const Family = (props) => {
                     {t("staff.family.name")}
                   </span>
                 }
-                disabled={!isEditing}
                 type="text"
                 name="name"
                 value={familyMember?.name || ""}
@@ -187,7 +182,6 @@ const Family = (props) => {
                       {t("staff.family.gender")}
                     </span>
                   }
-                  disabled={!isEditing}
                   value={familyMember?.gender ?? ""}
                   onChange={(e) => {
                     handleChange(e, "gender");
@@ -222,7 +216,6 @@ const Family = (props) => {
                 onChange={(e) => {
                   handleChange(e, "dateOfBirth");
                 }}
-                disabled={!isEditing}
                 type="date"
                 name="dateOfBirth"
                 inputProps={{
@@ -247,7 +240,6 @@ const Family = (props) => {
                       {t("staff.family.relationShip")}
                     </span>
                   }
-                  disabled={!isEditing}
                   value={familyMember?.relationShip ?? ""}
                   onChange={(e) => {
                     handleChange(e, "relationShip");
@@ -279,7 +271,6 @@ const Family = (props) => {
                     {t("staff.family.citizenIdentificationNumber")}
                   </span>
                 }
-                disabled={!isEditing}
                 type="text"
                 name="citizenIdentificationNumber"
                 value={familyMember?.citizenIdentificationNumber || ""}
@@ -306,7 +297,6 @@ const Family = (props) => {
                 onChange={(e) => {
                   handleChange(e, "phoneNumber");
                 }}
-                disabled={!isEditing}
                 type="text"
                 name="phoneNumber"
                 value={familyMember?.phoneNumber || ""}
@@ -331,15 +321,14 @@ const Family = (props) => {
                 onChange={(e) => {
                   handleChange(e, "email");
                 }}
-                disabled={!isEditing}
                 type="email"
                 name="email"
                 value={familyMember?.email || ""}
-                validators={["required", "isEmail", "maxStringLength:50"]}
+                validators={["required", "isEmail", "maxStringLength:255"]}
                 errorMessages={[
                   t("staff.notify.errorMessages_required"),
                   t("general.errorMessages_email_valid"),
-                  `${t("staff.notify.invalidStringContent")}(50 kí tự)`,
+                  `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
                 ]}
                 size="small"
               />
@@ -353,14 +342,13 @@ const Family = (props) => {
                     {t("staff.family.address")}
                   </span>
                 }
-                disabled={!isEditing}
                 type="text"
                 name="address"
                 value={familyMember?.address || ""}
                 onChange={(e) => {
                   handleChange(e, "address");
                 }}
-                validators={["required", `matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:175"]}
+                validators={["required", `matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:255"]}
                 errorMessages={[
                   t("staff.notify.errorMessages_required"),
                   t("staff.notify.inValidAddress"),

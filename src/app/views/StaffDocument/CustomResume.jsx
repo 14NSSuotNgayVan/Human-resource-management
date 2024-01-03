@@ -1,12 +1,8 @@
 import React from "react";
 import "../../../../src/styles/views/_resume.scss";
 import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
-import { useSelector } from "react-redux";
-import { imageSelector } from "app/redux/selectors/StaffSelector";
 import moment from "moment";
 import { GENDER, RELATIONSHIP } from "app/constants/staffConstant";
-import MaterialTable from "material-table";
-import { getAllFamilyMember } from "app/redux/selectors/FamilySelector";
 
 const Resume = (props) => {
   const { t, item } = props;
