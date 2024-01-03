@@ -104,7 +104,7 @@ const Family = (props) => {
       field: "name",
       align: "left",
       minWidth: "170px",
-      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
+      render: (props) => <p className="custom-table-cell">{props?.name}</p>,
     },
     {
       title: t("staff.family.dateOfBirth"),
