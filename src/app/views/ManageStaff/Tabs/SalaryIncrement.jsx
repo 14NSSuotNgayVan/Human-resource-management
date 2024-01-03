@@ -290,7 +290,7 @@ const SalaryIncrement = (props) => {
                 value={salary?.oldSalary||""}
                 inputProps={{
                   readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
-                  maxlength:10
+                  maxlength:9
                 }}
                 onChange={(e) => onChange(e, "oldSalary")}
                 validators={["required", "isPositive"]}
@@ -313,7 +313,7 @@ const SalaryIncrement = (props) => {
                 }
                 type="text"
                 name="newSalary"
-                inputProps={{maxlength:10}}
+                inputProps={{maxlength:9}}
                 onChange={(e) => onChange(e, "newSalary")}
                 value={salary?.newSalary || ""}
                 validators={["required", "isPositive",`minNumber:${salary?.oldSalary}`]}
