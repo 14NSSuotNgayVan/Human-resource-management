@@ -132,8 +132,8 @@ const StaffInformation = (props) => {
               name="name"
               value={staff?.name || ""}
               onChange={(e) => onChange(e, "name")}
-              validators={["required", `matchRegexp:${NAME_REGEX}`, "maxStringLength:50"]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(50 kí tự)`]}
+              validators={["required", `matchRegexp:${NAME_REGEX}`, "maxStringLength:255"]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`]}
               
               size="small"
             />
@@ -302,7 +302,7 @@ const StaffInformation = (props) => {
               name="placeOfIssueCard"
               value={staff?.placeOfIssueCard || ""}
               onChange={(e) => onChange(e, "placeOfIssueCard")}
-              validators={["required",`matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:175"]}
+              validators={["required",`matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:255"]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress"),`${t("staff.notify.invalidStringContent")}(175 kí tự)`]}
               
               size="small"
@@ -382,8 +382,8 @@ const StaffInformation = (props) => {
               type="email"
               name="email"
               value={staff?.email || ""}
-              validators={["required", "isEmail","maxStringLength:50"]}
-              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.errorMessages_email_valid"),`${t("staff.notify.invalidStringContent")}(50 kí tự)`]}
+              validators={["required", "isEmail","maxStringLength:255"]}
+              errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.errorMessages_email_valid"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`]}
               
               size="small"
             />
@@ -401,7 +401,7 @@ const StaffInformation = (props) => {
               name="address"
               onChange={(e) => onChange(e, "address")}
               value={staff?.address || ""}
-              validators={["required",`matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:175"]}
+              validators={["required",`matchRegexp:${ADDRESS_REGEX}`, "maxStringLength:255"]}
               errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress"),`${t("staff.notify.invalidStringContent")}(175 kí tự)`]}
               
               size="small"

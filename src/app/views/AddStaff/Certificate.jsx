@@ -12,7 +12,6 @@ import {
 } from "app/redux/actions/CertificateActions";
 import { ConfirmationDialog } from "egret";
 import { NAME_REGEX } from "app/constants/staffConstant";
-import { wrapText4 } from "utils";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm } = props;
@@ -40,7 +39,6 @@ const Certificates = (props) => {
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
 
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const [certificate, setCertificate] = useState({});
   const form = useRef(null);
   const updatePageData = () => {
@@ -64,14 +62,12 @@ const Certificates = (props) => {
   const handleClose = () => {
     setCertificate(null);
     setShowConfirmationDialog(false);
-    setIsEditing(false);
     form.current.resetValidations();
   };
   const onChange = (event, field) => {
     setCertificate({ ...certificate, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
-    setIsEditing(false);
     setShowConfirmationDialog(true);
     setCertificate({ id: id });
   };
@@ -80,7 +76,6 @@ const Certificates = (props) => {
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
-    setIsEditing(true);
     setCertificate({ ...item });
   };
   let columns = [
@@ -136,12 +131,11 @@ const Certificates = (props) => {
                     {t("staff.certificate.certificateName")}
                   </span>
                 }
-                disabled={!isEditing}
                 type="text"
                 name="certificateName"
                 value={certificate?.certificateName || ""}
                 onChange={(e) => onChange(e, "certificateName")}
-                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:225"]}
+                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:255"]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`]}
                 size="small"
               />
@@ -156,7 +150,6 @@ const Certificates = (props) => {
                   </span>
                 }
                 onChange={(e) => onChange(e, "issueDate")}
-                disabled={!isEditing}
                 type="date"
                 name="issueDate"
                 value={certificate?.issueDate ? moment(certificate?.issueDate).format("YYYY-MM-DD") : ""}
@@ -181,12 +174,11 @@ const Certificates = (props) => {
                     {t("staff.certificate.field")}
                   </span>
                 }
-                disabled={!isEditing}
                 type="text"
                 name="field"
                 onChange={(e) => onChange(e, "field")}
                 value={certificate?.field || ""}
-                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:225"]}
+                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:255"]}
                 errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidField"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`]}
                 size="small"
               />
@@ -200,7 +192,6 @@ const Certificates = (props) => {
                     {t("staff.certificate.content")}
                   </span>
                 }
-                disabled={!isEditing}
                 type="text"
                 name="content"
                 onChange={(e) => onChange(e, "content")}

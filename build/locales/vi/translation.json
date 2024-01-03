@@ -4,8 +4,12 @@
     "addStaff": "Thêm mới nhân viên",
     "LeadershipApproval":"Lãnh đạo chờ duyệt",
     "LeadershipApproved":"Lãnh đạo đã duyệt",
+    "endStaff":"Kết thúc nhân viên",
     "profile": "Thông tin tài khoản",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "manage":"Quản lý",
+    "manageStaff":"Quản lý nhân viên",
+    "leader":"Lãnh đạo"
   },
   "login": {
     "title": "Đăng nhập",
@@ -14,6 +18,33 @@
     "forgot_password": "Quên mật khẩu",
     "reset_password": "Đổi mật khẩu",
     "Logon_session_expires": "Phiên đăng nhập hết hạn"
+  },
+  "user": {
+    "title": "Tài khoản",
+    "userList": "Danh sách tài khoản người dùng",
+    "displayName": "Họ và tên",
+    "firstName": "Họ đệm",
+    "lastName": "Tên",
+    "gender": "Giới tính",
+    "username": "Tên đăng nhập",
+    "changePass": "Đổi Mật Khẩu",
+    "saveChange": "Lưu Thay Đổi",
+    "active": "Kích hoạt",
+    "role": "Vai trò",
+    "department": "Thuộc phòng ban",
+    "please_select_permission": "Vui lòng chọn ít nhất 1 quyền",
+    "email": "Email",
+    "isMainDepartment": "Phòng ban chính",
+    "search": "Tìm kiếm theo tên hoặc phòng ban",
+    "current_password": "Mật khẩu hiện tại",
+    "pass": "Mật khẩu",
+    "re_pass": "Nhập lại mật khẩu",
+    "confirm_password": "Xác nhận mật khẩu",
+    "filter": "Tìm kiếm theo tên đăng nhập, email và họ tên người dùng",
+    "person_info": "Thông tin người dùng",
+    "saveUpdate": "Thêm mới/Cập nhật người sử dụng",
+    "meetingId": "Mã Zoom",
+    "meetingPassw": "Mật khẩu Zoom"
   },
   "general": {
     "No": "Không",
@@ -99,7 +130,10 @@
     "confirmCalculator": "Bạn có chắc chắn muốn lưu?",
     "add_file": "Thêm tài liệu",
     "allProduct": "Tất cả sản phẩm"
-    ,"sendLeader":"Gửi lãnh đạo"
+    ,"sendLeader":"Trình lãnh đạo",
+    "accept":"Chấp nhận",
+    "editDocument":"Chỉnh sửa",
+    "history":"Lịch sử cập nhật"
   },
   "toast": {
     "error": "Có lỗi xảy ra, vui lòng thử lại."
@@ -129,10 +163,25 @@
     "reasonForRejection":"Lí do từ chối"
   },
   "sendLeader":{
+    "sendLeader_display":"Trình lãnh đạo",
     "submitDay":"Ngày trình",
     "submitContent":"Nội dung",
     "leaderName":"Tên lãnh đạo",
     "leaderPosition":"Chức vụ"
+  },
+  "manageStaff":{
+    "endProfile":"Kết thúc",
+    "showDocuments":"Xem hồ sơ",
+    "manageHappen":"Cập nhật diễn biến",
+    "salary_increment":"Tăng lương",
+    "proposal":"Đề xuất",
+    "promotion":"Thăng chức",
+    "history":"Lịch sử cập nhật"
+  },
+  "endStaff":{
+    "numberSaved":"Mã nộp lưu",
+    "decisionDay":"Ngày nộp lưu",
+    "saveProfile":"Nộp lưu hồ sơ"
   },
   "staff": {
     "title": "nhân viên",
@@ -147,6 +196,24 @@
       "endDate":"Ngày kết thúc",
       "jobDescription":"Mô tả công việc",
       "leavingReason":"Lí do nghỉ việc"
+    },
+    "salary_increment":{
+      "startDate":"Ngày tăng lương",
+      "oldSalary":"Mức lương cũ",
+      "newSalary":"Mức lương mới",
+      "reason":"Lý do",
+      "note":"Ghi chú"
+    },
+    "promotion":{
+      "promotionDay":"Ngày thăng chức",
+      "currentPosition":"Chức vụ hiện tại",
+      "newPosition":"Chức vụ đề xuất",
+      "note":"Ghi chú"
+    },
+    "endProfile":{
+      "endDay":"Ngày yêu cầu nghỉ việc",
+      "reasonForEnding":"Lí do nghỉ việc",
+      "endProfile_display":"Kết thúc hồ sơ"
     },
     "team": "Nhóm",
     "documents": "Hồ sơ",
@@ -211,11 +278,11 @@
       "accepted": "Đã được chấp nhận",
       "additionalRequest": "Yêu cầu bổ xung",
       "rejected": "Từ chối",
-      "sendingEndProfile": "Chờ Duyệt yêu cầu kết thúc hồ sơ",
-      "endProfileAccepted": "Chấp nhận yêu cầu kết thúc hồ sơ",
-      "endProfileAdditionalRequest": "Yêu cầu bổ xung yêu cầu kết thúc hồ sơ",
-      "EndProfileRejected": "Từ chối yêu cầu kết thúc hồ sơ",
-      "savedProfile": "Nộp lưu hồ sơ"
+      "sendingEndProfile": "Chờ Duyệt yêu cầu kết thúc",
+      "endProfileAccepted": "Chấp nhận yêu cầu kết thúc",
+      "endProfileAdditionalRequest": "Yêu cầu bổ xung yêu cầu kết thúc",
+      "EndProfileRejected": "Từ chối yêu cầu kết thúc",
+      "savedProfile": " Đã nộp lưu"
     },
     "action": {
       "addStaff": "Thêm mới nhân viên",
@@ -257,7 +324,8 @@
       "maxAgeValue_required": "Tuổi không phù hợp",
       "minAgeValue_required": "Tuổi phải lớn hơn 18",
       "invalidStringContent":"Vượt quá độ dài cho phép",
-      "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại"
+      "invalidAppointmentDate":"Ngày hẹn phải sau ngày hiện tại",
+      "invalidPositive":"Phải là số dương"
     }
   }
 }

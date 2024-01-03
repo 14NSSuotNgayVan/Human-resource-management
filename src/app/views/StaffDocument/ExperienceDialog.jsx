@@ -79,8 +79,8 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   name="companyName"
                   onChange={(e) => onChange(e, "companyName")}
                   value={experience?.companyName || ""}
-                  validators={["required",`matchRegexp:${NAME_REGEX}`,"maxStringLength:50"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(50 kí tự)`]}
+                  validators={["required",`matchRegexp:${NAME_REGEX}`,"maxStringLength:255"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`]}
                   
                   size="small"
                 />
@@ -98,8 +98,8 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   name="companyAddress"
                   onChange={(e) => onChange(e, "companyAddress")}
                   value={experience?.companyAddress || ""}
-                  validators={["required",`matchRegexp:${ADDRESS_REGEX}`,"maxStringLength:175"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress"),`${t("staff.notify.invalidStringContent")}(175 kí tự)`,]}
+                  validators={["required",`matchRegexp:${ADDRESS_REGEX}`,"maxStringLength:255"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.inValidAddress"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`,]}
                   
                   size="small"
                 />
@@ -193,7 +193,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
                   onChange={(e) => onChange(e, "leavingReason")}
                   value={experience?.leavingReason || ""}
                   validators={["required","maxStringLength:255"]}
-                  errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(255 kí tự)`,]}
+                  errorMessages={[t("staff.notify.errorMessages_required"),`${t("staff.notify.invalidStringContent")}(175 kí tự)`,]}
                 />
               </Grid>
             </Grid>
