@@ -82,7 +82,6 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
               <Grid item lg={4} md={4} sm={12} xs={12}>
                 <FormControl fullWidth={true}  className="" size="small">
                   <SelectValidator
-                    
                     size="small"
                     label={
                       <span className="inputLabel">
