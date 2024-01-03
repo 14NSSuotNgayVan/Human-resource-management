@@ -6,27 +6,9 @@ import firebaseConfig from "./firebaseConfig";
 class FirebaseAuthService {
   auth;
   firestore;
-  //   database;
-  //   storage;
-
   googleProvider;
   facebookProvider;
   twitterProvider;
-
-  constructor() {
-    // UNCOMMENT IF YOU WANT TO USE FIREBASE
-
-    // this.init();
-    // this.auth = firebase.auth();
-    // this.firestore = firebase.firestore();
-
-    //   this.database  = firebase.database();
-    //   this.storage = firebase.storage();
-    
-    // this.googleProvider = new firebase.auth.GoogleAuthProvider();
-    // this.facebookProvider = new firebase.auth.FacebookAuthProvider();
-    // this.twitterProvider = new firebase.auth.TwitterAuthProvider();
-  }
 
   init = () => {
     firebase.initializeApp(firebaseConfig);
@@ -65,7 +47,6 @@ class FirebaseAuthService {
   };
 
   getUserData = docId => {
-    //   generally it's better to use uid for docId
     this.firestore
       .collection("users")
       .doc(docId)

@@ -7,7 +7,6 @@ import Layout2Navbar from "./Layout2Navbar";
 import Layout2Sidenav from "./Layout2Sidenav";
 import Layout2Topbar from "./Layout2Topbar";
 import { PropTypes } from "prop-types";
-import Scrollbar from "react-perfect-scrollbar";
 import SecondarySidebar from "../SharedCompoents/SecondarySidebar";
 import { classList } from "utils";
 import { connect } from "react-redux";
@@ -41,15 +40,8 @@ class Layout2 extends Component {
   };
 
   render() {
-    let { settings, classes, theme } = this.props;
+    let { settings, classes } = this.props;
     let { layout2Settings } = settings;
-
-    // let layoutClasses = {
-    //   [classes.layout]: true,
-    //   [settings.activeLayout]: true,
-    //   [`sidenav-${layout2Settings.leftSidebar.mode}`]: true,
-    //   [`layout-${layout2Settings.mode} theme-${theme.palette.type}`]: true
-    // };
     let layoutClasses = {
       [classes.layout]: true,
       [settings.activeLayout]: true,
@@ -72,14 +64,6 @@ class Layout2 extends Component {
               </Hidden>
 
               {settings.perfectScrollbar && (
-                // <Scrollbar
-                //   options={{ suppressScrollX: true }}
-                //   className="scrollable-content p-0"
-                // >
-                //   <div className="container p-0">{renderRoutes(routes)}</div>
-                //   <div className="my-auto"></div>
-                //   {settings.footer.show && !settings.footer.fixed && <Footer />}
-                // </Scrollbar>
                 <div
                   options={{ suppressScrollX: true }}
                   className="scrollable-content p-0"

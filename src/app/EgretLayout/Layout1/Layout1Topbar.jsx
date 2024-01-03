@@ -4,7 +4,6 @@ import ConstantList from "../../appConfig";
 import {
   Icon,
   IconButton,
-  Badge,
   MenuItem,
   withStyles,
   MuiThemeProvider
@@ -17,8 +16,7 @@ import { EgretMenu, EgretSearchBox } from "egret";
 import { isMdScreen } from "utils";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import { Link } from "react-router-dom";
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import Select from '@material-ui/core/Select';
+import { withTranslation } from 'react-i18next';
 import LanguageSelect from '../SharedCompoents/LanguageSelect';
 import authService from "../../services/jwtAuthService";
 const styles = theme => ({
@@ -69,16 +67,8 @@ class Layout1Topbar extends Component {
     if(user!=null && user.imagePath!=null){
       imagePath =ConstantList.API_ENDPOINT + user.imagePath;
     }
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     let { theme, settings } = this.props;
-    let language= 'en';
-    const changeLanguage = lng => {
-      alert(lng);
-      i18n.changeLanguage(lng);
-      //alert('here');
-    };    
-
-  
     const topbarTheme =
       settings.themes[settings.layout1Settings.topbar.theme] || theme;
     return (
@@ -93,32 +83,13 @@ class Layout1Topbar extends Component {
                 <IconButton onClick={this.handleSidebarToggle}>
                   <Icon>menu</Icon>
                 </IconButton>
-
                 <div className="hide-on-mobile">
-                  {/* <IconButton>
-                    <Icon>mail_outline</Icon>
-                  </IconButton>
-
-                  <IconButton>
-                    <Icon>web_asset</Icon>
-                  </IconButton>
-
-                  <IconButton>
-                    <Icon>star_outline</Icon>
-                  </IconButton> */}
                 </div>
               </div>
               <div className="flex flex-middle">
                 <EgretSearchBox />
                 <ViewLanguageSelect/>
                 <NotificationBar />
-                {/* <select class="form-control language-selector"  onClick={() => changeLanguage('en')}>
-                    <option value="de">Deutsch</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="it">Italiano</option>
-                </select> */}
-                
                 <EgretMenu
                   menuButton={
                     <img

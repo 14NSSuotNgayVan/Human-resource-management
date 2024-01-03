@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, IconButton, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -18,30 +18,8 @@ class EgretSearchBox extends Component {
   };
 
   render() {
-    let { classes } = this.props;
     return (
       <React.Fragment>
-        {/* {!this.state.open && (
-          <IconButton onClick={this.toggle}>
-            <Icon>search</Icon>
-          </IconButton>
-        )}
-
-        {this.state.open && (
-          <div
-            className={`flex flex-middle h-100 egret-search-box ${classes.root}`}
-          >
-            <input
-              className={`px-16 search-box w-100 ${classes.root}`}
-              type="text"
-              placeholder="Type here"
-              autoFocus
-            />
-            <IconButton onClick={this.toggle} className="text-middle mx-4">
-              <Icon>close</Icon>
-            </IconButton>
-          </div>
-        )} */}
       </React.Fragment>
     );
   }

@@ -7,9 +7,7 @@ import PropTypes from "prop-types";
 import { navigations } from "../../navigations";
 import { EgretVerticalNav } from "egret";
 import { setLayoutSettings } from "app/redux/actions/LayoutActions";
-import ConstantList from "../../appConfig";
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
-import JwtAuthService from "../../services/jwtAuthService";
+import { withTranslation } from 'react-i18next';
 import localStorageService from "../../services/localStorageService";
 const ViewEgretVerticalNav = withTranslation()(EgretVerticalNav);
 class Sidenav extends Component {
@@ -39,7 +37,6 @@ class Sidenav extends Component {
   );
   getNavigation(){
     let navigation=localStorageService.getSessionItem("navigations");
-    // let navigation=localStorageService.getLocalStorageItem("navigations");
     if(navigation && navigation.length>0){
       return navigation;
     }else {

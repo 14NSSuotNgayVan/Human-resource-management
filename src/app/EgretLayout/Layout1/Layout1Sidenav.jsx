@@ -104,10 +104,8 @@ class Layout1Sidenav extends Component {
   );
 
   renderUser = () => {
-    const { t, i18n } = this.props;
-    //let { user } = this.props;
+    const { t } = this.props;
     let imagePath =ConstantList.ROOT_PATH+"assets/images/avatar.jpg"
-    //let user = authService.getLoginUser();
 
     let user = authService.getLoginUser();
     if(user!=null && user.imagePath!=null){
@@ -129,22 +127,11 @@ class Layout1Sidenav extends Component {
         </div>
         <div className="user__menu">
           <EgretMenu
-          // menuButton={
-          //   <Tooltip title="Settings">
-          //     <IconButtonWhite aria-label="Delete" className="" size="small">
-          //       <IconSmall> settings </IconSmall>
-          //     </IconButtonWhite>
-          //   </Tooltip>
-          // }
           >
             <MenuItem className="flex flex-middle" style={{ minWidth: 185 }}>
               <Icon> home </Icon>
               <span className="pl-16"> {t('Dashboard.dashboard')} </span>
             </MenuItem>
-            {/* <MenuItem className="flex flex-middle" style={{ minWidth: 185 }}>
-              <Icon> settings </Icon>
-              <span className="pl-16"> Account Setting </span>
-            </MenuItem> */}
           </EgretMenu>
 
           <Tooltip title={t('Dashboard.profile')}>

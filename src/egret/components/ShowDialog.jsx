@@ -1,6 +1,5 @@
 import React from "react";
 import { Dialog, Button, DialogActions } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 
 const ShowDialog = ({
   open,

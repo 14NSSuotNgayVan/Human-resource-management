@@ -1,4 +1,3 @@
-import { imageSelector } from "app/redux/selectors/StaffSelector";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../../src/styles/views/_cv.scss";

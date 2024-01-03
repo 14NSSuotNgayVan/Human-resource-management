@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "./PedingApprovalDialog";
-import { searchObjectsByKeyword, wrapText4 } from "utils";
+import { searchObjectsByKeyword } from "utils";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
 import { getProcess, getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
