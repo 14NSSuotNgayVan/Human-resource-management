@@ -291,7 +291,7 @@
       "staffDocument":"Hồ sơ nhân viên"
     },
     "notify": {
-      "inValidAddress":"Địa chỉ không chứa kí tự đặc biệt ngoại trừ '/'",
+      "inValidAddress":"Địa chỉ không chứa kí tự đặc biệt ngoại trừ '/' và ','",
       "enterInformation": "Vui lòng điền thông tin nhân viên",
       "addError": "Thêm không thành công!",
       "addSuccess": "Thêm nhân viên thành công !",
