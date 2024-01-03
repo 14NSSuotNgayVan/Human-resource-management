@@ -20,15 +20,10 @@ const Footer = ({ theme, settings }) => {
       </Helmet>
       <div className="footer flex flex-middle">
         <div className="flex flex-middle container px-sm-30 w-100">
-          <a href="#">
             <Button variant="contained" color="secondary">
               Hotline: 0349655473
             </Button>
-          </a>
           <span className="m-auto"></span>
-          {/* <p className="m-0">
-              Developed by <a href="http://globits.net">Globits</a>
-          </p> */}
         </div>
       </div>
     </MuiThemeProvider>

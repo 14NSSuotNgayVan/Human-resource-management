@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "./PedingApprovalDialog";
-import { searchObjectsByKeyword, wrapText4 } from "utils";
+import { searchObjectsByKeyword } from "utils";
 import { getSalaries, getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
 import SalaryIncreaseDialog from "app/component/Form/SalaryIncreaseDialog";
 import { getAllSalariesByLeader, updateSalary } from "app/redux/actions/SalaryAction";

@@ -1,5 +1,5 @@
 import { TablePagination } from '@material-ui/core';
-import MaterialTable, { MTableToolbar } from 'material-table';
+import MaterialTable from 'material-table';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 const CustomTable = (props) => {

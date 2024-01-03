@@ -1,10 +1,6 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
-import { getCertificatesByEmployeeId } from "app/redux/selectors/CertificateSelector";
 import moment from "moment";
-
 import React from "react";
-import { useSelector } from "react-redux";
-
 const CustomCertificate = (props) => {
   const { item, t } = props;
   return (

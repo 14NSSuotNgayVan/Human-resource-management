@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
-import { searchByPageAction, deleteStaffAction, setItem } from "app/redux/actions/StaffActions.js";
-import { Grid, IconButton, Icon, Button, FormControl, Input, InputAdornment } from "@material-ui/core";
+import React, { useState } from "react";
+import { searchByPageAction, setItem } from "app/redux/actions/StaffActions.js";
+import { Grid, IconButton, FormControl, Input, InputAdornment } from "@material-ui/core";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Breadcrumb } from "egret";
 import SearchIcon from "@material-ui/icons/Search";

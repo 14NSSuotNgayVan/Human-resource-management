@@ -31,18 +31,13 @@ class LanguageSelect extends React.Component {
   };
 
   handleChange(value) {
-    //alert(t('description.part1'));
-    const { t, i18n,classes } = this.props;
+    const { i18n } = this.props;
     i18n.changeLanguage(value);
     this.setState({ selected: value });
   }
   render() {
-    const { t, i18n,classes } = this.props;
+    const { t, classes } = this.props;
     const { selected, hasError } = this.state;
-    let language= 'vi';
-    const changeLanguage = lng => {
-      i18n.changeLanguage(lng);
-    };  
     return (
       <form className={classes.root} autoComplete="off">
         <FormControl className={classes.formControl} error={hasError}>

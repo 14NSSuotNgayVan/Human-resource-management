@@ -79,8 +79,6 @@ class JwtAuthService {
       this.removeUser();
       history.push(ConstantList.HOME_PAGE)
     }else {
-      let url = ConstantList.API_ENDPOINT + "/oauth/logout";
-      let res = axios.delete(url);
       this.setSession(null);
       this.removeUser();
       history.push(ConstantList.LOGIN_PAGE)

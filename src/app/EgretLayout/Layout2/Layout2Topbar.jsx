@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Icon,
   IconButton,
-  Badge,
   Hidden,
   withStyles,
   MuiThemeProvider,
@@ -17,7 +16,7 @@ import { Helmet } from "react-helmet";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import ConstantList from "../../appConfig";
 import LanguageSelect from '../SharedCompoents/LanguageSelect';
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { logoutUser } from "app/redux/actions/UserActions";
 const ViewLanguageSelect = withTranslation()(LanguageSelect);
 class Layout2Topbar extends Component {

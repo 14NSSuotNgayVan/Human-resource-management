@@ -5,7 +5,7 @@ import { withStyles, MuiThemeProvider } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
-import { useTranslation, withTranslation, Trans } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 const ViewEgretHorizontalNav = withTranslation()(EgretHorizontalNav);
 class Layout2Navbar extends Component {
   state = {};
