@@ -118,7 +118,7 @@ const Family = (props) => {
       field: "relationShip",
       align: "left",
       minWidth: "150px",
-      render: (props) => <span>{RELATIONSHIP.find((item) => item.id === props.relationShip).name}</span>,
+      render: (props) => <span>{RELATIONSHIP.find((item) => item.id === props.relationShip)?.name}</span>,
     },
     {
       title: t("staff.gender_display"),
