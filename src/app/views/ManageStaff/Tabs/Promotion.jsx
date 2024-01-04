@@ -16,6 +16,16 @@ const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify ,isPendingEndProfile } = props;
   return (
     <div className="none_wrap">
+      {STAFF_STATUS.VIEW.includes(item.processStatus) && (
+        <IconButton
+          size="small"
+          onClick={() => {
+            handleShowDocumentDialog(item);
+          }}
+        >
+          <VisibilityIcon fontSize="small"></VisibilityIcon>
+        </IconButton>
+      )}
       {!isPendingEndProfile && STAFF_STATUS.EDIT_PROCESS.includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
@@ -28,16 +38,6 @@ const Action = (props) => {
           <Icon fontSize="small" color="error">
             delete
           </Icon>
-        </IconButton>
-      )}
-      {STAFF_STATUS.VIEW.includes(item.processStatus) && (
-        <IconButton
-          size="small"
-          onClick={() => {
-            handleShowDocumentDialog(item);
-          }}
-        >
-          <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>
       )}
       {STAFF_STATUS.ADDITIONAL.includes(item.processStatus) && (
@@ -70,7 +70,7 @@ const Promotion = (props) => {
   const [promotionsByPage, setPromotionsByPage] = useState([]);
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
-  const [isActiveEdit, setIsActiveEdit] = useState(false);
+  const [isPending,setIsPending] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isSendLeader, setIsSendLeader] = useState(false);
   const [showNotify, setShowNotify] = useState({
@@ -87,17 +87,13 @@ const Promotion = (props) => {
     note: "",
   });
   useEffect(() => {
-    setIsActiveEdit(
-      promotionList.length === 0 ||
-        promotionList.every((item) => item.processStatus === "3") ||
-        promotionList.every((item) => item.processStatus === "1")
-    );
-  }, [promotionList]);
-  useEffect(() => {
     if (promotion?.leaderId) setIsSendLeader(true);
     else setIsSendLeader(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [promotion?.leaderId]);
+  useEffect(()=>{
+    setIsPending(promotionList.some((item) => item.processStatus === "2"));
+  },[promotionList]);
   const updatePageData = () => {
     const promotions = [...promotionList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
@@ -239,7 +235,6 @@ const Promotion = (props) => {
               <Grid item lg={3} md={3} sm={6} xs={6}>
                 <TextValidator
                   className="w-100 mb-16"
-                  disabled={!(isEditing || isActiveEdit)}
                   label={
                     <span className="inputLabel">
                       <span style={{ color: "red" }}> * </span>
@@ -266,7 +261,6 @@ const Promotion = (props) => {
                 <FormControl fullWidth={true} className="" size="small">
                   <SelectValidator
                     size="small"
-                    disabled={!(isEditing || isActiveEdit)}
                     label={
                       <span className="inputLabel">
                         <span style={{ color: "red" }}> * </span>
@@ -297,7 +291,6 @@ const Promotion = (props) => {
                 <FormControl fullWidth={true} className="" size="small">
                   <SelectValidator
                     size="small"
-                    disabled={!(isEditing || isActiveEdit)}
                     label={
                       <span className="inputLabel">
                         <span style={{ color: "red" }}> * </span>
@@ -323,7 +316,6 @@ const Promotion = (props) => {
               <Grid item xs={6} sm={6} md={3} lg={3}>
                 <TextValidator
                   className={"w-100 mb-16"}
-                  disabled={!(isEditing || isActiveEdit)}
                   label={
                     <span className="inputLabel">
                       <span style={{ color: "red" }}> * </span>
@@ -346,7 +338,7 @@ const Promotion = (props) => {
                 <FormControl fullWidth={true} className="" size="small">
                   <SelectValidator
                     size="small"
-                    disabled={!isActiveEdit}
+                    disabled={isPending}
                     label={
                       <span className="inputLabel">
                         <span style={{ color: "red" }}> * </span>
@@ -371,16 +363,12 @@ const Promotion = (props) => {
                 </FormControl>
               </Grid>
               <Grid item justify="flex-end" className="mb-16">
-                {(isActiveEdit || isEditing) && (
-                  <>
-                    <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit">
+                    <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit" disabled ={isPending && isSendLeader}>
                       {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
                     </Button>
                     <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
                       {t("general.cancel")}
                     </Button>
-                  </>
-                )}
               </Grid>
             </Grid>
           </ValidatorForm>

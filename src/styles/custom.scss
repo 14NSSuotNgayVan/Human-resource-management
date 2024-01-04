@@ -27,6 +27,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top:10px;
+  max-width: 250px;
 }
 .text-overflow-none{
   overflow: unset!important;
@@ -192,6 +193,9 @@
 .MuiDialog-paper.MuiDialog-paperScrollPaper::-webkit-scrollbar {
   width: 0 !important;
 }
+.MuiPaper-root div::-webkit-scrollbar {
+  width: 8px !important;
+}
 .text-center {
   text-align: center;
 }
@@ -217,4 +221,9 @@
 }
 .relative {
   position: relative;
+}
+.headerStyle-code{
+  float:right;
+  margin-right: 40px;
+  color: #7467ef;
 }

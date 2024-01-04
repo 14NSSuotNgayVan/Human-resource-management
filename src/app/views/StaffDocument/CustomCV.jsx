@@ -169,7 +169,7 @@ const CustomCV = (props) => {
               {!isEditSkill &&
                 formData?.skill &&
                 splitStringByNewLine(formData?.skill) !== null &&
-                splitStringByNewLine(formData?.skill).map((formData, index) => <li key={index}>{formData}</li>)}
+                splitStringByNewLine(formData?.skill).map((formData, index) => <li key={index}><span>{formData}</span></li>)}
             </ul>
           </div>
           <div className="cv-skill-rating">
@@ -265,7 +265,7 @@ const CustomCV = (props) => {
                   {!isEditActivity &&
                     formData?.activity &&
                     splitStringByNewLine(formData?.activity) !== null &&
-                    splitStringByNewLine(formData?.activity).map((formData, index) => <li key={index}>{formData}</li>)}
+                    splitStringByNewLine(formData?.activity).map((formData, index) => <li key={index}><span>{formData}</span></li>)}
                 </ul>
               </div>
             </div>
@@ -329,7 +329,7 @@ const CustomCV = (props) => {
                         <span className="experience-dot">&#x2022;</span>
                         <span className="experience-company">{experience?.companyName}</span>
                       </div>
-                      {isRegister&&<div>
+                      {isRegister&&<div className="experience-tittle-button">
                         <IconButton
                           size="small"
                           onClick={() => {

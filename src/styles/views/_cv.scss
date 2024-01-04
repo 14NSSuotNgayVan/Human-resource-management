@@ -7,6 +7,12 @@
     padding: 69px 32px 40px 32px;
     background-color: #fff;
   }
+.cv li > span{
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
   .left-content{
     width: 33%;
   }
@@ -235,10 +241,15 @@
 }
 .experience-tittle{
   font-size: 1.15rem;
-  display: flex;
-  justify-content: space-between;
-  
+  align-items: center;
 }
+.experience-tittle :first-child{
+  display: contents;
+}
+.experience-tittle-button{
+  float: right;
+}
+
 .experience-dot{
   margin: 0 16px;
 }
@@ -247,8 +258,13 @@
   
 }
 .experience-company{
+  display: inline-block;
   text-transform: uppercase;
   letter-spacing: -0.6px;
+  max-width: 40%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  vertical-align: bottom;
 
 }
 .experience-job{
@@ -275,7 +291,6 @@
 }
 .detail-content{
   display: inline-block;
-  
 }
 .cv-experience{
   margin-top: 24px;

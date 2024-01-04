@@ -107,6 +107,10 @@ function Staff(props) {
     const item = props.item;
     return (
       <div className="none_wrap">
+        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus)&&
+        <IconButton size="small" onClick={() => {handleShowDocumentDialog(item,false)}}>
+          <VisibilityIcon fontSize="small"></VisibilityIcon>
+        </IconButton>}
         {STAFF_STATUS.EDIT.includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={()=>handleAddItem(item)}>
             <Icon fontSize="small" color="primary">
@@ -119,10 +123,6 @@ function Staff(props) {
           <Icon fontSize="small" color="error">
             delete
           </Icon>
-        </IconButton>}
-        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus)&&
-        <IconButton size="small" onClick={() => {handleShowDocumentDialog(item,false)}}>
-          <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>}
         {STAFF_STATUS.ADDITIONAL.includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleShowNotify(item,true)}>
