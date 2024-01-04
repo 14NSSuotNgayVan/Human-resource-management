@@ -34,13 +34,13 @@ const AddStaffDialog = (props) => {
   const { handleClose, t, handleShowDocumentDialog } = props;
   const staff = useSelector(staffSelector);
   const dispatch = useDispatch();
-  const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
+  const [tab, setTab] = useState(ADD_STAFF_TABS?.INFORMATION?.value);
   const [informationSaved, setInformationSaved] = useState(false);
   const shouldUpdateCertificate = useSelector(getShouldUpdateCertificate);
   const shouldUpdateFamily = useSelector(getShouldUpdateFamily);
   const informationFormRef = useRef(null);
   const handleSubmit = () => {
-    if(tab === ADD_STAFF_TABS.INFORMATION.value){
+    if(tab === ADD_STAFF_TABS?.INFORMATION?.value){
       informationFormRef.current.submit();
     }else{
       handleClose();
@@ -89,7 +89,7 @@ const AddStaffDialog = (props) => {
         <Tabs
           value={tab}
           onChange={(event, newValue) => {
-            if (!informationSaved && newValue !== ADD_STAFF_TABS.INFORMATION.value) {
+            if (!informationSaved && newValue !== ADD_STAFF_TABS?.INFORMATION?.value) {
               toast.error(t("staff.notify.enterInformation"));
             } else setTab(newValue);
           }}
@@ -99,18 +99,18 @@ const AddStaffDialog = (props) => {
           centered
           className =""
         >
-          <Tab label={t(`staff.${ADD_STAFF_TABS.INFORMATION.name}`)} value={ADD_STAFF_TABS.INFORMATION.value} />
-          <Tab label={t(`staff.${ADD_STAFF_TABS.CERTIFICATES.name}`)} value={ADD_STAFF_TABS.CERTIFICATES.value} />
-          <Tab label={t(`staff.${ADD_STAFF_TABS.RELATIONSHIP.name}`)} value={ADD_STAFF_TABS.RELATIONSHIP.value} />
+          <Tab label={t(`staff.${ADD_STAFF_TABS?.INFORMATION?.name}`)} value={ADD_STAFF_TABS?.INFORMATION?.value} />
+          <Tab label={t(`staff.${ADD_STAFF_TABS?.CERTIFICATES?.name}`)} value={ADD_STAFF_TABS?.CERTIFICATES?.value} />
+          <Tab label={t(`staff.${ADD_STAFF_TABS?.RELATIONSHIP?.name}`)} value={ADD_STAFF_TABS?.RELATIONSHIP?.value} />
         </Tabs>
       </DialogTitle>
 
       <DialogContent dividers spacing={2}>
-        {tab === ADD_STAFF_TABS.INFORMATION.value && (
+        {tab === ADD_STAFF_TABS?.INFORMATION?.value && (
           <StaffInformation item={staff} t={t} formRef={informationFormRef} handleCloseDialog ={handleClose}/>
         )}
-        {tab === ADD_STAFF_TABS.CERTIFICATES.value && <Certificates staffId={staff?.id} t={t} />}
-        {tab === ADD_STAFF_TABS.RELATIONSHIP.value && <Family staffId={staff?.id} t={t} />}
+        {tab === ADD_STAFF_TABS?.CERTIFICATES?.value && <Certificates staffId={staff?.id} t={t} />}
+        {tab === ADD_STAFF_TABS?.RELATIONSHIP?.value && <Family staffId={staff?.id} t={t} />}
       </DialogContent>
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         {informationSaved && (

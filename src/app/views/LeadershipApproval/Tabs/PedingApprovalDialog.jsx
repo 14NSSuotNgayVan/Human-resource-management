@@ -28,7 +28,7 @@ import ManageStaffDialog from "app/views/ManageStaff/ManageStaffDialog";
 
 const PendingApprovalDialog = (props) => {
   const { t, handleCloseDialog,isPendingRegister,isRegister,handleCloseAllDialog,isPendingEndProfile} = props;
-  const [tab, setTab] = useState(DOCUMENT_TABS.DOCUMENTS.value);
+  const [tab, setTab] = useState(DOCUMENT_TABS?.DOCUMENTS?.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
@@ -106,16 +106,16 @@ const PendingApprovalDialog = (props) => {
             centered
             className=""
           >
-            <Tab label={t(`staff.${DOCUMENT_TABS.DOCUMENTS.name}`)} value={DOCUMENT_TABS.DOCUMENTS.value} />
-            <Tab label={t(`staff.${DOCUMENT_TABS.RESUME.name}`)} value={DOCUMENT_TABS.RESUME.value} />
-            <Tab label={t(`staff.${DOCUMENT_TABS.CERTIFICATES.name}`)} value={DOCUMENT_TABS.CERTIFICATES.value} />
+            <Tab label={t(`staff.${DOCUMENT_TABS?.DOCUMENTS?.name}`)} value={DOCUMENT_TABS?.DOCUMENTS?.value} />
+            <Tab label={t(`staff.${DOCUMENT_TABS?.RESUME?.name}`)} value={DOCUMENT_TABS?.RESUME?.value} />
+            <Tab label={t(`staff.${DOCUMENT_TABS?.CERTIFICATES?.name}`)} value={DOCUMENT_TABS?.CERTIFICATES?.value} />
           </Tabs>
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
           <DialogContent className ="dialog-content-py">
-            {tab === DOCUMENT_TABS.DOCUMENTS.value && <CustomCV t={t} setFormData={setFormData} formData={formData} isRegister ={isRegister}/>}
-            {tab === DOCUMENT_TABS.RESUME.value && <Resume t={t} item={formData} />}
-            {tab === DOCUMENT_TABS.CERTIFICATES.value && <CustomCertificate t={t} item={formData} />}
+            {tab === DOCUMENT_TABS?.DOCUMENTS?.value && <CustomCV t={t} setFormData={setFormData} formData={formData} isRegister ={isRegister}/>}
+            {tab === DOCUMENT_TABS?.RESUME?.value && <Resume t={t} item={formData} />}
+            {tab === DOCUMENT_TABS?.CERTIFICATES?.value && <CustomCertificate t={t} item={formData} />}
           </DialogContent>
         </Grid>
       </Grid>

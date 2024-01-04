@@ -94,7 +94,7 @@ function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action 
         </Typography>
         <Typography>
           <b>- Điều 2: </b>Các Ông/Bà Phòng nhân sự, Phòng tài chính kế toán và Ông/Bà:{' '}
-          <b>{LEADER.find(item=>item?.id===dataSalaryIncrease?.leaderId).leaderName}</b> căn cứ thi hành quyết định này.
+          <b>{LEADER?.find(item=>item?.id===dataSalaryIncrease?.leaderId)?.leaderName}</b> căn cứ thi hành quyết định này.
         </Typography>
         <Box className="flex-between mt-32">
           <Box className='px-32'>

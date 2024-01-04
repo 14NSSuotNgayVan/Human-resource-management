@@ -38,7 +38,7 @@ function LeadershipApproved(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS.APPROVED;
+    searchObject.listStatus = STAFF_STATUS?.APPROVED;
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -67,7 +67,7 @@ function LeadershipApproved(props) {
     const { item, handleShowDialog } = props;
     return (
       <div className="none_wrap">
-        {STAFF_STATUS.APPROVED.includes(item.submitProfileStatus) && (
+        {STAFF_STATUS?.APPROVED.includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleShowDialog(item)}>
             <VisibilityIcon fontSize="small"></VisibilityIcon>
           </IconButton>
