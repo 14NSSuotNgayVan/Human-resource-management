@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import '../../../styles/components/_form.scss';
 import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
-import { STAFF_POSITION } from 'app/constants/staffConstant';
+import { LEADER, STAFF_POSITION } from 'app/constants/staffConstant';
 import moment from 'moment';
 
 function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
@@ -109,7 +109,7 @@ function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
             <Typography fontWeight="bold" fontStyle="italic">
               Nơi Nhận:
             </Typography>
-            <Typography>Ông/Bà: {<b>{staff?.leaderName}</b>} </Typography>
+            <Typography>Ông/Bà: {<b>{LEADER.find(item=>item?.id===processData?.leaderId).leaderName}</b>} </Typography>
             <Typography>Cơ quan, tổ chức, cá nhân liên quan</Typography>
             <Typography>Lưu HS,VP</Typography>
           </Box>

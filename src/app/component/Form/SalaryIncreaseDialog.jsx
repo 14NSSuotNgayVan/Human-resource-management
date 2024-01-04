@@ -10,6 +10,7 @@ import '../../../styles/components/_form.scss';
 import moment from 'moment';
 import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
+import { LEADER } from 'app/constants/staffConstant';
 
 function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action }) {
   const staff = useSelector(staffSelector);
@@ -82,7 +83,7 @@ function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action 
         </Typography>
         <Typography>
           <b>- Điều 1:</b> Tăng lương cho Ông/Bà: <b>{staff?.name}</b> đang làm việc tại{' '}
-          Công ty kể từ ngày {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[0]} tháng{' '}
+          công ty kể từ ngày {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[0]} tháng{' '}
           {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[1]} năm {moment(new Date(dataSalaryIncrease?.startDate)).format("DD/MM/YYYY").split("/")[2]}, cụ thể như sau:
         </Typography>
         <Typography>
@@ -93,7 +94,7 @@ function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action 
         </Typography>
         <Typography>
           <b>- Điều 2: </b>Các Ông/Bà Phòng nhân sự, Phòng tài chính kế toán và Ông/Bà:{' '}
-          <b>{staff?.leaderName}</b> căn cứ thi hành quyết định này.
+          <b>{LEADER.find(item=>item?.id===dataSalaryIncrease?.leaderId).leaderName}</b> căn cứ thi hành quyết định này.
         </Typography>
         <Box className="flex-between mt-32">
           <Box className='px-32'>

@@ -17,6 +17,16 @@ const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify,isPendingEndProfile } = props;
   return (
     <div className="none_wrap">
+      {STAFF_STATUS.VIEW.includes(item.salaryIncreaseStatus) && (
+        <IconButton
+          size="small"
+          onClick={() => {
+            handleShowDocumentDialog(item);
+          }}
+        >
+          <VisibilityIcon fontSize="small"></VisibilityIcon>
+        </IconButton>
+      )}
       {!isPendingEndProfile && STAFF_STATUS.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
@@ -29,16 +39,6 @@ const Action = (props) => {
           <Icon fontSize="small" color="error">
             delete
           </Icon>
-        </IconButton>
-      )}
-      {STAFF_STATUS.VIEW.includes(item.salaryIncreaseStatus) && (
-        <IconButton
-          size="small"
-          onClick={() => {
-            handleShowDocumentDialog(item);
-          }}
-        >
-          <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>
       )}
       {STAFF_STATUS.ADDITIONAL.includes(item.salaryIncreaseStatus) && (
@@ -72,7 +72,6 @@ const SalaryIncrement = (props) => {
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
   const [isPending,setIsPending] = useState(false);
-  const [isActiveEdit, setIsActiveEdit] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isSendLeader, setIsSendLeader] = useState(false);
   const [showNotify, setShowNotify] = useState({
@@ -97,11 +96,6 @@ const SalaryIncrement = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   useEffect(() => {
-    setIsActiveEdit(
-      salaryList.length === 0 ||
-        salaryList.every((item) => item.salaryIncreaseStatus === 3) ||
-        salaryList.every((item) => item.salaryIncreaseStatus === 1)
-    );
     setIsPending(salaryList.some((item) => item.salaryIncreaseStatus === 2));
     !isEditing &&setSalary({
       ...salary,
@@ -256,7 +250,6 @@ const SalaryIncrement = (props) => {
           <Grid container spacing={2} className="p-12">
             <Grid item lg={3} md={3} sm={6} xs={6}>
               <TextValidator
-                disabled={!(isEditing || isActiveEdit)}
                 className="w-100 mb-16"
                 label={
                   <span className="inputLabel">
@@ -278,7 +271,7 @@ const SalaryIncrement = (props) => {
             </Grid>
             <Grid item xs={6} sm={6} md={3} lg={3}>
               <TextValidator
-                disabled={!(isEditing || isActiveEdit) || getOldestSalary(salaryList)}
+                disabled={getOldestSalary(salaryList)}
                 className={"w-100 mb-16"}
                 label={
                   <span className="inputLabel">
@@ -304,7 +297,6 @@ const SalaryIncrement = (props) => {
 
             <Grid item xs={6} sm={6} md={3} lg={3}>
               <TextValidator
-                disabled={!(isEditing || isActiveEdit)}
                 className={"w-100 mb-16"}
                 label={
                   <span className="inputLabel">
@@ -326,7 +318,6 @@ const SalaryIncrement = (props) => {
             </Grid>
             <Grid item xs={6} sm={6} md={3} lg={3}>
               <TextValidator
-                disabled={!(isEditing || isActiveEdit)}
                 className={"w-100 mb-16"}
                 label={
                   <span className="inputLabel">
@@ -348,7 +339,6 @@ const SalaryIncrement = (props) => {
             </Grid>
             <Grid item xs={6} sm={6} md={3} lg={3}>
               <TextValidator
-                disabled={!(isEditing || isActiveEdit)}
                 className={"w-100 mb-16"}
                 label={
                   <span className="inputLabel">
@@ -371,7 +361,7 @@ const SalaryIncrement = (props) => {
             <Grid item lg={3} md={3} sm={6} xs={6}>
               <FormControl fullWidth={true} className="" size="small">
                 <SelectValidator
-                  disabled={!isActiveEdit}
+                disabled={isPending}
                   size="small"
                   label={
                     <span className="inputLabel">
@@ -381,7 +371,7 @@ const SalaryIncrement = (props) => {
                   }
                   value={salary?.leaderId ?? ""}
                   inputProps={{
-                    readOnly: salary?.leaderId && salary?.salaryIncreaseStatus === 4,
+                    readOnly:(salary?.leaderId && salary?.salaryIncreaseStatus === 4),
                   }}
                   onChange={(e) => onChange(e, "leaderId")}
                   className="w-100 mb-16"
@@ -397,16 +387,12 @@ const SalaryIncrement = (props) => {
               </FormControl>
             </Grid>
             <Grid item justify="flex-end" className="mb-16">
-              {(isActiveEdit || isEditing) && (
-                <>
                   <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit" disabled ={isPending && isSendLeader}>
                     {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
                   </Button>
                   <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
                     {t("general.cancel")}
                   </Button>
-                </>
-              )}
             </Grid>
           </Grid>
         </ValidatorForm>

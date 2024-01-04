@@ -42,10 +42,10 @@ const CustomCertificate = (props) => {
                       <TableCell align="center" className="table-cell">
                         <span>{moment(new Date(certificate?.issueDate)).format("DD/MM/YYYY")}</span>
                       </TableCell>
-                      <TableCell align="center" className="table-cell">
+                      <TableCell align="left" className="table-cell">
                         <span>{certificate?.field}</span>
                       </TableCell>
-                      <TableCell align="center" className="table-cell">
+                      <TableCell align="left" className="table-cell">
                         <span>{certificate?.content}</span>
                       </TableCell>
                     </TableRow>

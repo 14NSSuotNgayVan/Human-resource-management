@@ -85,6 +85,7 @@ const PendingApprovalDialog = (props) => {
     >
       <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
         <span className="headerStyle">{t("staff.action.staffDocument")}</span>
+        <span className="headerStyle-code">{staff?.submitProfileStatus==="0"&& `Mã nộp lưu: ${staff?.numberSaved}`}</span>
         <IconButton className="buttonClose" onClick={handleCloseDialog}>
           <Icon color="error" title={t("close")}>
             close
