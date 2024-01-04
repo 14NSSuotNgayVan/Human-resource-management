@@ -78,7 +78,7 @@ function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
           QUYẾT ĐỊNH
         </Typography>
         <Typography>
-          <b>Điều 1:</b> Bổ nhiệm chức danh <b>{STAFF_POSITION.find((item)=>item?.id === processData?.newPosition)?.name}</b> đối với:
+          <b>Điều 1:</b> Bổ nhiệm chức danh <b>{STAFF_POSITION?.find((item)=>item?.id === processData?.newPosition)?.name}</b> đối với:
         </Typography>
         <Typography>
           - Ông/Bà: <b>{staff?.name}</b>. Giới tính: {staff?.gender === 0 ? 'Nữ' : 'Nam'}
@@ -109,7 +109,7 @@ function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
             <Typography fontWeight="bold" fontStyle="italic">
               Nơi Nhận:
             </Typography>
-            <Typography>Ông/Bà: {<b>{LEADER.find(item=>item?.id===processData?.leaderId).leaderName}</b>} </Typography>
+            <Typography>Ông/Bà: {<b>{LEADER?.find(item=>item?.id===processData?.leaderId)?.leaderName}</b>} </Typography>
             <Typography>Cơ quan, tổ chức, cá nhân liên quan</Typography>
             <Typography>Lưu HS,VP</Typography>
           </Box>

@@ -17,7 +17,7 @@ const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify,isPendingEndProfile } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS.VIEW.includes(item.salaryIncreaseStatus) && (
+      {STAFF_STATUS?.VIEW.includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => {
@@ -27,21 +27,21 @@ const Action = (props) => {
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS?.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
           </Icon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS.REMOVE.includes(item.salaryIncreaseStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS?.REMOVE.includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleShowDeleteConfirm(item.id)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS.ADDITIONAL.includes(item.salaryIncreaseStatus) && (
+      {STAFF_STATUS?.ADDITIONAL.includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.additionalRequest, tittle: "Yêu cầu bổ sung" })}
@@ -51,7 +51,7 @@ const Action = (props) => {
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS.REJECT.includes(item.salaryIncreaseStatus) && (
+      {STAFF_STATUS?.REJECT.includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.reasonForRefusal, tittle: "Lí do từ chối" })}

@@ -37,7 +37,7 @@ function PendingApproval(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS.PENDING;
+    searchObject.listStatus = STAFF_STATUS?.PENDING;
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -66,7 +66,7 @@ function PendingApproval(props) {
     const { item, handleShowDialog } = props;
     return (
       <div className="none_wrap">
-        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus) && (
+        {STAFF_STATUS?.VIEW.includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleShowDialog(item)}>
             <VisibilityIcon fontSize="small"></VisibilityIcon>
           </IconButton>

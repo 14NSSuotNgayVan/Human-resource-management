@@ -208,7 +208,7 @@ function PendingPromotion({ t }) {
       align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.currentPosition).name}</span>,
+      render: (props) => <span>{STAFF_POSITION?.find(item=>item?.id === props?.currentPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.newPosition"),
@@ -216,7 +216,7 @@ function PendingPromotion({ t }) {
       align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find(item=>item?.id === props?.newPosition).name}</span>,
+      render: (props) => <span>{STAFF_POSITION?.find(item=>item?.id === props?.newPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.note"),

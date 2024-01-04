@@ -46,7 +46,7 @@ function ManageStaff(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS.MANAGE;
+    searchObject.listStatus = STAFF_STATUS?.MANAGE;
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -108,30 +108,30 @@ function ManageStaff(props) {
     const item = props.item;
     return (
       <div className="none_wrap">
-        {STAFF_STATUS.VIEW.includes(item.submitProfileStatus)&&
+        {STAFF_STATUS?.VIEW.includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={() => {handleShowDocumentDialog(item,false)}}>
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>}
-        {STAFF_STATUS.EDIT.includes(item.submitProfileStatus) && (
+        {STAFF_STATUS?.EDIT.includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={()=>handleAddItem(item)}>
             <Icon fontSize="small" color="primary">
               edit
             </Icon>
           </IconButton>
         )}
-        {STAFF_STATUS.REMOVE.includes(item.submitProfileStatus)&&
+        {STAFF_STATUS?.REMOVE.includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleDelete(item)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
         </IconButton>}
-        {STAFF_STATUS.ADDITIONAL.includes(item.submitProfileStatus)&&
+        {STAFF_STATUS?.ADDITIONAL.includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleShowNotify(item,true)}>
         <Icon fontSize="small" color="secondary">
         notifications
         </Icon>
       </IconButton>}
-        {STAFF_STATUS.REJECT.includes(item.submitProfileStatus)&&
+        {STAFF_STATUS?.REJECT.includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleShowNotify(item,false)}>
         <Icon fontSize="small" color="secondary">
         notifications

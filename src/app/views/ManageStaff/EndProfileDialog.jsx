@@ -23,8 +23,8 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
                 setFormData({
                     ...formData,
                     leaderId: value,
-                    leaderName:LEADER.find(item=>item.id===value)?.leaderName,
-                    leaderPosition: LEADER.find(item=>item.id===value)?.leaderPosition
+                    leaderName:LEADER?.find(item=>item.id===value)?.leaderName,
+                    leaderPosition: LEADER?.find(item=>item.id===value)?.leaderPosition
                   });
                   break;
             }

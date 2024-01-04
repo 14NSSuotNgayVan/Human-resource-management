@@ -180,21 +180,21 @@ const ManageStaffDialog = (props) => {
               className=""
             >
               <Tab
-                label={t(`manageStaff.${MANAGE_STAFF_TABS.SALARY_INCREMENT.name}`)}
-                value={MANAGE_STAFF_TABS.SALARY_INCREMENT.value}
+                label={t(`manageStaff.${MANAGE_STAFF_TABS?.SALARY_INCREMENT?.name}`)}
+                value={MANAGE_STAFF_TABS?.SALARY_INCREMENT?.value}
               />
               <Tab
-                label={t(`manageStaff.${MANAGE_STAFF_TABS.PROMOTION.name}`)}
-                value={MANAGE_STAFF_TABS.PROMOTION.value}
+                label={t(`manageStaff.${MANAGE_STAFF_TABS?.PROMOTION?.name}`)}
+                value={MANAGE_STAFF_TABS?.PROMOTION?.value}
               />
             </Tabs>
           </Grid>
           <Grid item xs={12} lg={12} md={12} sm={12}>
             <div className="p-12">
-              {tab === MANAGE_STAFF_TABS.SALARY_INCREMENT.value && (
+              {tab === MANAGE_STAFF_TABS?.SALARY_INCREMENT?.value && (
                 <SalaryIncrement item={staff} t={t} isPendingEndProfile={isPendingEndProfile} />
               )}
-              {tab === MANAGE_STAFF_TABS.PROMOTION.value && (
+              {tab === MANAGE_STAFF_TABS?.PROMOTION?.value && (
                 <Promotion item={staff} t={t} isPendingEndProfile={isPendingEndProfile} />
               )}
             </div>

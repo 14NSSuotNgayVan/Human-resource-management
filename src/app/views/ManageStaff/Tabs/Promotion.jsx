@@ -16,7 +16,7 @@ const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify ,isPendingEndProfile } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS.VIEW.includes(item.processStatus) && (
+      {STAFF_STATUS?.VIEW.includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => {
@@ -26,21 +26,21 @@ const Action = (props) => {
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS.EDIT_PROCESS.includes(item.processStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS?.EDIT_PROCESS.includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
           </Icon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS.REMOVE.includes(item.processStatus) && (
+      {!isPendingEndProfile && STAFF_STATUS?.REMOVE.includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleShowDeleteConfirm(item.id)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS.ADDITIONAL.includes(item.processStatus) && (
+      {STAFF_STATUS?.ADDITIONAL.includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.additionalRequest, tittle: "Yêu cầu bổ sung" })}
@@ -50,7 +50,7 @@ const Action = (props) => {
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS.REJECT.includes(item.processStatus) && (
+      {STAFF_STATUS?.REJECT.includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.reasonForRefusal, tittle: "Lí do từ chối" })}
@@ -201,7 +201,7 @@ const Promotion = (props) => {
       align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find((item) => item?.id === props?.currentPosition).name}</span>,
+      render: (props) => <span>{STAFF_POSITION?.find((item) => item?.id === props?.currentPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.newPosition"),
@@ -209,7 +209,7 @@ const Promotion = (props) => {
       align: "center",
       minWidth: "150px",
       maxWidth: "250px",
-      render: (props) => <span>{STAFF_POSITION.find((item) => item?.id === props?.newPosition).name}</span>,
+      render: (props) => <span>{STAFF_POSITION?.find((item) => item?.id === props?.newPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.note"),

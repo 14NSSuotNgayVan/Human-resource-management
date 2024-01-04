@@ -19,7 +19,7 @@ toast.configure({
 });
 
 function LeadershipApproval({ t }) {
-  const [tab, setTab] = useState(LEADERSHIP_APPROVAL_TABS.PENDING.value);
+  const [tab, setTab] = useState(LEADERSHIP_APPROVAL_TABS?.PENDING?.value);
 
   return (
     <div className="m-sm-24">
@@ -40,27 +40,27 @@ function LeadershipApproval({ t }) {
         }}
       >
         <Tab
-          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS.PENDING.name}`)}
-          value={LEADERSHIP_APPROVAL_TABS.PENDING.value}
+          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS?.PENDING?.name}`)}
+          value={LEADERSHIP_APPROVAL_TABS?.PENDING?.value}
         />
         <Tab
-          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS.SALARY_INCREMENT.name}`)}
-          value={LEADERSHIP_APPROVAL_TABS.SALARY_INCREMENT.value}
+          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS?.SALARY_INCREMENT?.name}`)}
+          value={LEADERSHIP_APPROVAL_TABS?.SALARY_INCREMENT?.value}
         />
         <Tab
-          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS.PROMOTION.name}`)}
-          value={LEADERSHIP_APPROVAL_TABS.PROMOTION.value}
+          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS?.PROMOTION?.name}`)}
+          value={LEADERSHIP_APPROVAL_TABS?.PROMOTION?.value}
         />
         <Tab
-          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS.FINISH.name}`)}
-          value={LEADERSHIP_APPROVAL_TABS.FINISH.value}
+          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS?.FINISH?.name}`)}
+          value={LEADERSHIP_APPROVAL_TABS?.FINISH?.value}
         />
       </Tabs>
       <div className="p-16">
-      {tab === LEADERSHIP_APPROVAL_TABS.PENDING.value && <PendingApproval t={t} />}
-      {tab === LEADERSHIP_APPROVAL_TABS.SALARY_INCREMENT.value && <PendingSalaryIncrement t={t} />}
-      {tab === LEADERSHIP_APPROVAL_TABS.PROMOTION.value && <PendingPromotion t={t} />}
-      {tab === LEADERSHIP_APPROVAL_TABS.FINISH.value && <PendingEndProfile t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS?.PENDING?.value && <PendingApproval t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS?.SALARY_INCREMENT?.value && <PendingSalaryIncrement t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS?.PROMOTION?.value && <PendingPromotion t={t} />}
+      {tab === LEADERSHIP_APPROVAL_TABS?.FINISH?.value && <PendingEndProfile t={t} />}
       </div>
     </div>
   );
