@@ -165,11 +165,6 @@ function PendingEndProfile(props) {
       minWidth: "80px",
       render: (rowData) => (
         <>
-          <IconButton size="small" onClick={() => handleShowEditorDialog(rowData)}>
-            <Icon fontSize="small" color="primary">
-              edit
-            </Icon>
-          </IconButton>
           <IconButton
             size="small"
             onClick={() => {
@@ -177,6 +172,11 @@ function PendingEndProfile(props) {
             }}
           >
             <VisibilityIcon fontSize="small"></VisibilityIcon>
+          </IconButton>
+          <IconButton size="small" onClick={() => handleShowEditorDialog(rowData)}>
+            <Icon fontSize="small" color="primary">
+              edit
+            </Icon>
           </IconButton>
         </>
       ),
