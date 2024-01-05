@@ -52,7 +52,7 @@ const EndProfileDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmitFormData} className="p-8">
-          <DialogContent dividers spacing={2} className="overflow-none">
+          <DialogContent dividers spacing={2} className="overflow-none mh-70">
             <Grid container spacing={2}>
               <Grid item lg={6} md={6} sm={12} xs={12}>
                 <FormControl fullWidth={true}  className="" size="small">

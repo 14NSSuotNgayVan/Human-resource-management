@@ -148,7 +148,7 @@ const CustomCV = (props) => {
                       rows={skillLine}
                       fullWidth
                       
-                      className="mt-16 profile-input-text"
+                      className="mt-16 "
                       name="skill"
                       value={formData?.skill || ""}
                       onChange={handleChange}
@@ -239,7 +239,7 @@ const CustomCV = (props) => {
                           rows={activityLine}
                           fullWidth
                           
-                          className="mt-16 profile-input-text"
+                          className="mt-16 "
                           name="activity"
                           value={formData?.activity || ""}
                           onChange={handleChange}

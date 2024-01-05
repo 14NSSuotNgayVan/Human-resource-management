@@ -53,7 +53,7 @@ const SendLeaderDialog = ({handleCloseDialog,t,item,handleCloseParentDialog}) =>
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit={handleSubmit} className="p-8">
-          <DialogContent dividers spacing={2} className="overflow-none">
+          <DialogContent dividers spacing={2} className="overflow-none mh-70">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <TextValidator

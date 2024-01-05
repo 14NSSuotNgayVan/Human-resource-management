@@ -41,7 +41,7 @@ const RejectionDialog = (props) => {
         </IconButton>
       </DialogTitle>
       <ValidatorForm onSubmit={handleSubmit} className="p-8">
-        <DialogContent dividers spacing={2}>
+        <DialogContent dividers spacing={2} className="mh-70">
               <TextValidator
                 className="w-100 mb-16"
                 label={

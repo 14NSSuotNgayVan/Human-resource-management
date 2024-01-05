@@ -64,7 +64,7 @@ const ExperienceDialog = ({ t, handleCloseDialog, staffId,}) => {
           </IconButton>
         </DialogTitle>
         <ValidatorForm onSubmit ={handleSubmit} className="p-8" ref={exForm}>
-          <DialogContent dividers spacing={2} className="overflow-none">
+          <DialogContent dividers spacing={2} className="overflow-none mh-70">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <TextValidator

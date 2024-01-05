@@ -11,11 +11,13 @@ import moment from 'moment';
 import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
 import { LEADER } from 'app/constants/staffConstant';
-import { getSalariesItem } from 'app/redux/selectors/SalarySelector';
+import { getSalaries, getSalariesItem } from 'app/redux/selectors/SalarySelector';
 
 function SalaryIncreaseDialog({ t, handleCloseDialog,Action }) {
   const staff = useSelector(staffSelector);
-const dataSalaryIncrease = useSelector(getSalariesItem);
+  const dataSalaryIncrease = useSelector(getSalariesItem);
+  const salaryList = useSelector(getSalaries);
+
   return (
     <Dialog open={true}  fullWidth maxWidth="md">
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
@@ -26,7 +28,7 @@ const dataSalaryIncrease = useSelector(getSalariesItem);
               close
             </Icon>
           </IconButton>
-      <DialogContent dividers className="wrapper-a4">
+      <DialogContent dividers className="wrapper-a4 mh-70">
       <Box className="A4">
       <Box className="A4-content">
         <Grid container spacing={2}>
@@ -123,7 +125,7 @@ const dataSalaryIncrease = useSelector(getSalariesItem);
     </Box>
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {Action? <Action isPending ={dataSalaryIncrease?.salaryIncreaseStatus === 2}/> :""}
+        {Action? <Action isPending ={salaryList.some((item) => item.salaryIncreaseStatus === 2)}/> :""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>

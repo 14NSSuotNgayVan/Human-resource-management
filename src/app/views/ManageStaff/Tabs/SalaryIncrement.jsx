@@ -142,6 +142,7 @@ const SalaryIncrement = (props) => {
     }
     setShouldOpenSalaryForm(true);
   };
+  useEffect(()=>{console.log(salary); return() =>{console.log("unmount"); }},[salary])
   const handleClose = () => {
     setSalary({
       ...salary,

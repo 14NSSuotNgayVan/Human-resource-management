@@ -54,7 +54,7 @@ const SaveProfileDialog = (props) => {
         </IconButton>
       </DialogTitle>
       <ValidatorForm onSubmit={handleSubmit} className="p-8">
-        <DialogContent dividers spacing={2}>
+        <DialogContent dividers spacing={2} className="mh-70">
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <TextValidator

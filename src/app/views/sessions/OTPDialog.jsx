@@ -109,10 +109,7 @@ class OTPDialog extends Component {
         </DialogTitle>
 
         <ValidatorForm ref="form" onSubmit={this.handleFormSubmit}>
-          <DialogContent>
-           
-
-              
+          <DialogContent>     
           <Grid item sm={12} xs={12}>
                 <TextValidator
                   className="w-100 "

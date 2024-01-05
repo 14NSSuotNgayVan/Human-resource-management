@@ -16,7 +16,7 @@ const NotifyDialog = ({ t, handleCloseDialog, item }) => {
             </Icon>
           </IconButton>
         </DialogTitle>
-          <DialogContent dividers spacing={2}>
+          <DialogContent dividers spacing={2} className="mh-70">
             <p>{item?.message}</p>
           </DialogContent>
           <DialogActions spacing={4} className="flex flex-center flex-middle">
