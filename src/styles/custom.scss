@@ -20,14 +20,14 @@
 .custom-table-cell, .table-cell span{
   display: block!important;
   display: -webkit-box!important;
-  max-height: 1.3rem*1.3*4;
+  max-height: 1.3rem*1.3*3;
   line-height: 1.3;
-  -webkit-line-clamp: 4;  /* số dòng hiển thị */
+  -webkit-line-clamp: 3;  /* số dòng hiển thị */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top:10px;
   max-width: 250px;
+  margin: 0;
 }
 .text-overflow-none{
   overflow: unset!important;

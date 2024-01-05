@@ -3,7 +3,7 @@ import axios from 'axios';
 import ConstantList from "../../appConfig";
 import { toast } from 'react-toastify';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { DELETE_PROCESS, GET_PROCESS, GET_PROCESS_BY_LEADER, GET_PROCESS_FAIL, GET_PROCESS_SUCCESS, POST_PROCESS, SET_SHOULD_UPDATE_PROCESS, UPDATE_PROCESS } from '../actionTypeConstant/ProcessActionTypeConstant';
+import { DELETE_PROCESS, GET_PROCESS, GET_PROCESS_BY_LEADER, GET_PROCESS_FAIL, GET_PROCESS_SUCCESS, POST_PROCESS, SET_PROCESS, SET_SHOULD_UPDATE_PROCESS, UPDATE_PROCESS } from '../actionTypeConstant/ProcessActionTypeConstant';
 
 toast.configure({
     autoClose: 2000,
@@ -50,6 +50,10 @@ function* createProcess(action) {
             yield put({
                 type: SET_SHOULD_UPDATE_PROCESS,
             })
+            yield put({
+                type: SET_PROCESS,
+                payload:data.data[0]
+            })
         } else toast.error(data.message);
     } catch (err) { toast.error(err); }
 }
@@ -60,6 +64,10 @@ function* updateProcess(action){
             toast.success("Cập nhật thành công");
             yield put({
                 type: SET_SHOULD_UPDATE_PROCESS,
+            })
+            yield put({
+                type: SET_PROCESS,
+                payload:data.data
             })
         } else toast.error(data.message);
     }catch(err){toast.error(err);}

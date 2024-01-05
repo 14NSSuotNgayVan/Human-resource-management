@@ -1,16 +1,16 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { ADD_STAFF_TABS, GENDER, MANAGE_STAFF_TABS } from "app/constants/staffConstant";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
 import SalaryIncrement from "./Tabs/SalaryIncrement";
 import Promotion from "./Tabs/Promotion";
-import EndProfileDialog from "./EndProfileDialog";
 import { getAllSalaries } from "app/redux/actions/SalaryAction";
 import { getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
 import { getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
 import { getAllProcess } from "app/redux/actions/ProcessAction";
 import moment from "moment";
+import EndProfileFormDialog from "app/component/Form/EndProfileFormDialog";
 const {
   Dialog,
   Paper,
@@ -34,20 +34,27 @@ toast.configure({
   limit: 3,
 });
 const ManageStaffDialog = (props) => {
-  const { handleClose, t, handleShowDocumentDialog, isPendingEndProfile } = props;
+  const {
+    handleClose,
+    t,
+    handleShowDocumentDialog,
+    isPendingEndProfile,
+    setShouldOpenPromotionForm,
+    setShouldOpenSalaryForm,
+  } = props;
   const staff = useSelector(staffSelector);
   const shouldUpdateSalary = useSelector(getShouldUpdateSalary);
   const shouldUpdateProcess = useSelector(getShouldUpdateProcess);
   const [tab, setTab] = useState(ADD_STAFF_TABS.INFORMATION.value);
   const [showEndProfileDialog, setShowEndProfileDialog] = useState(false);
   const dispatch = useDispatch();
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     setShowEndProfileDialog(true);
-  };
+  }, []);
 
-  const handleCloseEndProfileDialog = () => {
+  const handleCloseEndProfileDialog = useCallback(() => {
     setShowEndProfileDialog(false);
-  };
+  }, []);
   useEffect(() => {
     if (staff?.id) {
       if (shouldUpdateSalary) dispatch(getAllSalaries(staff?.id));
@@ -62,6 +69,7 @@ const ManageStaffDialog = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <Dialog
       open={true}
@@ -192,20 +200,28 @@ const ManageStaffDialog = (props) => {
           <Grid item xs={12} lg={12} md={12} sm={12}>
             <div className="p-12">
               {tab === MANAGE_STAFF_TABS?.SALARY_INCREMENT?.value && (
-                <SalaryIncrement item={staff} t={t} isPendingEndProfile={isPendingEndProfile} />
+                <SalaryIncrement
+                  t={t}
+                  isPendingEndProfile={isPendingEndProfile}
+                  setShouldOpenSalaryForm={setShouldOpenSalaryForm}
+                />
               )}
               {tab === MANAGE_STAFF_TABS?.PROMOTION?.value && (
-                <Promotion item={staff} t={t} isPendingEndProfile={isPendingEndProfile} />
+                <Promotion
+                  setShouldOpenPromotionForm={setShouldOpenPromotionForm}
+                  t={t}
+                  isPendingEndProfile={isPendingEndProfile}
+                />
               )}
             </div>
           </Grid>
         </Grid>
         {showEndProfileDialog && (
-          <EndProfileDialog
+          <EndProfileFormDialog
             t={t}
             handleCloseParentDialog={handleClose}
-            item={staff}
             handleCloseDialog={handleCloseEndProfileDialog}
+            isRegister={true}
           />
         )}
       </DialogContent>

@@ -11,10 +11,11 @@ import moment from 'moment';
 import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
 import { LEADER } from 'app/constants/staffConstant';
+import { getSalariesItem } from 'app/redux/selectors/SalarySelector';
 
-function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action }) {
+function SalaryIncreaseDialog({ t, handleCloseDialog,Action }) {
   const staff = useSelector(staffSelector);
-
+const dataSalaryIncrease = useSelector(getSalariesItem);
   return (
     <Dialog open={true}  fullWidth maxWidth="md">
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
@@ -122,7 +123,7 @@ function SalaryIncreaseDialog({ t, handleCloseDialog, dataSalaryIncrease,Action 
     </Box>
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {Action? <Action/> :""}
+        {Action? <Action isPending ={dataSalaryIncrease?.salaryIncreaseStatus === 2}/> :""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>

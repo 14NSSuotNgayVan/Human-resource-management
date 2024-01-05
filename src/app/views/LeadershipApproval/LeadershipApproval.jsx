@@ -51,16 +51,11 @@ function LeadershipApproval({ t }) {
           label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS?.PROMOTION?.name}`)}
           value={LEADERSHIP_APPROVAL_TABS?.PROMOTION?.value}
         />
-        <Tab
-          label={t(`leaderShipApproval.${LEADERSHIP_APPROVAL_TABS?.FINISH?.name}`)}
-          value={LEADERSHIP_APPROVAL_TABS?.FINISH?.value}
-        />
       </Tabs>
       <div className="p-16">
       {tab === LEADERSHIP_APPROVAL_TABS?.PENDING?.value && <PendingApproval t={t} />}
       {tab === LEADERSHIP_APPROVAL_TABS?.SALARY_INCREMENT?.value && <PendingSalaryIncrement t={t} />}
       {tab === LEADERSHIP_APPROVAL_TABS?.PROMOTION?.value && <PendingPromotion t={t} />}
-      {tab === LEADERSHIP_APPROVAL_TABS?.FINISH?.value && <PendingEndProfile t={t} />}
       </div>
     </div>
   );

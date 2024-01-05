@@ -1,4 +1,4 @@
-import { GET_PROCESS, GET_PROCESS_FAIL, GET_PROCESS_SUCCESS, SET_SHOULD_UPDATE_PROCESS } from "../actionTypeConstant/ProcessActionTypeConstant";
+import { GET_PROCESS_FAIL, GET_PROCESS_SUCCESS, SET_PROCESS, SET_SHOULD_UPDATE_PROCESS } from "../actionTypeConstant/ProcessActionTypeConstant";
 
 const initState = {
     processItem:{},
@@ -9,10 +9,12 @@ const initState = {
 
 const ProcessReducer=(state =initState, action)=>{
     switch(action?.type){
-        case GET_PROCESS :{
+
+        case SET_PROCESS :{
             return {
                 ...state,
                 processItem:action?.payload,
+                shouldUpdate: false,
             }
         }
         case GET_PROCESS_SUCCESS :{

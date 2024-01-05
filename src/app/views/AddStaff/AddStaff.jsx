@@ -57,7 +57,6 @@ function Staff(props) {
   useEffect(() => {
     if (shouldUpdate) {
       updatePageData();
-      handleCloseDocumentDialog();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldUpdate]);
@@ -144,12 +143,14 @@ function Staff(props) {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => <Action item={rowData} />,
     },
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
     },
@@ -157,20 +158,23 @@ function Staff(props) {
       title: t("staff.code"),
       field: "code",
       align: "center",
-      minWidth: "150px",
+      maxWidth: "120px",
+      minWidth: "120px",
     },
-    { title: t("staff.name"), field: "name", align: "left", minWidth: "170px" },
+    { title: t("staff.name"), field: "name", align: "left", minWidth: "200px" },
     {
       title: t("staff.dateOfBirth"),
       field: "dateOfBirth",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.dateOfBirth)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.gender_display"),
       field: "gender",
       align: "center",
+      maxWidth: "80px",
       minWidth: "80px",
       render: (props) => <span>{t(`staff.gender.${GENDER[props.gender]?.name}`)}</span>,
     },
@@ -178,28 +182,30 @@ function Staff(props) {
       title: t("staff.team"),
       field: "team",
       align: "left",
-      minWidth: "100px",
-      render: (props) => <span>{TEAM[props.team]?.name}</span>,
-    },
-
-    {
-      title: t("staff.address"),
-      field: "address",
-      align: "left",
-      minWidth: "150px",
       maxWidth: "150px",
-      render: (props) => <p className ="custom-table-cell">{props?.address}</p>,
+      minWidth: "150px",
+      render: (props) => <span>{TEAM[props.team]?.name}</span>,
     },
     {
       title: t("staff.phone"),
       field: "phone",
       align: "center",
-      minWidth: "150px",
+      maxWidth: "100px",
+      minWidth: "100px",
+    },
+    {
+      title: t("staff.address"),
+      field: "address",
+      align: "left",
+      maxWidth: "250px",
+      minWidth: "250px",
+      render: (props) => <p className ="custom-table-cell">{props?.address}</p>,
     },
     {
       title: t("staff.submit_profile_status_display"),
       field: "submitProfileStatus",
       align: "left",
+      maxWidth: "150px",
       minWidth: "150px",
       render: (props) => (
         <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.submitProfileStatus]}`)}</span>
@@ -249,12 +255,12 @@ function Staff(props) {
             {shouldOpenConfirmationDialog && (
               <ConfirmationDialog
                 title={t("general.confirm")}
-                open={shouldOpenConfirmationDialog}
+                t={t}
                 onConfirmDialogClose={handleDialogClose}
                 onYesClick={handleConfirmationResponse}
                 text={t("general.deleteConfirm")}
                 Yes={t("general.Yes")}
-                No={t("general.No")}
+                No={t("general.cancel")}
               />
             )}
           </div>

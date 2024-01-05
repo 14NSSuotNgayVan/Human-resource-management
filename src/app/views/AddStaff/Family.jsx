@@ -88,7 +88,8 @@ const Family = (props) => {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => (
         <Action item={rowData} handleUpdate={handleUpdate} handleShowDeleteConfirm={handleShowDeleteConfirm} />
       ),
@@ -96,6 +97,7 @@ const Family = (props) => {
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
@@ -103,45 +105,49 @@ const Family = (props) => {
       title: t("staff.family.name"),
       field: "name",
       align: "left",
-      minWidth: "170px",
+      minWidth: "200px",
       render: (props) => <p className="custom-table-cell">{props?.name}</p>,
     },
     {
       title: t("staff.family.dateOfBirth"),
       field: "dateOfBirth",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.dateOfBirth)).format("DD/MM/YYYY")}</span>,
-    },
-    {
-      title: t("staff.family.relationShip"),
-      field: "relationShip",
-      align: "left",
-      minWidth: "150px",
-      render: (props) => <span>{RELATIONSHIP?.find((item) => item.id === props.relationShip)?.name}</span>,
     },
     {
       title: t("staff.gender_display"),
       field: "gender",
       align: "center",
-      minWidth: "80px",
+      minWidth: "70px",
+      maxWidth: "70px",
       render: (props) => <span>{t(`staff.gender.${GENDER[props.gender]?.name}`)}</span>,
     },
-
     {
-      title: t("staff.family.address"),
-      field: "address",
+      title: t("staff.family.relationShip"),
+      field: "relationShip",
       align: "left",
-      minWidth: "150px",
-      maxWidth: "150px",
-      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
+      minWidth: "120px",
+      maxWidth: "120px",
+      render: (props) => <span>{RELATIONSHIP?.find((item) => item.id === props.relationShip)?.name}</span>,
     },
+    
     {
       title: t("staff.family.phoneNumber"),
       field: "phoneNumber",
       align: "center",
-      minWidth: "150px",
+      maxWidth: "100px",
+      minWidth: "100px",
     },
+    {
+      title: t("staff.family.address"),
+      field: "address",
+      align: "left",
+      minWidth: "250px",
+      maxWidth: "250px",
+      render: (props) => <p className="custom-table-cell">{props?.address}</p>,
+    }
   ];
   return (
     <Grid container>
@@ -373,12 +379,12 @@ const Family = (props) => {
       {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}
-          open={showConfirmationDialog}
+          t={t}
           onConfirmDialogClose={handleClose}
           onYesClick={handleConfirmDelete}
           text={t("general.deleteConfirm")}
           Yes={t("general.Yes")}
-          No={t("general.No")}
+          No={t("general.cancel")}
         />
       )}
       <Grid item xs={12} sm={12} md={12} lg={12}>

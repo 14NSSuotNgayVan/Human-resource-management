@@ -11,10 +11,11 @@ import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
 import { LEADER, STAFF_POSITION } from 'app/constants/staffConstant';
 import moment from 'moment';
+import { getProcessItem } from 'app/redux/selectors/ProcessSelector';
 
-function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
+function PromotionDialog({ t, handleCloseDialog,Action }) {
   const staff = useSelector(staffSelector);
-
+  const processData = useSelector(getProcessItem);
   return (
     <Dialog open={true}  fullWidth maxWidth="md">
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
@@ -132,11 +133,9 @@ function PromotionDialog({ t, handleCloseDialog, processData,Action }) {
         </Box>
       </Box>
     </Box>
-
-
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {Action? <Action/> :""}
+        {Action? <Action isPending ={processData?.processStatus === "2"}/> :""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>

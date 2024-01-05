@@ -45,7 +45,6 @@ const AddStaffDialog = (props) => {
     }else{
       handleClose();
     }
-    
   };
   useEffect(()=>{
     if(staff?.id){
@@ -107,14 +106,17 @@ const AddStaffDialog = (props) => {
 
       <DialogContent dividers spacing={2}>
         {tab === ADD_STAFF_TABS?.INFORMATION?.value && (
-          <StaffInformation item={staff} t={t} formRef={informationFormRef} handleCloseDialog ={handleClose}/>
+          <StaffInformation t={t} formRef={informationFormRef} handleCloseDialog ={handleClose}/>
         )}
         {tab === ADD_STAFF_TABS?.CERTIFICATES?.value && <Certificates staffId={staff?.id} t={t} />}
         {tab === ADD_STAFF_TABS?.RELATIONSHIP?.value && <Family staffId={staff?.id} t={t} />}
       </DialogContent>
       <DialogActions spacing={4} className="flex flex-center flex-middle">
         {informationSaved && (
-          <Button variant="contained" color="primary" onClick={() => {handleShowDocumentDialog(staff,true)}}>
+          <Button variant="contained" color="primary" onClick={() => {
+            informationFormRef.current.submit();
+            handleShowDocumentDialog(staff,true);
+            }}>
             {t("general.register")}
           </Button>
         )}

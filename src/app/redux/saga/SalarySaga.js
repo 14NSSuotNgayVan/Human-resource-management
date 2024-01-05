@@ -3,7 +3,7 @@ import axios from 'axios';
 import ConstantList from "../../appConfig";
 import { toast } from 'react-toastify';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { DELETE_SALARY, GET_SALARY, GET_SALARY_BY_LEADER, GET_SALARY_FAIL, GET_SALARY_SUCCESS, POST_SALARY, SET_SHOULD_UPDATE_SALARY, UPDATE_SALARY } from '../actionTypeConstant/SalaryActionTypeConstant';
+import { DELETE_SALARY, GET_SALARY, GET_SALARY_BY_LEADER, GET_SALARY_FAIL, GET_SALARY_SUCCESS, POST_SALARY, SET_SALARY, SET_SHOULD_UPDATE_SALARY, UPDATE_SALARY } from '../actionTypeConstant/SalaryActionTypeConstant';
 
 toast.configure({
     autoClose: 2000,
@@ -50,6 +50,10 @@ function* createSalaries(action) {
             yield put({
                 type: SET_SHOULD_UPDATE_SALARY,
             })
+            yield put({
+                type: SET_SALARY,
+                payload: data.data[0]
+            })
         } else toast.error(data.message);
     } catch (err) { toast.error(err); }
 }
@@ -60,6 +64,10 @@ function* updateSalary(action){
             toast.success("Cập nhật thành công");
             yield put({
                 type: SET_SHOULD_UPDATE_SALARY,
+            })
+            yield put({
+                type: SET_SALARY,
+                payload: data.data
             })
         } else toast.error(data.message);
     }catch(err){toast.error(err);}

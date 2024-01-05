@@ -171,7 +171,8 @@ function PendingSalaryIncrement({ t }) {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => (
         <>
           <IconButton
@@ -193,6 +194,7 @@ function PendingSalaryIncrement({ t }) {
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
@@ -200,30 +202,32 @@ function PendingSalaryIncrement({ t }) {
       title: t("staff.salary_increment.startDate"),
       field: "startDate",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.startDate)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.salary_increment.oldSalary"),
       field: "oldSalary",
       align: "right",
-      minWidth: "150px",
-      maxWidth: "250px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => `${props?.oldSalary.toLocaleString("en-US")} VND`,
     },
     {
       title: t("staff.salary_increment.newSalary"),
       field: "newSalary",
       align: "right",
-      minWidth: "150px",
-      maxWidth: "250px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => `${props?.newSalary.toLocaleString("en-US")} VND`,
     },
     {
       title: t("staff.salary_increment.reason"),
       field: "reason",
       align: "left",
-      minWidth: "170px",
+      maxWidth: "250px",
+      minWidth: "250px",
       render: (props) => <p className="custom-table-cell">{props?.reason}</p>,
     },
   ];

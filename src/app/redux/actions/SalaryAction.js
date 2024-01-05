@@ -33,7 +33,7 @@ export const deleteSalary =(SalaryId)=>{
         payload:SalaryId
     }
 }
-export const setSalary =(Salary)=>{
+export const setSalaryItem =(Salary)=>{
     return {
         type:SET_SALARY,
         payload:{...Salary}

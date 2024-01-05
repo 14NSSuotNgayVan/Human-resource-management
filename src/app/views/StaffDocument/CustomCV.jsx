@@ -323,8 +323,8 @@ const CustomCV = (props) => {
                     <h4 className="experience-tittle">
                       <div>
                         <span className="experience-process">
-                          {moment(experience?.startDate).format("DD/MM/YYYY")} -{" "}
-                          {moment(experience?.endDate).format("DD/MM/YYYY")}
+                          {moment(experience?.startDate).format("MM/YYYY")} -{" "}
+                          {moment(experience?.endDate).format("MM/YYYY")}
                         </span>
                         <span className="experience-dot">&#x2022;</span>
                         <span className="experience-company">{experience?.companyName}</span>
@@ -372,7 +372,7 @@ const CustomCV = (props) => {
                   <span className="certificates-detail">
                     <span className="detail-dot">&#x2022;</span>
                     <span className="detail-content">
-                      {moment(formData?.issueDate)?.year()}:{formData?.content}.
+                      {moment(formData?.issueDate)?.year()}: {formData?.content}.
                     </span>
                   </span>
                 ))}
@@ -383,12 +383,12 @@ const CustomCV = (props) => {
         {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}
-          open={showConfirmationDialog}
+          t={t}
           onConfirmDialogClose={handleCancel}
           onYesClick={handleConfirmDelete}
           text={t("general.deleteConfirm")}
           Yes={t("general.Yes")}
-          No={t("general.No")}
+          No={t("general.cancel")}
         />
       )}
       </div>

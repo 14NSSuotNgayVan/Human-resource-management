@@ -5,18 +5,25 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { LEADER, STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
+import {STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { getProcess } from "app/redux/selectors/ProcessSelector";
-import { createProcess, deleteProcess, updateProcess } from "app/redux/actions/ProcessAction";
+import { getProcess, getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
+import { createProcess, deleteProcess, setProcess, updateProcess } from "app/redux/actions/ProcessAction";
 import NotifyDialog from "app/component/CustomNotifyDialog";
-import PromotionDialog from "app/component/Form/PromotionDialog";
+import { staffSelector } from "app/redux/selectors/StaffSelector";
 
 const Action = (props) => {
-  const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify ,isPendingEndProfile } = props;
+  const {
+    item,
+    handleUpdate,
+    handleShowDeleteConfirm,
+    handleShowDocumentDialog,
+    handleShowNotify,
+    isPendingEndProfile,
+  } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS?.VIEW.includes(item.processStatus) && (
+      {STAFF_STATUS?.VIEW_MANAGE.includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => {
@@ -64,15 +71,17 @@ const Action = (props) => {
   );
 };
 const Promotion = (props) => {
-  const { t, item, isPendingEndProfile } = props;
+  const { t, isPendingEndProfile,setShouldOpenPromotionForm } = props;
+  const item =useSelector(staffSelector);
   const dispatch = useDispatch();
   const promotionList = useSelector(getProcess);
+  const shouldUpdatePromotion = useSelector(getShouldUpdateProcess);
   const [promotionsByPage, setPromotionsByPage] = useState([]);
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
-  const [isPending,setIsPending] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isSendLeader, setIsSendLeader] = useState(false);
+  const [id, setId] = useState("");
   const [showNotify, setShowNotify] = useState({
     shouldShowNotifyDialog: false,
     message: "",
@@ -80,27 +89,25 @@ const Promotion = (props) => {
   });
   const form = useRef(null);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  const [shouldOpenDocumentDialog, setShouldOpenDocumentDialog] = useState(false);
-  const [promotion, setPromotion] = useState({
-    promotionDay: new Date(),
-    newPosition: 1,
-    note: "",
-  });
+  const [promotion, setPromotion] = useState({});
+  useState(() => {
+    setPromotion({
+      promotionDay: new Date(),
+      newPosition: 1,
+      note: "",
+    });
+  }, [shouldUpdatePromotion]);
+
   useEffect(() => {
-    if (promotion?.leaderId) setIsSendLeader(true);
-    else setIsSendLeader(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [promotion?.leaderId]);
-  useEffect(()=>{
-    setIsPending(promotionList.some((item) => item.processStatus === "2"));
-  },[promotionList]);
+    setIsPending(promotionList.some((item) => item?.processStatus === "2"));
+  }, [promotionList]);
   const updatePageData = () => {
     const promotions = [...promotionList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
     const pageData = isPendingEndProfile
       ? promotions
-          .filter(item => item?.processStatus === "3" || item?.processStatus === "4"|| item?.processStatus === "5")
+          .filter((item) => item?.processStatus === "3" || item?.processStatus === "4" || item?.processStatus === "5")
           .slice(startOfPage, endOfPage)
       : promotions.slice(startOfPage, endOfPage);
     setPromotionsByPage(pageData);
@@ -109,48 +116,45 @@ const Promotion = (props) => {
   useEffect(() => {
     updatePageData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagePagination]);
+  }, [pagePagination,promotionList]);
   const handleSubmit = () => {
     if (isEditing) {
-      promotion?.leaderId
-        ? dispatch(updateProcess({ ...promotion, processStatus: "2" }))
-        : dispatch(updateProcess(promotion));
-    } else
-      promotion?.leaderId
-        ? dispatch(createProcess(item?.id, { ...promotion, processStatus: "2" }))
-        : dispatch(createProcess(item?.id, { ...promotion, processStatus: "1" }));
+      dispatch(updateProcess(promotion));
+    }
+    else {
+      dispatch(createProcess(item?.id, { ...promotion, processStatus: "1" }));
+    }
+    setShouldOpenPromotionForm(true);
   };
   const handleClose = () => {
+    setPromotion({
+      promotionDay: new Date(),
+      newPosition: 1,
+      note: "",
+    });
+    dispatch(setProcess({}));
+    setIsEditing(false);
+    !isPendingEndProfile && form.current.resetValidations();
+  };
+  const handleCloseNotify =()=>{
     setShowNotify({
       shouldShowNotifyDialog: false,
       message: "",
       tittle: "",
     });
-    setPromotion({
-      promotionDay: new Date(),
-      newPosition: 1,
-      note: "",
-      leaderId:""
-    });
-    setShowConfirmationDialog(false);
-    setIsSendLeader(false);
-    setIsEditing(false);
-    setShouldOpenDocumentDialog(false);
-    !isPendingEndProfile && form.current.resetValidations();
-  };
+  }
   const onChange = (event, field) => {
     setPromotion({ ...promotion, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
     setShowConfirmationDialog(true);
-    setPromotion({ id: id });
+    setId(id);
   };
   const handleConfirmDelete = () => {
-    dispatch(deleteProcess(promotion?.id));
+    dispatch(deleteProcess(id));
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
-    if (promotion?.leaderId) setIsSendLeader(true);
     setIsEditing(true);
     setPromotion({ ...item });
   };
@@ -162,15 +166,17 @@ const Promotion = (props) => {
     });
   };
   const handleShowDocumentDialog = (PromotionData) => {
-    setPromotion(PromotionData);
-    setShouldOpenDocumentDialog(true);
+    dispatch(setProcess({...PromotionData}));
+    setShouldOpenPromotionForm(true);
   };
+
   let columns = [
     {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => (
         <Action
           item={rowData}
@@ -185,6 +191,7 @@ const Promotion = (props) => {
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
@@ -192,36 +199,39 @@ const Promotion = (props) => {
       title: t("staff.promotion.promotionDay"),
       field: "promotionDay",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.promotionDay)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.promotion.currentPosition"),
       field: "currentPosition",
       align: "center",
-      minWidth: "150px",
-      maxWidth: "250px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{STAFF_POSITION?.find((item) => item?.id === props?.currentPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.newPosition"),
       field: "newPosition",
       align: "center",
-      minWidth: "150px",
-      maxWidth: "250px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{STAFF_POSITION?.find((item) => item?.id === props?.newPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.note"),
       field: "note",
       align: "left",
-      minWidth: "170px",
+      maxWidth: "250px",
+      minWidth: "250px",
       render: (props) => <p className="custom-table-cell">{props?.note}</p>,
     },
     {
       title: t("staff.submit_profile_status_display"),
       field: "submitProfileStatus",
       align: "left",
+      maxWidth: "150px",
       minWidth: "150px",
       render: (props) => <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.processStatus]}`)}</span>,
     },
@@ -232,7 +242,7 @@ const Promotion = (props) => {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <ValidatorForm onSubmit={handleSubmit} ref={form}>
             <Grid container spacing={2} className="p-12">
-              <Grid item lg={3} md={3} sm={6} xs={6}>
+              <Grid item lg={2} md={2} sm={6} xs={6}>
                 <TextValidator
                   className="w-100 mb-16"
                   label={
@@ -257,7 +267,7 @@ const Promotion = (props) => {
                   size="small"
                 />
               </Grid>
-              <Grid item xs={6} sm={6} md={3} lg={3}>
+              <Grid item xs={6} sm={6} md={2} lg={2}>
                 <FormControl fullWidth={true} className="" size="small">
                   <SelectValidator
                     size="small"
@@ -287,7 +297,7 @@ const Promotion = (props) => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={6} sm={6} md={3} lg={3}>
+              <Grid item xs={6} sm={6} md={2} lg={2}>
                 <FormControl fullWidth={true} className="" size="small">
                   <SelectValidator
                     size="small"
@@ -313,7 +323,7 @@ const Promotion = (props) => {
                   </SelectValidator>
                 </FormControl>
               </Grid>
-              <Grid item xs={6} sm={6} md={3} lg={3}>
+              <Grid item xs={6} sm={6} md={4} lg={4}>
                 <TextValidator
                   className={"w-100 mb-16"}
                   label={
@@ -334,41 +344,19 @@ const Promotion = (props) => {
                   size="small"
                 />
               </Grid>
-              <Grid item lg={3} md={3} sm={6} xs={6}>
-                <FormControl fullWidth={true} className="" size="small">
-                  <SelectValidator
-                    size="small"
-                    disabled={isPending}
-                    label={
-                      <span className="inputLabel">
-                        <span style={{ color: "red" }}> * </span>
-                        {t("sendLeader.leaderName")}
-                      </span>
-                    }
-                    value={promotion?.leaderId ?? ""}
-                    inputProps={{
-                      readOnly: promotion?.leaderId && promotion?.processStatus === "4",
-                    }}
-                    onChange={(e) => onChange(e, "leaderId")}
-                    className="w-100 mb-16"
-                  >
-                    {LEADER?.map((item) => {
-                      return (
-                        <MenuItem key={item?.id} value={item?.id}>
-                          {item?.leaderName}
-                        </MenuItem>
-                      );
-                    })}
-                  </SelectValidator>
-                </FormControl>
-              </Grid>
               <Grid item justify="flex-end" className="mb-16">
-                    <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit" disabled ={isPending && isSendLeader}>
-                      {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
-                    </Button>
-                    <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
-                      {t("general.cancel")}
-                    </Button>
+                <Button
+                  className="align-bottom mr-8 mb-4"
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={isPending}
+                >
+                  {t(`general.${"save"}`)}
+                </Button>
+                <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
+                  {t("general.cancel")}
+                </Button>
               </Grid>
             </Grid>
           </ValidatorForm>
@@ -377,16 +365,18 @@ const Promotion = (props) => {
       {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}
-          open={showConfirmationDialog}
-          onConfirmDialogClose={handleClose}
+          t={t}
+          onConfirmDialogClose={() => {
+            setShowConfirmationDialog(false);
+          }}
           onYesClick={handleConfirmDelete}
           text={t("general.deleteConfirm")}
           Yes={t("general.Yes")}
-          No={t("general.No")}
+          No={t("general.cancel")}
         />
       )}
-      {showNotify?.shouldShowNotifyDialog && <NotifyDialog t={t} handleCloseDialog={handleClose} item={showNotify} />}
-      {shouldOpenDocumentDialog && <PromotionDialog handleCloseDialog={handleClose} processData={promotion} t={t} />}
+      {showNotify?.shouldShowNotifyDialog && <NotifyDialog t={t} handleCloseDialog={handleCloseNotify} item={showNotify} />}
+      
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomTable
           data={promotionsByPage}

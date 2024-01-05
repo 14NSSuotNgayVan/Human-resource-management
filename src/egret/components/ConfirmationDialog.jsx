@@ -1,8 +1,8 @@
 import React from "react";
-import { Dialog, Button, DialogActions} from "@material-ui/core";
+import { Dialog, Button, DialogActions, DialogTitle, IconButton, DialogContent, Icon} from "@material-ui/core";
 
 const ConfirmationDialog = ({
-  open,
+  t,
   onConfirmDialogClose,
   text,
   title = "confirm",
@@ -11,27 +11,29 @@ const ConfirmationDialog = ({
   No
 }) => {
   return (
-    <Dialog
-      maxWidth="xs"
-      fullWidth={true}
-      open={open}
-      onClose={onConfirmDialogClose}
-    >
-      <div className="pt-24 px-20 pb-8">
-        <h4 className="capitalize">{title}</h4>
+
+      <Dialog open={true} maxWidth={"sm"} fullWidth={true}>
+      <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
+        <span className="headerStyle">{title}</span>
+        <IconButton className="buttonClose" onClick={onConfirmDialogClose}>
+          <Icon color="error" title={t("close")}>
+            close
+          </Icon>
+        </IconButton>
+      </DialogTitle>
+        <DialogContent dividers spacing={2}>
         <p>{text}</p>
-        <DialogActions>
-          <div className="flex flex-space-between flex-middle">
-            {No && (<Button onClick={onConfirmDialogClose} variant="contained" color="secondary">
-              {No}
-            </Button>)}
-            <Button onClick={onYesClick} className={"ml-16"} variant="contained" color="primary">
+        </DialogContent>
+        <DialogActions spacing={4} className="flex flex-center flex-middle">
+            <Button variant="contained" color="primary" onClick={onYesClick}>
               {Yes}
             </Button>
-          </div>
-          </DialogActions>
-      </div>
+          <Button variant="contained" className="color-error" onClick={onConfirmDialogClose}>
+          {No}
+          </Button>
+        </DialogActions>
     </Dialog>
+    
   );
 };
 

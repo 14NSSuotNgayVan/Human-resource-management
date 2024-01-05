@@ -170,7 +170,8 @@ function PendingPromotion({ t }) {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => (
         <>
           <IconButton
@@ -192,6 +193,7 @@ function PendingPromotion({ t }) {
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
@@ -199,30 +201,32 @@ function PendingPromotion({ t }) {
       title: t("staff.promotion.promotionDay"),
       field: "promotionDay",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.promotionDay)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.promotion.currentPosition"),
       field: "currentPosition",
       align: "center",
-      minWidth: "150px",
-      maxWidth: "250px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{STAFF_POSITION?.find(item=>item?.id === props?.currentPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.newPosition"),
       field: "newPosition",
       align: "center",
-      minWidth: "150px",
-      maxWidth: "250px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{STAFF_POSITION?.find(item=>item?.id === props?.newPosition)?.name}</span>,
     },
     {
       title: t("staff.promotion.note"),
       field: "note",
       align: "left",
-      minWidth: "170px",
+      maxWidth: "250px",
+      minWidth: "250px",
       render: (props) => <p className="custom-table-cell">{props?.note}</p>,
     }
   ];

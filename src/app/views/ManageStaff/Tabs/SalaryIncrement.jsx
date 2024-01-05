@@ -1,23 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, FormControl, Grid, Icon, IconButton, MenuItem } from "@material-ui/core";
-import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { Button, Grid, Icon, IconButton } from "@material-ui/core";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { LEADER, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
-import { getOldestSalary} from "utils";
-import { getSalaries } from "app/redux/selectors/SalarySelector";
-import { createSalaries, deleteSalary, updateSalary } from "app/redux/actions/SalaryAction";
+import { STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
+import { getOldestSalary } from "utils";
+import { getSalaries, getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
+import { createSalaries, deleteSalary, setSalaryItem, updateSalary } from "app/redux/actions/SalaryAction";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import NotifyDialog from "app/component/CustomNotifyDialog";
 import SalaryIncreaseDialog from "app/component/Form/SalaryIncreaseDialog";
+import { staffSelector } from "app/redux/selectors/StaffSelector";
 
 const Action = (props) => {
-  const { item, handleUpdate, handleShowDeleteConfirm, handleShowDocumentDialog, handleShowNotify,isPendingEndProfile } = props;
+  const {
+    item,
+    handleUpdate,
+    handleShowDeleteConfirm,
+    handleShowDocumentDialog,
+    handleShowNotify,
+    isPendingEndProfile,
+  } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS?.VIEW.includes(item.salaryIncreaseStatus) && (
+      {STAFF_STATUS?.VIEW_MANAGE.includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => {
@@ -65,15 +73,17 @@ const Action = (props) => {
   );
 };
 const SalaryIncrement = (props) => {
-  const { t, item,isPendingEndProfile } = props;
+  const { t, isPendingEndProfile, setShouldOpenSalaryForm} = props;
+  const item =useSelector(staffSelector);
   const dispatch = useDispatch();
   const salaryList = useSelector(getSalaries);
+  const ShouldUpdateSalary = useSelector(getShouldUpdateSalary);
   const [salariesByPage, setSalariesByPage] = useState([]);
   const [totalElement, setTotalElement] = useState(0);
   const [pagePagination, setPagePagination] = useState({ page: 0, rowsPerPage: 10 });
-  const [isPending,setIsPending] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isSendLeader, setIsSendLeader] = useState(false);
+  const [id, setId] = useState("");
   const [showNotify, setShowNotify] = useState({
     shouldShowNotifyDialog: false,
     message: "",
@@ -92,27 +102,31 @@ const SalaryIncrement = (props) => {
       note: "",
       oldSalary: getOldestSalary(salaryList),
       newSalary: 0,
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+      leaderId: "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ShouldUpdateSalary]);
   useEffect(() => {
     setIsPending(salaryList.some((item) => item.salaryIncreaseStatus === 2));
-    !isEditing &&setSalary({
-      ...salary,
-      oldSalary: getOldestSalary(salaryList),
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [salaryList]);
-  useEffect(() => {
-    if (salary?.leaderId) setIsSendLeader(true);
-    else setIsSendLeader(false);
+    !isEditing &&
+      setSalary({
+        ...salary,
+        oldSalary: getOldestSalary(salaryList),
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [salary?.leaderId]);
+  }, [salaryList]);
   const updatePageData = () => {
     const salaries = [...salaryList];
     const startOfPage = pagePagination.page * pagePagination.rowsPerPage;
     const endOfPage = (pagePagination.page + 1) * pagePagination.rowsPerPage;
-    const pageData = isPendingEndProfile ? salaries.filter(item=>item?.salaryIncreaseStatus===3||item?.salaryIncreaseStatus===4||item?.salaryIncreaseStatus===5).slice(startOfPage, endOfPage) :salaries.slice(startOfPage, endOfPage);
+    const pageData = isPendingEndProfile
+      ? salaries
+          .filter(
+            (item) =>
+              item?.salaryIncreaseStatus === 3 || item?.salaryIncreaseStatus === 4 || item?.salaryIncreaseStatus === 5
+          )
+          .slice(startOfPage, endOfPage)
+      : salaries.slice(startOfPage, endOfPage);
     setSalariesByPage(pageData);
     setTotalElement(salaries.length);
   };
@@ -122,20 +136,13 @@ const SalaryIncrement = (props) => {
   }, [pagePagination, salaryList]);
   const handleSubmit = () => {
     if (isEditing) {
-      salary?.leaderId
-        ? dispatch(updateSalary({ ...salary, salaryIncreaseStatus: 2 }))
-        : dispatch(updateSalary(salary));
-    } else
-      salary?.leaderId
-        ? dispatch(createSalaries(item?.id, { ...salary, salaryIncreaseStatus: 2 }))
-        : dispatch(createSalaries(item?.id, { ...salary, salaryIncreaseStatus: 1 }));
+      dispatch(updateSalary(salary));
+    } else {
+      dispatch(createSalaries(item?.id, { ...salary, salaryIncreaseStatus: 1 }));
+    }
+    setShouldOpenSalaryForm(true);
   };
   const handleClose = () => {
-    setShowNotify({
-      shouldShowNotifyDialog: false,
-      message: "",
-      tittle: "",
-    })
     setSalary({
       ...salary,
       startDate: new Date(),
@@ -143,27 +150,31 @@ const SalaryIncrement = (props) => {
       note: "",
       oldSalary: getOldestSalary(salaryList),
       newSalary: 0,
-      leaderId:""
+      leaderId: "",
     });
-    setShowConfirmationDialog(false);
-    setIsSendLeader(false);
     setIsEditing(false);
     setShouldOpenDocumentDialog(false);
     !isPendingEndProfile && form.current.resetValidations();
   };
+  const handleCloseNotify =()=>{
+    setShowNotify({
+      shouldShowNotifyDialog: false,
+      message: "",
+      tittle: "",
+    });
+  }
   const onChange = (event, field) => {
     setSalary({ ...salary, [field]: event.target.value });
   };
   const handleShowDeleteConfirm = (id) => {
     setShowConfirmationDialog(true);
-    setSalary({ id: id });
+    setId(id);
   };
   const handleConfirmDelete = () => {
-    dispatch(deleteSalary(salary?.id));
+    dispatch(deleteSalary(id));
     setShowConfirmationDialog(false);
   };
   const handleUpdate = (item) => {
-    if(salary?.leaderId) setIsSendLeader(true);
     setIsEditing(true);
     setSalary(item);
   };
@@ -174,16 +185,17 @@ const SalaryIncrement = (props) => {
       tittle: item?.tittle,
     });
   };
-  const handleShowDocumentDialog  = (salaryData) =>{
-    setSalary(salaryData);
-    setShouldOpenDocumentDialog(true);
-  }
+  const handleShowDocumentDialog = (salaryData) => {
+    dispatch(setSalaryItem({...salaryData}))
+    setShouldOpenSalaryForm(true);
+  };
   let columns = [
     {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => (
         <Action
           item={rowData}
@@ -198,6 +210,7 @@ const SalaryIncrement = (props) => {
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id + 1 + pagePagination.page * pagePagination.rowsPerPage,
     },
@@ -205,37 +218,39 @@ const SalaryIncrement = (props) => {
       title: t("staff.salary_increment.startDate"),
       field: "startDate",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.startDate)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.salary_increment.oldSalary"),
       field: "oldSalary",
       align: "right",
-      minWidth: "150px",
-      maxWidth: "250px",
-      render: (props) =>`${props?.oldSalary.toLocaleString('en-US')} VND`,
+      maxWidth: "100px",
+      minWidth: "100px",
+      render: (props) => `${props?.oldSalary.toLocaleString("en-US")} VND`,
     },
     {
       title: t("staff.salary_increment.newSalary"),
       field: "newSalary",
       align: "right",
-      minWidth: "150px",
-      maxWidth: "250px",
-      render: (props) =>`${props?.newSalary.toLocaleString('en-US')} VND`,
-
+      maxWidth: "100px",
+      minWidth: "100px",
+      render: (props) => `${props?.newSalary.toLocaleString("en-US")} VND`,
     },
     {
       title: t("staff.salary_increment.reason"),
       field: "reason",
       align: "left",
-      minWidth: "170px",
+      maxWidth: "250px",
+      minWidth: "250px",
       render: (props) => <p className="custom-table-cell">{props?.reason}</p>,
     },
     {
       title: t("staff.submit_profile_status_display"),
       field: "salaryIncreaseStatus",
       align: "left",
+      maxWidth: "150px",
       minWidth: "150px",
       render: (props) => (
         <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.salaryIncreaseStatus]}`)}</span>
@@ -244,172 +259,154 @@ const SalaryIncrement = (props) => {
   ];
   return (
     <Grid container>
-      {!isPendingEndProfile&&
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <ValidatorForm onSubmit={handleSubmit} ref={form}>
-          <Grid container spacing={2} className="p-12">
-            <Grid item lg={3} md={3} sm={6} xs={6}>
-              <TextValidator
-                className="w-100 mb-16"
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.startDate")}
-                  </span>
-                }
-                onChange={(e) => onChange(e, "startDate")}
-                type="date"
-                name="startDate"
-                value={salary?.startDate ? moment(salary?.startDate).format("YYYY-MM-DD") : ""}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                validators={["required"]}
-                errorMessages={[t("staff.notify.errorMessages_required")]}
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                disabled={getOldestSalary(salaryList)}
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.oldSalary")}
-                  </span>
-                }
-                type="text"
-                name="oldSalary"
-                value={salary?.oldSalary||""}
-                inputProps={{
-                  readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
-                  maxlength:9
-                }}
-                onChange={(e) => onChange(e, "oldSalary")}
-                validators={["required", "isPositive"]}
-                errorMessages={[t("staff.notify.errorMessages_required"), 
-                t("staff.notify.invalidPositive"),
-              ]}
-                size="small"
-              />
-            </Grid>
-
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.newSalary")}
-                  </span>
-                }
-                type="text"
-                name="newSalary"
-                inputProps={{maxlength:9}}
-                onChange={(e) => onChange(e, "newSalary")}
-                value={salary?.newSalary || ""}
-                validators={["required", "isPositive",`minNumber:${salary?.oldSalary}`]}
-                errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive"),
-                t("staff.notify.inValidNewSalary")
-              ]}
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.reason")}
-                  </span>
-                }
-                type="text"
-                name="reason"
-                onChange={(e) => onChange(e, "reason")}
-                value={salary?.reason || ""}
-                validators={["required", "maxStringLength:255"]}
-                errorMessages={[
-                  t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
-                ]}
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={3} lg={3}>
-              <TextValidator
-                className={"w-100 mb-16"}
-                label={
-                  <span className="inputLabel">
-                    <span style={{ color: "red" }}> * </span>
-                    {t("staff.salary_increment.note")}
-                  </span>
-                }
-                type="text"
-                name="note"
-                onChange={(e) => onChange(e, "note")}
-                value={salary?.note || ""}
-                validators={["required", "maxStringLength:1000"]}
-                errorMessages={[
-                  t("staff.notify.errorMessages_required"),
-                  `${t("staff.notify.invalidStringContent")}(1000 kí tự)`,
-                ]}
-                size="small"
-              />
-            </Grid>
-            <Grid item lg={3} md={3} sm={6} xs={6}>
-              <FormControl fullWidth={true} className="" size="small">
-                <SelectValidator
-                disabled={isPending}
-                  size="small"
+      {!isPendingEndProfile && (
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <ValidatorForm onSubmit={handleSubmit} ref={form}>
+            <Grid container spacing={2} className="p-12">
+              <Grid item lg={2} md={2} sm={6} xs={6}>
+                <TextValidator
+                  className="w-100 mb-16"
                   label={
                     <span className="inputLabel">
                       <span style={{ color: "red" }}> * </span>
-                      {t("sendLeader.leaderName")}
+                      {t("staff.salary_increment.startDate")}
                     </span>
                   }
-                  value={salary?.leaderId ?? ""}
-                  inputProps={{
-                    readOnly:(salary?.leaderId && salary?.salaryIncreaseStatus === 4),
+                  onChange={(e) => onChange(e, "startDate")}
+                  type="date"
+                  name="startDate"
+                  value={salary?.startDate ? moment(salary?.startDate).format("YYYY-MM-DD") : ""}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
-                  onChange={(e) => onChange(e, "leaderId")}
-                  className="w-100 mb-16"
+                  validators={["required"]}
+                  errorMessages={[t("staff.notify.errorMessages_required")]}
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2} lg={2}>
+                <TextValidator
+                  disabled={getOldestSalary(salaryList)}
+                  className={"w-100 mb-16"}
+                  label={
+                    <span className="inputLabel">
+                      <span style={{ color: "red" }}> * </span>
+                      {t("staff.salary_increment.oldSalary")}
+                    </span>
+                  }
+                  type="text"
+                  name="oldSalary"
+                  value={salary?.oldSalary || ""}
+                  inputProps={{
+                    readOnly: salary?.oldSalary && salary?.salaryIncreaseStatus === "4",
+                    maxlength: 9,
+                  }}
+                  onChange={(e) => onChange(e, "oldSalary")}
+                  validators={["required", "isPositive"]}
+                  errorMessages={[t("staff.notify.errorMessages_required"), t("staff.notify.invalidPositive")]}
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2} lg={2}>
+                <TextValidator
+                  className={"w-100 mb-16"}
+                  label={
+                    <span className="inputLabel">
+                      <span style={{ color: "red" }}> * </span>
+                      {t("staff.salary_increment.newSalary")}
+                    </span>
+                  }
+                  type="text"
+                  name="newSalary"
+                  inputProps={{ maxlength: 9 }}
+                  onChange={(e) => onChange(e, "newSalary")}
+                  value={salary?.newSalary || ""}
+                  validators={["required", "isPositive", `minNumber:${salary?.oldSalary}`]}
+                  errorMessages={[
+                    t("staff.notify.errorMessages_required"),
+                    t("staff.notify.invalidPositive"),
+                    t("staff.notify.inValidNewSalary"),
+                  ]}
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2} lg={2}>
+                <TextValidator
+                  className={"w-100 mb-16"}
+                  label={
+                    <span className="inputLabel">
+                      <span style={{ color: "red" }}> * </span>
+                      {t("staff.salary_increment.reason")}
+                    </span>
+                  }
+                  type="text"
+                  name="reason"
+                  onChange={(e) => onChange(e, "reason")}
+                  value={salary?.reason || ""}
+                  validators={["required", "maxStringLength:255"]}
+                  errorMessages={[
+                    t("staff.notify.errorMessages_required"),
+                    `${t("staff.notify.invalidStringContent")}(255 kí tự)`,
+                  ]}
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2} lg={2}>
+                <TextValidator
+                  className={"w-100 mb-16"}
+                  label={
+                    <span className="inputLabel">
+                      <span style={{ color: "red" }}> * </span>
+                      {t("staff.salary_increment.note")}
+                    </span>
+                  }
+                  type="text"
+                  name="note"
+                  onChange={(e) => onChange(e, "note")}
+                  value={salary?.note || ""}
+                  validators={["required", "maxStringLength:1000"]}
+                  errorMessages={[
+                    t("staff.notify.errorMessages_required"),
+                    `${t("staff.notify.invalidStringContent")}(1000 kí tự)`,
+                  ]}
+                  size="small"
+                />
+              </Grid>
+              <Grid item justify="flex-end" className="mb-16">
+                <Button
+                  className="align-bottom mr-8 mb-4"
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={isPending}
                 >
-                  {LEADER?.map((item) => {
-                    return (
-                      <MenuItem key={item?.id} value={item?.id}>
-                        {item?.leaderName}
-                      </MenuItem>
-                    );
-                  })}
-                </SelectValidator>
-              </FormControl>
+                  {t(`general.save`)}
+                </Button>
+                <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
+                  {t("general.cancel")}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item justify="flex-end" className="mb-16">
-                  <Button className="align-bottom mr-8 mb-4" variant="contained" color="primary" type="submit" disabled ={isPending && isSendLeader}>
-                    {t(`general.${isSendLeader ? "sendLeader" : "save"}`)}
-                  </Button>
-                  <Button className="align-bottom mr-8 mb-4 color-error" variant="contained" onClick={handleClose}>
-                    {t("general.cancel")}
-                  </Button>
-            </Grid>
-          </Grid>
-        </ValidatorForm>
-      </Grid>}
+          </ValidatorForm>
+        </Grid>
+      )}
       {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}
-          open={showConfirmationDialog}
-          onConfirmDialogClose={handleClose}
+          t={t}
+          onConfirmDialogClose={() => {
+            setShowConfirmationDialog(false);
+          }}
           onYesClick={handleConfirmDelete}
           text={t("general.deleteConfirm")}
           Yes={t("general.Yes")}
-          No={t("general.No")}
+          No={t("general.cancel")}
         />
       )}
-      {showNotify?.shouldShowNotifyDialog&&  <NotifyDialog t = {t} handleCloseDialog ={handleClose} item={showNotify} />}
-      {shouldOpenDocumentDialog && <SalaryIncreaseDialog handleCloseDialog={handleClose} dataSalaryIncrease={salary} t={t}/>}
+      {showNotify?.shouldShowNotifyDialog && <NotifyDialog t={t} handleCloseDialog={handleCloseNotify} item={showNotify} />}
+      {shouldOpenDocumentDialog && (
+        <SalaryIncreaseDialog handleCloseDialog={handleClose} dataSalaryIncrease={salary} t={t} />
+      )}
       <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomTable
           data={salariesByPage}
@@ -422,4 +419,4 @@ const SalaryIncrement = (props) => {
     </Grid>
   );
 };
-export default SalaryIncrement;
+export default memo(SalaryIncrement);
