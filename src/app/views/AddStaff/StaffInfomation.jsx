@@ -1,7 +1,7 @@
 import { PhotoCamera } from "@material-ui/icons";
 import { ADDRESS_REGEX, GENDER, NAME_REGEX, TEAM } from "app/constants/staffConstant";
 import { addStaffAction, setStaffImage, updateStaffAction } from "app/redux/actions/StaffActions";
-import { fileSelector, imageSelector } from "app/redux/selectors/StaffSelector";
+import { fileSelector, imageSelector, staffSelector } from "app/redux/selectors/StaffSelector";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,8 @@ toast.configure({
 });
 const StaffInformation = (props) => {
   const { t, formRef, handleCloseDialog } = props;
-  const [staff, setStaff] = useState(props?.item);
+  const staffData = useSelector(staffSelector);
+  const [staff, setStaff] = useState({...staffData});
   const staffImageUrl = useSelector(imageSelector);
   const file = useSelector(fileSelector);
   const dispatch = useDispatch();

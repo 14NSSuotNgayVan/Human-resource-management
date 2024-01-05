@@ -13,6 +13,7 @@ const SalaryReducer=(state =initState, action)=>{
             return {
                 ...state,
                 salaryItem:action?.payload,
+                shouldUpdate: false,
             }
         }
         case GET_SALARY_SUCCESS :{

@@ -11,7 +11,7 @@ import {
   updateCertificate,
 } from "app/redux/actions/CertificateActions";
 import { ConfirmationDialog } from "egret";
-import { NAME_REGEX } from "app/constants/staffConstant";
+import { CERTIFICATE_REGEX, NAME_REGEX } from "app/constants/staffConstant";
 
 const Action = (props) => {
   const { item, handleUpdate, handleShowDeleteConfirm } = props;
@@ -83,7 +83,8 @@ const Certificates = (props) => {
       title: t("general.action"),
       field: "custom",
       align: "center",
-      minWidth: "80px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (rowData) => (
         <Action item={rowData} handleShowDeleteConfirm={handleShowDeleteConfirm} handleUpdate={handleUpdate} />
       ),
@@ -91,6 +92,7 @@ const Certificates = (props) => {
     {
       title: t("STT"),
       align: "center",
+      maxWidth: "60px",
       minWidth: "60px",
       render: (rowData) => rowData.tableData.id +1+pagePagination.page*pagePagination.rowsPerPage,
     },
@@ -98,20 +100,23 @@ const Certificates = (props) => {
       title: t("staff.certificate.certificateName"),
       field: "certificateName",
       align: "left",
-      minWidth: "150px",render: (props) => <p className ="custom-table-cell">{props?.certificateName}</p>,
+      minWidth: "200px",
+      render: (props) => <p className ="custom-table-cell">{props?.certificateName}</p>,
     },
     {
       title: t("staff.certificate.issueDate"),
       field: "issueDate",
       align: "center",
-      minWidth: "120px",
+      maxWidth: "100px",
+      minWidth: "100px",
       render: (props) => <span>{moment(new Date(props?.issueDate)).format("DD/MM/YYYY")}</span>,
     },
     {
       title: t("staff.certificate.field"),
       field: "field",
       align: "left",
-      minWidth: "150px",
+      minWidth: "250px",
+      maxWidth: "250px",
       render: (props) => <p className ="custom-table-cell">{props?.field}</p>,
     },
     { title: t("staff.certificate.content"), field: "content", align: "left", minWidth: "170px",render: (props) => <p className ="custom-table-cell">{props?.content}</p> },
@@ -135,8 +140,8 @@ const Certificates = (props) => {
                 name="certificateName"
                 value={certificate?.certificateName || ""}
                 onChange={(e) => onChange(e, "certificateName")}
-                validators={["required",`matchRegexp:${NAME_REGEX}`, "maxStringLength:255"]}
-                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidName"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`]}
+                validators={["required",`matchRegexp:${CERTIFICATE_REGEX}`, "maxStringLength:255"]}
+                errorMessages={[t("staff.notify.errorMessages_required"),t("staff.notify.invalidCertificateName"),`${t("staff.notify.invalidStringContent")}(225 kí tự)`]}
                 size="small"
               />
             </Grid>
@@ -149,9 +154,11 @@ const Certificates = (props) => {
                     {t("staff.certificate.issueDate")}
                   </span>
                 }
+                format="dd/MM/yyyy"
                 onChange={(e) => onChange(e, "issueDate")}
                 type="date"
                 name="issueDate"
+                floatingLabelText={"dd/MM/yyyy"}
                 value={certificate?.issueDate ? moment(certificate?.issueDate).format("YYYY-MM-DD") : ""}
                 inputProps={{
                   max:moment().format("YYYY-MM-DD"),
@@ -217,12 +224,12 @@ const Certificates = (props) => {
       {showConfirmationDialog && (
         <ConfirmationDialog
           title={t("general.confirm")}
-          open={showConfirmationDialog}
+          t={t}
           onConfirmDialogClose={handleClose}
           onYesClick={handleConfirmDelete}
           text={t("general.deleteConfirm")}
           Yes={t("general.Yes")}
-          No={t("general.No")}
+          No={t("general.cancel")}
         />
       )}
       <Grid item xs={12} sm={12} md={12} lg={12}>

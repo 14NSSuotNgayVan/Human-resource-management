@@ -19,7 +19,7 @@ const Resume = (props) => {
           <Grid item md={8}>
             <h3 className="resume-sub-heading">Cộng hòa xã hội chủ nghĩa việt nam</h3>
             <h4 className="resume-sub-heading heading-underline">Độc lập - Tự do - Hạnh phúc</h4>
-            <h3 className="resume-heading">Sơ yếu lí lịch</h3>
+            <h3 className="resume-heading">Sơ yếu lý lịch</h3>
             <h4 className="resume-sub-heading">Tự thuật</h4>
           </Grid>
         </Grid>

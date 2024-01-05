@@ -1,4 +1,5 @@
 export const NAME_REGEX = "^[a-zA-ZÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$";
+export const CERTIFICATE_REGEX = "^[a-z0-9A-ZÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$";
 export const ADDRESS_REGEX = "^[a-z0-9A-ZÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s/,]+$";
 export const GENDER = [
     { id: 0, name: "other" },
@@ -99,10 +100,12 @@ export const STAFF_STATUS = {
     REJECT:"5,9",
     MANAGE:"3,6,8,9",
     EDIT_PROCESS:"1,4,5",
-    PENDING:"2",
+    PENDING:"2,6",
     END_PROFILE_PROCESS:"6",
     VIEW_END_PROFILE:"7,0",
-    EDIT_END_PROFILE:"7"
+    EDIT_END_PROFILE:"7",
+    VIEW_MANAGE:"2,3,4,5",
+    VIEW_PENDING:"2"
 
 }
 export const RELATIONSHIP = [

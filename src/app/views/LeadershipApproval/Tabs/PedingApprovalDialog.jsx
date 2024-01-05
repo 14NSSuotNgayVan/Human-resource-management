@@ -25,31 +25,35 @@ import { getAllExperiences } from "app/redux/actions/ExperienceAction";
 import { updateStaffAction } from "app/redux/actions/StaffActions";
 import SendLeaderDialog from "app/views/StaffDocument/SendLeaderDialog";
 import ManageStaffDialog from "app/views/ManageStaff/ManageStaffDialog";
+import PromotionDialog from "app/component/Form/PromotionDialog";
+import SalaryIncreaseDialog from "app/component/Form/SalaryIncreaseDialog";
 
 const PendingApprovalDialog = (props) => {
-  const { t, handleCloseDialog,isPendingRegister,isRegister,handleCloseAllDialog,isPendingEndProfile} = props;
+  const { t, handleCloseDialog, isPendingRegister, isRegister, handleCloseAllDialog, isPendingEndProfile } = props;
   const [tab, setTab] = useState(DOCUMENT_TABS?.DOCUMENTS?.value);
   const [shouldOpenApprovalDialog, setShouldOpenApprovalDialog] = useState(false);
   const [shouldOpenAdditionalDialog, setShouldOpenAdditionalDialog] = useState(false);
   const [shouldOpenRejectionDialog, setShouldOpenRejectionDialog] = useState(false);
   const [shouldOpenSendLeaderDialog, setShouldOpenSendLeaderDialog] = useState(false);
   const [shouldOpenHistoryDialog, setShouldOpenHistoryDialog] = useState(false);
+  const [shouldOpenPromotionForm, setShouldOpenPromotionForm] = useState(false);
+  const [shouldOpenSalaryForm, setShouldOpenSalaryForm] = useState(false);
   const staff = useSelector(staffSelector);
-  const [formData,setFormData] =useState({});
+  const [formData, setFormData] = useState({});
   const shouldUpdateStaff = useSelector(shouldUpdateSelector);
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     setFormData(staff);
     dispatch(getAllExperiences(staff?.id));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[staff]); 
-  useEffect(()=>{
-    if(shouldUpdateStaff) {
-    setShouldOpenRejectionDialog(false);
-    setShouldOpenAdditionalDialog(false);
-    setShouldOpenApprovalDialog(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [staff]);
+  useEffect(() => {
+    if (shouldUpdateStaff) {
+      setShouldOpenRejectionDialog(false);
+      setShouldOpenAdditionalDialog(false);
+      setShouldOpenApprovalDialog(false);
     }
-  },[shouldUpdateStaff])
+  }, [shouldUpdateStaff]);
   const handleOpenRejectionDialog = () => {
     setShouldOpenRejectionDialog(true);
   };
@@ -74,18 +78,16 @@ const PendingApprovalDialog = (props) => {
   const handleCloseHistoryDialog = useCallback(() => {
     setShouldOpenHistoryDialog(false);
   }, []);
-  const handleUpdateStaff =()=>{
+  const handleUpdateStaff = () => {
     dispatch(updateStaffAction(formData));
-  }
+  };
   return (
-    <Dialog
-      open={true}
-      maxWidth={"lg"}
-      fullWidth={true}
-    >
+    <Dialog open={true} maxWidth={"lg"} fullWidth={true}>
       <DialogTitle className={"draggableDialogTitle"} id="draggable-dialog-title">
         <span className="headerStyle">{t("staff.action.staffDocument")}</span>
-        <span className="headerStyle-code">{staff?.submitProfileStatus==="0"&& `Mã nộp lưu: ${staff?.numberSaved}`}</span>
+        <span className="headerStyle-code">
+          {staff?.submitProfileStatus === "0" && `Mã nộp lưu: ${staff?.numberSaved}`}
+        </span>
         <IconButton className="buttonClose" onClick={handleCloseDialog}>
           <Icon color="error" title={t("close")}>
             close
@@ -112,8 +114,10 @@ const PendingApprovalDialog = (props) => {
           </Tabs>
         </Grid>
         <Grid item lg={10} md={10} sm={12} className="tabs-content">
-          <DialogContent className ="dialog-content-py">
-            {tab === DOCUMENT_TABS?.DOCUMENTS?.value && <CustomCV t={t} setFormData={setFormData} formData={formData} isRegister ={isRegister}/>}
+          <DialogContent className="dialog-content-py">
+            {tab === DOCUMENT_TABS?.DOCUMENTS?.value && (
+              <CustomCV t={t} setFormData={setFormData} formData={formData} isRegister={isRegister} />
+            )}
             {tab === DOCUMENT_TABS?.RESUME?.value && <Resume t={t} item={formData} />}
             {tab === DOCUMENT_TABS?.CERTIFICATES?.value && <CustomCertificate t={t} item={formData} />}
           </DialogContent>
@@ -129,68 +133,105 @@ const PendingApprovalDialog = (props) => {
         <RejectionDialog t={t} handleCloseDialog={handleCloseRejectionDialog} item={staff} />
       )}
       {shouldOpenSendLeaderDialog && (
-        <SendLeaderDialog t={t} handleCloseDialog={handleCloseSendLeaderDialog} handleCloseParentDialog={handleCloseAllDialog} item={staff} />
+        <SendLeaderDialog
+          t={t}
+          handleCloseDialog={handleCloseSendLeaderDialog}
+          handleCloseParentDialog={handleCloseAllDialog}
+          item={staff}
+        />
       )}
-      {
-        shouldOpenHistoryDialog && 
-        <ManageStaffDialog handleClose={handleCloseHistoryDialog} t={t} isPendingEndProfile={true}/>
-      }
+      {shouldOpenHistoryDialog && (
+        <ManageStaffDialog
+          handleClose={handleCloseHistoryDialog}
+          t={t}
+          isPendingEndProfile={true}
+          setShouldOpenPromotionForm={setShouldOpenPromotionForm}
+          setShouldOpenSalaryForm={setShouldOpenSalaryForm}
+        />
+      )}
+      {shouldOpenPromotionForm && (
+        <PromotionDialog
+          handleCloseDialog={() => {
+            setShouldOpenPromotionForm(false);
+          }}
+          t={t}
+        />
+      )}
+      {shouldOpenSalaryForm && (
+        <SalaryIncreaseDialog
+          handleCloseDialog={() => {
+            setShouldOpenSalaryForm(false);
+          }}
+          t={t}
+        />
+      )}
       <DialogActions spacing={4} className="flex flex-center flex-middle">
-        
-        {isPendingEndProfile && <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setShouldOpenHistoryDialog(true);
-          }}
-        >
-          {t("general.history")}
-        </Button>}
-        {isRegister && <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setShouldOpenSendLeaderDialog(true);
-          }}
-        >
-          {t("general.sendLeader")}
-        </Button>}
-        {isRegister && <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            handleUpdateStaff()
-          }}
-        >
-          {t("general.save")}
-        </Button>}
-        {isPendingRegister && <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            handleOpenApprovalConfirmDialog();
-          }}
-        >
-          {t("general.approve")}
-        </Button>}
-        {isPendingRegister && <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            handleOpenAdditionalDialog();
-          }}
-        >
-          {t("general.additionalRequest")}
-        </Button>}
-        {isPendingRegister&& <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            handleOpenRejectionDialog();
-          }}
-        >
-          {t("general.reject")}
-        </Button>}
+        {isPendingEndProfile && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setShouldOpenHistoryDialog(true);
+            }}
+          >
+            {t("general.history")}
+          </Button>
+        )}
+        {isRegister && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setShouldOpenSendLeaderDialog(true);
+            }}
+          >
+            {t("general.sendLeader")}
+          </Button>
+        )}
+        {isRegister && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleUpdateStaff();
+            }}
+          >
+            {t("general.save")}
+          </Button>
+        )}
+        {isPendingRegister && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleOpenApprovalConfirmDialog();
+            }}
+          >
+            {t("general.approve")}
+          </Button>
+        )}
+        {isPendingRegister && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleOpenAdditionalDialog();
+            }}
+          >
+            {t("general.additionalRequest")}
+          </Button>
+        )}
+        {isPendingRegister && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              handleOpenRejectionDialog();
+            }}
+          >
+            {t("general.reject")}
+          </Button>
+        )}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           {t("general.cancel")}
         </Button>
