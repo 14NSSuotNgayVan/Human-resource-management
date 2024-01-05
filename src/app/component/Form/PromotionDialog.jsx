@@ -11,11 +11,13 @@ import { staffSelector } from 'app/redux/selectors/StaffSelector';
 import { useSelector } from 'react-redux';
 import { LEADER, STAFF_POSITION } from 'app/constants/staffConstant';
 import moment from 'moment';
-import { getProcessItem } from 'app/redux/selectors/ProcessSelector';
+import { getProcess, getProcessItem } from 'app/redux/selectors/ProcessSelector';
 
 function PromotionDialog({ t, handleCloseDialog,Action }) {
   const staff = useSelector(staffSelector);
   const processData = useSelector(getProcessItem);
+  const promotionList = useSelector(getProcess);
+
   return (
     <Dialog open={true}  fullWidth maxWidth="md">
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
@@ -26,7 +28,7 @@ function PromotionDialog({ t, handleCloseDialog,Action }) {
               close
             </Icon>
           </IconButton>
-      <DialogContent dividers className="wrapper-a4">
+      <DialogContent dividers className="wrapper-a4 mh-70">
       <Box className="A4">
       <Box className="A4-content">
         <Grid container spacing={2}>
@@ -135,7 +137,7 @@ function PromotionDialog({ t, handleCloseDialog,Action }) {
     </Box>
       </DialogContent>
       <DialogActions className="flex flex-center px-16">
-        {Action? <Action isPending ={processData?.processStatus === "2"}/> :""}
+        {Action? <Action isPending ={promotionList.some((item) => item?.processStatus === "2")}/> :""}
         <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
           Hủy
         </Button>

@@ -21,7 +21,7 @@ const ConfirmationDialog = ({
           </Icon>
         </IconButton>
       </DialogTitle>
-        <DialogContent dividers spacing={2}>
+        <DialogContent dividers spacing={2} className="mh-70">
         <p>{text}</p>
         </DialogContent>
         <DialogActions spacing={4} className="flex flex-center flex-middle">

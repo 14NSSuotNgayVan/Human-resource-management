@@ -3,7 +3,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import Icon from "@material-ui/core/Icon";
-import { Box, Dialog, DialogActions, Grid } from "@material-ui/core";
+import { Box, Dialog, DialogActions, Grid, Input } from "@material-ui/core";
 import Typography from "@mui/material/Typography";
 import Button from "@material-ui/core/Button";
 import "../../../styles/components/_form.scss";
@@ -11,7 +11,7 @@ import { staffSelector } from "app/redux/selectors/StaffSelector";
 import { useSelector } from "react-redux";
 import { STAFF_POSITION } from "app/constants/staffConstant";
 import moment from "moment";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { ValidatorForm } from "react-material-ui-form-validator";
 import EndProfileDialog from "app/views/ManageStaff/EndProfileDialog";
 import { toast } from "react-toastify";
 
@@ -20,55 +20,36 @@ toast.configure({
   draggable: false,
   limit: 3,
 });
-function EndProfileFormDialog({ t, handleCloseDialog,isRegister,handleCloseParentDialog,Action}) {
+function EndProfileFormDialog({ t, handleCloseDialog, isRegister, handleCloseParentDialog, Action }) {
   const staff = useSelector(staffSelector);
   const form = useRef(null);
   const [formData, setFormData] = useState({ ...staff });
-  const [previousState, setPreviousState] = useState({ ...staff });
-  const [isEditDay, setIsEditDay] = useState(false);
-  const [isEditReason, setIsEditReason] = useState(false);
   const [shouldOpenSendLeader, setShouldOpenSendLeader] = useState(false);
-  const handleChange = (event) => {
+  const handleChange = (event,field) => {
     event.persist();
-    const { name, value } = event.target;
-    if (!value.startsWith(" ")) {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
-  const handleSubmitReason = () => {
-    setPreviousState({ ...formData });
-    setIsEditReason(false);
-  };
-  const handleCancelReason = () => {
-    setIsEditReason(false);
-    setFormData({ ...previousState });
-  };
-  const handleSubmitDay = () => {
-    setPreviousState({ ...formData });
-    setIsEditDay(false);
-  };
-  const handleCancelDay = () => {
-    setIsEditDay(false);
-    setFormData({ ...previousState });
-  };
-  const handleSubmit = () => {
-    if (!previousState?.endDay || !previousState?.reasonForEnding) {
-      if(!previousState?.endDay) setIsEditDay(true);
-      if(!previousState?.reasonForEnding) setIsEditReason(true);
-      if (formData?.endDay && formData?.reasonForEnding) {
-        isEditDay || isEditReason
-          ? toast.warning("Vui lòng lưu trước khi trình lãnh đạo")
-          : setShouldOpenSendLeader(true);
+    const { value, innerHTML } = event.target;
+    switch (field) {
+      case "reasonForEnding": {
+        setFormData({
+          ...formData,
+          [field]: innerHTML,
+        });
+        break;
       }
-      form.current.validate();
-    } else {
-      if (isEditDay || isEditReason) {
-        toast.warning("Vui lòng lưu trước khi trình lãnh đạo");
-      } else setShouldOpenSendLeader(true);
+      default: {
+        setFormData({
+          ...formData,
+          [field]: value,
+        });
+        break;
+      }
     }
+  };
+
+  const handleSubmit = () => {
+    if(!formData?.endDay || !formData?.reasonForEnding){
+      toast.error("vui lòng điền đầy đủ thông tin trước khi trình");
+    }else setShouldOpenSendLeader(true);
   };
   return (
     <Dialog open={true} fullWidth maxWidth="md">
@@ -81,7 +62,7 @@ function EndProfileFormDialog({ t, handleCloseDialog,isRegister,handleCloseParen
             close
           </Icon>
         </IconButton>
-        <DialogContent dividers className="wrapper-a4">
+        <DialogContent dividers className="wrapper-a4 mh-70">
           <Box className="A4">
             <Box className="A4-content text-justify">
               <Typography fontWeight="bold" className="flex-center">
@@ -123,76 +104,36 @@ function EndProfileFormDialog({ t, handleCloseDialog,isRegister,handleCloseParen
                     .format("DD/MM/YYYY")
                     .split("/")[2]
                 }
-                {isRegister && !isEditDay && (
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setIsEditDay(true);
-                    }}
-                  >
-                    <Icon fontSize="small" color="primary">
-                      date_range
-                    </Icon>
-                  </IconButton>
-                )}
-                {isEditDay && (
+                {isRegister && (
                   <>
-                    <TextValidator
-                      fullWidth
+                    <Input
+                      id="icon-button-date"
+                      className="mr-4 ml-4"
                       type="date"
                       inputProps={{
                         min: moment().format("YYYY-MM-DD"),
+                        width: "50",
                       }}
-                      className="mt-16 profile-input-text"
                       name="endDay"
                       value={formData?.endDay || ""}
-                      onChange={handleChange}
-                      validators={["required"]}
-                      errorMessages={[t("staff.notify.errorMessages_required")]}
+                      onChange={(e)=>handleChange(e,"endDay")}
                       InputLabelProps={{
                         shrink: true,
                       }}
                     />
-                    <Button className="mt-12 mr-12" variant="contained" color="primary" onClick={handleSubmitDay}>
-                      {t("general.save")}
-                    </Button>
-                    <Button className="mt-12 color-error" variant="contained" onClick={handleCancelDay}>
-                      {t("general.cancel")}
-                    </Button>
-                  </>
-                )}
-                {isEditDay ? <><br></br><br></br></> : ","} vì lý do:{" "}
-                {isEditReason && (
-                  <>
-                    <TextValidator
-                      fullWidth
-                      className="mt-16 profile-input-text"
+                    vì lý do
+                    <p
                       name="reasonForEnding"
-                      value={formData?.reasonForEnding || ""}
-                      onChange={handleChange}
-                      validators={["required"]}
-                      errorMessages={[t("staff.notify.errorMessages_required")]}
+                      contentEditable
+                      dangerouslySetInnerHTML={{ __html: formData?.reasonForEnding || "" }}
+                      onInput={(e)=>handleChange(e,"reasonForEnding")}
+                      style={{
+                        display: "inline-block",
+                        borderBottom: "1px solid #000000",
+                        padding: " 0 10px 0 6px",
+                      }}
                     />
-                    <Button className="mt-12 mr-12" variant="contained" color="primary" onClick={handleSubmitReason}>
-                      {t("general.save")}
-                    </Button>
-                    <Button className="mt-12 color-error" variant="contained" onClick={handleCancelReason}>
-                      {t("general.cancel")}
-                    </Button>
                   </>
-                )}
-                {!isEditReason && (formData?.reasonForEnding ? formData?.reasonForEnding : formData?.reasonForEnding)}
-                {isRegister && !isEditReason && (
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setIsEditReason(true);
-                    }}
-                  >
-                    <Icon fontSize="small" color="primary">
-                      edit
-                    </Icon>
-                  </IconButton>
                 )}
               </Typography>
               <Typography className="pb-12">
@@ -249,12 +190,12 @@ function EndProfileFormDialog({ t, handleCloseDialog,isRegister,handleCloseParen
               handleCloseParentDialog={handleCloseParentDialog}
             />
           )}
-          {isRegister && 
+          {isRegister && (
             <Button variant="contained" color="primary" type="submit">
               {t("general.save")}
             </Button>
-          }
-          {Action? <Action/>:""}
+          )}
+          {Action ? <Action /> : ""}
           <Button variant="contained" className="color-error" onClick={handleCloseDialog}>
             Hủy
           </Button>
