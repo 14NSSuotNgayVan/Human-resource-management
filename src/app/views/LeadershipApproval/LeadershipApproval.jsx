@@ -10,7 +10,6 @@ import {
 import PendingApproval from "./Tabs/PendingApproval";
 import PendingSalaryIncrement from "./Tabs/PendingSalaryIncrement";
 import PendingPromotion from "./Tabs/PendingPromotion";
-import PendingEndProfile from "./Tabs/PendingEndProfile";
 
 toast.configure({
   autoClose: 2000,
