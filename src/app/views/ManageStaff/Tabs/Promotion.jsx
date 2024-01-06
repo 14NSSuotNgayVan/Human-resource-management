@@ -5,12 +5,13 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import {STAFF_POSITION, STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
+import {STAFF_POSITION,  STATUS_FOR_ADDITIONAL, STATUS_FOR_EDIT_PROCESS, STATUS_FOR_REJECT, STATUS_FOR_REMOVE, STATUS_FOR_VIEW_MANAGE } from "app/constants/staffConstant";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getProcess, getShouldUpdateProcess } from "app/redux/selectors/ProcessSelector";
 import { createProcess, deleteProcess, setProcess, updateProcess } from "app/redux/actions/ProcessAction";
 import NotifyDialog from "app/component/CustomNotifyDialog";
 import { staffSelector } from "app/redux/selectors/StaffSelector";
+import { getProfileStatusNameById } from "utils";
 
 const Action = (props) => {
   const {
@@ -23,7 +24,7 @@ const Action = (props) => {
   } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS?.VIEW_MANAGE.includes(item.processStatus) && (
+      {STATUS_FOR_VIEW_MANAGE.join(',').includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => {
@@ -33,21 +34,21 @@ const Action = (props) => {
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS?.EDIT_PROCESS.includes(item.processStatus) && (
+      {!isPendingEndProfile && STATUS_FOR_EDIT_PROCESS.join(',').includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
           </Icon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS?.REMOVE.includes(item.processStatus) && (
+      {!isPendingEndProfile && STATUS_FOR_REMOVE.join(',').includes(item.processStatus) && (
         <IconButton size="small" onClick={() => handleShowDeleteConfirm(item.id)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS?.ADDITIONAL.includes(item.processStatus) && (
+      {STATUS_FOR_ADDITIONAL.join(',').includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.additionalRequest, tittle: "Yêu cầu bổ sung" })}
@@ -57,7 +58,7 @@ const Action = (props) => {
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS?.REJECT.includes(item.processStatus) && (
+      {STATUS_FOR_REJECT.join(',').includes(item.processStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.reasonForRefusal, tittle: "Lí do từ chối" })}
@@ -233,7 +234,7 @@ const Promotion = (props) => {
       align: "left",
       maxWidth: "150px",
       minWidth: "150px",
-      render: (props) => <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.processStatus]}`)}</span>,
+      render: (props) => <span>{t(`staff.submit_profile_status.${getProfileStatusNameById(props?.processStatus)}`)}</span>,
     },
   ];
   return (

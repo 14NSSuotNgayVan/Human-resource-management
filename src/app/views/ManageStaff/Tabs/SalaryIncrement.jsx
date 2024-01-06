@@ -5,8 +5,8 @@ import moment from "moment";
 import CustomTable from "app/component/CustomTable";
 import { useDispatch, useSelector } from "react-redux";
 import { ConfirmationDialog } from "egret";
-import { STAFF_STATUS, SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
-import { getOldestSalary } from "utils";
+import {  STATUS_FOR_ADDITIONAL, STATUS_FOR_EDIT_PROCESS, STATUS_FOR_REJECT, STATUS_FOR_REMOVE, STATUS_FOR_VIEW_MANAGE } from "app/constants/staffConstant";
+import { getOldestSalary, getProfileStatusNameById } from "utils";
 import { getSalaries, getShouldUpdateSalary } from "app/redux/selectors/SalarySelector";
 import { createSalaries, deleteSalary, setSalaryItem, updateSalary } from "app/redux/actions/SalaryAction";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -25,7 +25,7 @@ const Action = (props) => {
   } = props;
   return (
     <div className="none_wrap">
-      {STAFF_STATUS?.VIEW_MANAGE.includes(item.salaryIncreaseStatus) && (
+      {STATUS_FOR_VIEW_MANAGE.join(',').includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => {
@@ -35,21 +35,21 @@ const Action = (props) => {
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS?.EDIT_PROCESS.includes(item.salaryIncreaseStatus) && (
+      {!isPendingEndProfile && STATUS_FOR_EDIT_PROCESS.join(',').includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleUpdate(item)}>
           <Icon fontSize="small" color="primary">
             edit
           </Icon>
         </IconButton>
       )}
-      {!isPendingEndProfile && STAFF_STATUS?.REMOVE.includes(item.salaryIncreaseStatus) && (
+      {!isPendingEndProfile && STATUS_FOR_REMOVE.join(',').includes(item.salaryIncreaseStatus) && (
         <IconButton size="small" onClick={() => handleShowDeleteConfirm(item.id)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS?.ADDITIONAL.includes(item.salaryIncreaseStatus) && (
+      {STATUS_FOR_ADDITIONAL.join(',').includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.additionalRequest, tittle: "Yêu cầu bổ sung" })}
@@ -59,7 +59,7 @@ const Action = (props) => {
           </Icon>
         </IconButton>
       )}
-      {STAFF_STATUS?.REJECT.includes(item.salaryIncreaseStatus) && (
+      {STATUS_FOR_REJECT.join(',').includes(item.salaryIncreaseStatus) && (
         <IconButton
           size="small"
           onClick={() => handleShowNotify({ message: item?.reasonForRefusal, tittle: "Lí do từ chối" })}
@@ -254,7 +254,7 @@ const SalaryIncrement = (props) => {
       maxWidth: "150px",
       minWidth: "150px",
       render: (props) => (
-        <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.salaryIncreaseStatus]}`)}</span>
+        <span>{t(`staff.submit_profile_status.${getProfileStatusNameById(props?.salaryIncreaseStatus)}`)}</span>
       ),
     },
   ];

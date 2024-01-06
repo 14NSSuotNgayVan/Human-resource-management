@@ -15,12 +15,13 @@ import {
   staffSelector,
 } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
-import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
+import { GENDER, STATUS_FOR_END_PROFILE_PROCESS, STATUS_FOR_PENDING, STATUS_FOR_VIEW_PENDING, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "./PedingApprovalDialog";
 import EndProfileFormDialog from "app/component/Form/EndProfileFormDialog";
 import AdditionalDialog from "../AdditionalDialog";
 import RejectionDialog from "../RejectionDialog";
+import { getProfileStatusNameById } from "utils";
 
 toast.configure({
   autoClose: 2000,
@@ -50,7 +51,7 @@ function PendingApproval(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS?.PENDING;
+    searchObject.listStatus = STATUS_FOR_PENDING.join(',');
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -169,14 +170,14 @@ function PendingApproval(props) {
     return (
       <div className="none_wrap">
         <>
-          {STAFF_STATUS?.VIEW_PENDING.includes(item.submitProfileStatus) && (
+          {STATUS_FOR_VIEW_PENDING.join(',').includes(item.submitProfileStatus) && (
             <IconButton size="small" onClick={() => handleShowDialog(item)}>
               <Icon fontSize="small" color="primary">
                 edit
               </Icon>
             </IconButton>
           )}
-          {STAFF_STATUS?.END_PROFILE_PROCESS.includes(item.submitProfileStatus) && (
+          {STATUS_FOR_END_PROFILE_PROCESS.join(',').includes(item.submitProfileStatus) && (
             <>
               <IconButton
                 size="small"
@@ -267,7 +268,7 @@ function PendingApproval(props) {
       maxWidth: "150px",
       minWidth: "150px",
       render: (props) => (
-        <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.submitProfileStatus]}`)}</span>
+        <span>{t(`staff.submit_profile_status.${getProfileStatusNameById(props?.submitProfileStatus)}`)}</span>
       ),
     }
   ];

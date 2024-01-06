@@ -1,3 +1,4 @@
+import { SUBMIT_PROFILE_STATUS } from "app/constants/staffConstant";
 import moment from "moment";
 
 export function debounce(func, wait, immediate) {
@@ -88,6 +89,10 @@ export function searchObjectsByKeyword(keyword, objectsArray) {
 
   return filteredArray;
 }
+export const getProfileStatusNameById = (id) => {
+  const status = Object.values(SUBMIT_PROFILE_STATUS).find((item) => String(item.ID) === String(id));
+  return status ? status.NAME : null;
+};
 export function getOldestSalary(objectsArray) {
   objectsArray.sort((a, b) => new Date(a.acceptanceDate) - new Date(b.acceptanceDate));
 
