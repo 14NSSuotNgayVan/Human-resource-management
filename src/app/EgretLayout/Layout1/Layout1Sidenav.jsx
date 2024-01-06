@@ -137,7 +137,7 @@ class Layout1Sidenav extends Component {
           <Tooltip title={t('Dashboard.profile')}>
             <Link
               className="flex flex-middle"
-              to="/page-layouts/user-profile"
+              to="/home/Home"
             >
               <IconButtonWhite aria-label="Delete" className="" size="small">
                 <IconSmall>person</IconSmall>

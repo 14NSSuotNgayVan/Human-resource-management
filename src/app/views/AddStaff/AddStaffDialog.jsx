@@ -13,7 +13,6 @@ import { getShouldUpdateFamily } from "app/redux/selectors/FamilySelector";
 import { getAllFamilyMembers } from "app/redux/actions/FamilyAction";
 const {
   Dialog,
-  Paper,
   IconButton,
   Icon,
   DialogTitle,
@@ -23,7 +22,6 @@ const {
   Tabs,
   Tab,
 } = require("@material-ui/core");
-const { default: Draggable } = require("react-draggable");
 
 toast.configure({
   autoClose: 2000,
@@ -70,11 +68,6 @@ const AddStaffDialog = (props) => {
   return (
     <Dialog
       open={true}
-      PaperComponent={(props) => (
-        <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-          <Paper {...props} />
-        </Draggable>
-      )}
       maxWidth={"lg"}
       fullWidth={true}
     >

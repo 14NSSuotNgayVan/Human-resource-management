@@ -25,7 +25,7 @@ i18n
     },
     lng: "vi", //Đặt mặc định là tiếng Việt
     fallbackLng: 'vi',
-    debug: true,
+    debug: false,
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
