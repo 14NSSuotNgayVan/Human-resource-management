@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
@@ -23,17 +23,30 @@ toast.configure({
 function EndProfileFormDialog({ t, handleCloseDialog, isRegister, handleCloseParentDialog, Action }) {
   const staff = useSelector(staffSelector);
   const form = useRef(null);
-  const [formData, setFormData] = useState({ ...staff });
+  const [formData, setFormData] = useState({});
   const [shouldOpenSendLeader, setShouldOpenSendLeader] = useState(false);
-  const handleChange = (event,field) => {
+  const [line, setLine] = useState([]);
+  useEffect(() => {
+    setFormData({ ...staff,reasonForEnding: `Vì lý do: ${staff?.reasonForEnding}`, });
+  }, [staff]);
+  const handleChange = (event, field) => {
     event.persist();
     const { value, innerHTML } = event.target;
+    console.log(innerHTML)
     switch (field) {
       case "reasonForEnding": {
+        if (!value.startsWith("Vì lý do: ")) {
+          setFormData({
+          ...formData,
+          reasonForEnding: "Vì lý do: ",
+          });
+      } else {
         setFormData({
           ...formData,
-          [field]: innerHTML,
+          reasonForEnding: value,
         });
+      }
+
         break;
       }
       default: {
@@ -45,11 +58,14 @@ function EndProfileFormDialog({ t, handleCloseDialog, isRegister, handleClosePar
       }
     }
   };
+  useEffect(() => {
+    setLine(formData?.reasonForEnding?.split("\n"));
+  }, [formData.reasonForEnding]);
 
   const handleSubmit = () => {
-    if(!formData?.endDay || !formData?.reasonForEnding){
+    if (!formData?.endDay || !formData?.reasonForEnding) {
       toast.error("vui lòng điền đầy đủ thông tin trước khi trình");
-    }else setShouldOpenSendLeader(true);
+    } else setShouldOpenSendLeader(true);
   };
   return (
     <Dialog open={true} fullWidth maxWidth="md">
@@ -103,37 +119,72 @@ function EndProfileFormDialog({ t, handleCloseDialog, isRegister, handleClosePar
                   moment(new Date(formData?.endDay ? formData?.endDay : formData?.endDay))
                     .format("DD/MM/YYYY")
                     .split("/")[2]
-                }
+                  }
+                  .
                 {isRegister && (
                   <>
-                    <Input
-                      id="icon-button-date"
-                      className="mr-4 ml-4"
-                      type="date"
-                      inputProps={{
-                        min: moment().format("YYYY-MM-DD"),
-                        width: "50",
-                      }}
-                      name="endDay"
-                      value={formData?.endDay || ""}
-                      onChange={(e)=>handleChange(e,"endDay")}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                    vì lý do
-                    <p
-                      name="reasonForEnding"
-                      contentEditable
-                      dangerouslySetInnerHTML={{ __html: formData?.reasonForEnding || "" }}
-                      onInput={(e)=>handleChange(e,"reasonForEnding")}
-                      style={{
-                        display: "inline-block",
-                        borderBottom: "1px solid #000000",
-                        padding: " 0 10px 0 6px",
-                      }}
-                    />
+                  <Input
+                    id="icon-button-date"
+                    className="mr-4 ml-4"
+                    type="date"
+                    inputProps={{
+                      min: moment().format("YYYY-MM-DD"),
+                      width: "50",
+                    }}
+                    name="endDay"
+                    value={formData?.endDay || ""}
+                    onChange={(e) => handleChange(e, "endDay")}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                  <span style={{ color: "red" }}> * </span>
                   </>
+                )}
+                <br></br>
+                {!isRegister && `Vì lý do : ${formData?.reasonForEnding}`}
+                {isRegister && (
+                   <div className="relative">
+                    <span
+                        style={{
+                          position: "absolute",
+                          top: `0`,
+                          backgroundColor: "white",
+                          zIndex: "1001",
+                          transform: "translateY(-2px)",
+                        }}
+                      >Vì lý do:  </span>
+                    <Input
+                      className="no-padding custom-input"
+                      name="reasonForEnding"
+                      multiline
+                      value={formData?.reasonForEnding || ""}
+                      onChange={(e) => handleChange(e, "reasonForEnding")}
+                      style={{
+                        fontFamily:"Times New Roman",
+                        fontSize:"16px",
+                        display: "block",
+                        position: "relative",
+                        zIndex: "1000",
+                        width: "100%",
+                        outline: "unset",
+                      }}
+                    ></Input>
+                    {line?.map((item, index) => (
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: `${(1 / line.length) * 100 * index}%`,
+                          right: "0",
+                          left: "0",
+                          width: "100%",
+                          height: line ? `${(1 / line.length) * 100}%` : "100%",
+                          borderBottom: "1px dashed",
+                          transform: "translateY(-2px)",
+                        }}
+                      ></span>
+                    ))}
+                  </div>
                 )}
               </Typography>
               <Typography className="pb-12">
@@ -183,7 +234,9 @@ function EndProfileFormDialog({ t, handleCloseDialog, isRegister, handleClosePar
           {shouldOpenSendLeader && (
             <EndProfileDialog
               t={t}
-              item={formData}
+              item={{...formData,
+                reasonForEnding: formData?.reasonForEnding?.replace("Vì lí do: ","")
+              }}
               handleCloseDialog={() => {
                 setShouldOpenSendLeader(false);
               }}

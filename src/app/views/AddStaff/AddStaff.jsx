@@ -11,11 +11,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
-import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
+import { GENDER, STATUS_FOR_ADD, STATUS_FOR_ADDITIONAL, STATUS_FOR_EDIT, STATUS_FOR_REJECT, STATUS_FOR_REMOVE, STATUS_FOR_VIEW, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import AddStaffDialog from "./AddStaffDialog";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 import NotifyDialog from "app/component/CustomNotifyDialog";
+import { getProfileStatusNameById } from "utils";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -45,7 +46,7 @@ function Staff(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STAFF_STATUS?.ADD;
+    searchObject.listStatus = STATUS_FOR_ADD.join(',');
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -106,30 +107,30 @@ function Staff(props) {
     const item = props.item;
     return (
       <div className="none_wrap">
-        {STAFF_STATUS?.VIEW.includes(item.submitProfileStatus)&&
+        {STATUS_FOR_VIEW.join(',').includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={() => {handleShowDocumentDialog(item,false)}}>
           <VisibilityIcon fontSize="small"></VisibilityIcon>
         </IconButton>}
-        {STAFF_STATUS?.EDIT.includes(item.submitProfileStatus) && (
+        {STATUS_FOR_EDIT.join(',').includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={()=>handleAddItem(item)}>
             <Icon fontSize="small" color="primary">
               edit
             </Icon>
           </IconButton>
         )}
-        {STAFF_STATUS?.REMOVE.includes(item.submitProfileStatus)&&
+        {STATUS_FOR_REMOVE.join(',').includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleDelete(item)}>
           <Icon fontSize="small" color="error">
             delete
           </Icon>
         </IconButton>}
-        {STAFF_STATUS?.ADDITIONAL.includes(item.submitProfileStatus)&&
+        {STATUS_FOR_ADDITIONAL.join(',').includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleShowNotify(item,true)}>
         <Icon fontSize="small" color="secondary">
         notifications
         </Icon>
       </IconButton>}
-        {STAFF_STATUS?.REJECT.includes(item.submitProfileStatus)&&
+        {STATUS_FOR_REJECT.join(',').includes(item.submitProfileStatus)&&
         <IconButton size="small" onClick={()=>handleShowNotify(item,false)}>
         <Icon fontSize="small" color="secondary">
         notifications
@@ -208,7 +209,7 @@ function Staff(props) {
       maxWidth: "150px",
       minWidth: "150px",
       render: (props) => (
-        <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.submitProfileStatus]}`)}</span>
+        <span>{t(`staff.submit_profile_status.${getProfileStatusNameById(props?.submitProfileStatus)}`)}</span>
       ),
     },
   ];

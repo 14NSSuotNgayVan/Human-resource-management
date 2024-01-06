@@ -11,10 +11,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
-import { GENDER, STAFF_STATUS, SUBMIT_PROFILE_STATUS, TEAM } from "app/constants/staffConstant.js";
+import { GENDER, STAFF_STATUS, TEAM } from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 import SaveProfileDialog from "./SaveProfileDialog";
+import { getProfileStatusNameById } from "utils";
 toast.configure({
   autoClose: 2000,
   draggable: false,
@@ -173,7 +174,7 @@ function EndStaff(props) {
       maxWidth: "150px",
       minWidth: "150px",
       render: (props) => (
-        <span>{t(`staff.submit_profile_status.${SUBMIT_PROFILE_STATUS[props.submitProfileStatus]}`)}</span>
+        <span>{t(`staff.submit_profile_status.${getProfileStatusNameById(props?.submitProfileStatus)}`)}</span>
       ),
     },
   ];

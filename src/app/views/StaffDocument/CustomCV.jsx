@@ -142,20 +142,19 @@ const CustomCV = (props) => {
             <div>
               {isEditSkill && (
                 <>
-                  <ValidatorForm>
+                  <ValidatorForm onSubmit={handleSubmitSkill}>
                     <TextValidator
                       multiline
                       rows={skillLine}
                       fullWidth
-                      
                       className="mt-16 "
                       name="skill"
                       value={formData?.skill || ""}
                       onChange={handleChange}
-                      validators={["required"]}
-                      errorMessages={[t("staff.notify.errorMessages_required")]}
+                      validators={["maxStringLength:1000"]}
+                      errorMessages={[`${t("staff.notify.invalidStringContent")}(1000 kí tự)`]}
                     />
-                    <Button className="mt-12 mr-12" variant="contained" color="primary" onClick={handleSubmitSkill}>
+                    <Button className="mt-12 mr-12" variant="contained" color="primary" type="submit">
                       {t("general.save")}
                     </Button>
                     <Button className="mt-12 color-error" variant="contained" onClick={handleCancel}>
@@ -233,7 +232,7 @@ const CustomCV = (props) => {
                 <div>
                   {isEditActivity && (
                     <>
-                      <ValidatorForm>
+                      <ValidatorForm onSubmit={handleCancel}>
                         <TextValidator
                           multiline
                           rows={activityLine}
@@ -243,8 +242,8 @@ const CustomCV = (props) => {
                           name="activity"
                           value={formData?.activity || ""}
                           onChange={handleChange}
-                          validators={["required"]}
-                          errorMessages={[t("staff.notify.errorMessages_required")]}
+                          validators={["maxStringLength:1000"]}
+                          errorMessages={[`${t("staff.notify.invalidStringContent")}(1000 kí tự)`]}
                         />
                         <Button
                           className="mt-12 mr-12"
@@ -254,7 +253,7 @@ const CustomCV = (props) => {
                         >
                           {t("general.save")}
                         </Button>
-                        <Button className="mt-12 color-error" variant="contained" onClick={handleCancel}>
+                        <Button className="mt-12 color-error" variant="contained" type="submit">
                           {t("general.cancel")}
                         </Button>
                       </ValidatorForm>
