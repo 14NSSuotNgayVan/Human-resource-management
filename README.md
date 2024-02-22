@@ -1,15 +1,16 @@
 # Human-resource-management
-Link Depployed app here: https://merry-hummingbird-7d69ff.netlify.app
+## Link Depployed app here: https://merry-hummingbird-7d69ff.netlify.app
 
-UserName | passWord| role
-admin    | admin   | admin
-user     | admin   | user
-user1    | admin   | user
-user2    | admin   | user
-user3    | admin   | user
-manage   | admin   | manage
-manage2  | admin   | manage
-manage3  | admin   | manage
+| UserName | Password| Role  | 
+|----------|---------|-------|
+| admin    | admin   | admin | 
+| user     | admin   | user  | 
+| user1    | admin   | user  | 
+| user2    | admin   | user  | 
+| user3    | admin   | user  | 
+| manage   | admin   | manage| 
+| manage2  | admin   | manage| 
+| manage3  | admin   | manage| 
 
  Mô tả các luồng chức năng
 1. Luồng tạo mới nhân viên
