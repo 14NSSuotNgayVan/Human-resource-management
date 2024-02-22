@@ -11,7 +11,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { staffListSelector, totalElementsSelector, shouldUpdateSelector } from "app/redux/selectors/StaffSelector.js";
 import moment from "moment";
-import { GENDER,  STATUS_FOR_ADDITIONAL, STATUS_FOR_EDIT, STATUS_FOR_MANAGE, STATUS_FOR_REJECT, STATUS_FOR_REMOVE, STATUS_FOR_VIEW, TEAM } from "app/constants/staffConstant.js";
+import {
+  GENDER,
+  STATUS_FOR_ADDITIONAL,
+  STATUS_FOR_EDIT,
+  STATUS_FOR_MANAGE,
+  STATUS_FOR_REJECT,
+  STATUS_FOR_REMOVE,
+  STATUS_FOR_VIEW,
+  TEAM,
+} from "app/constants/staffConstant.js";
 import CustomTable from "app/component/CustomTable";
 import PendingApprovalDialog from "../LeadershipApproval/Tabs/PedingApprovalDialog";
 import ManageStaffDialog from "./ManageStaffDialog";
@@ -55,7 +64,7 @@ function ManageStaff(props) {
     searchObject.keyword = keyword;
     searchObject.pageIndex = pagePagination.page + 1;
     searchObject.pageSize = pagePagination.rowsPerPage;
-    searchObject.listStatus = STATUS_FOR_MANAGE.join(',');
+    searchObject.listStatus = STATUS_FOR_MANAGE.join(",");
     dispatch(searchByPageAction(searchObject));
   };
 
@@ -120,18 +129,16 @@ function ManageStaff(props) {
 
   ////
   const handleSubmitSendLeader = (Data, staff) => {
-    if(shouldOpenPromotionForm){
+    if (shouldOpenPromotionForm) {
       if (Data?.id) {
         dispatch(updateProcess({ ...Data, processStatus: "2" }));
       } else dispatch(createProcess(staff?.id, { ...Data, processStatus: "2" }));
-    }else 
-    if(shouldOpenSalaryForm){
+    } else if (shouldOpenSalaryForm) {
       if (Data?.id) {
-          dispatch(updateSalary({ ...Data, salaryIncreaseStatus: 2 }))
-      } else
-          dispatch(createSalaries(staff?.id, { ...Data, salaryIncreaseStatus: 2 }))
+        dispatch(updateSalary({ ...Data, salaryIncreaseStatus: 2 }));
+      } else dispatch(createSalaries(staff?.id, { ...Data, salaryIncreaseStatus: 2 }));
     }
-      handleCloseManageDialog();
+    handleCloseManageDialog();
   };
   const DialogAction = ({ isPending }) => {
     return (
@@ -153,7 +160,7 @@ function ManageStaff(props) {
     const item = props.item;
     return (
       <div className="none_wrap">
-        {STATUS_FOR_VIEW.join(',').includes(item.submitProfileStatus) && (
+        {STATUS_FOR_VIEW.join(",").includes(item.submitProfileStatus) && (
           <IconButton
             size="small"
             onClick={() => {
@@ -163,28 +170,28 @@ function ManageStaff(props) {
             <VisibilityIcon fontSize="small"></VisibilityIcon>
           </IconButton>
         )}
-        {STATUS_FOR_EDIT.join(',').includes(item.submitProfileStatus) && (
+        {STATUS_FOR_EDIT.join(",").includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleAddItem(item)}>
             <Icon fontSize="small" color="primary">
               edit
             </Icon>
           </IconButton>
         )}
-        {STATUS_FOR_REMOVE.join(',').includes(item.submitProfileStatus) && (
+        {STATUS_FOR_REMOVE.join(",").includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleDelete(item)}>
             <Icon fontSize="small" color="error">
               delete
             </Icon>
           </IconButton>
         )}
-        {STATUS_FOR_ADDITIONAL.join(',').includes(item.submitProfileStatus) && (
+        {STATUS_FOR_ADDITIONAL.join(",").includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleShowNotify(item, true)}>
             <Icon fontSize="small" color="secondary">
               notifications
             </Icon>
           </IconButton>
         )}
-        {STATUS_FOR_REJECT.join(',').includes(item.submitProfileStatus) && (
+        {STATUS_FOR_REJECT.join(",").includes(item.submitProfileStatus) && (
           <IconButton size="small" onClick={() => handleShowNotify(item, false)}>
             <Icon fontSize="small" color="secondary">
               notifications
